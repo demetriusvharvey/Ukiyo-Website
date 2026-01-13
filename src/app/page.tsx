@@ -1,38 +1,65 @@
 export default function Home() {
+  const EVENTBRITE_LISTING = "https://www.eventbrite.com/d/va--portsmouth/ukiyo/";
+  const INSTAGRAM_URL = "https://www.instagram.com/ukiyo_virginia/";
+
+  // For MVP: you can keep these manual.
+  // Later: replace this array with Eventbrite API data so it auto-updates.
   const events = [
     {
       date: "FRI • JAN 24",
       title: "Ukiyo Fridays",
       desc: "Guest DJ • Doors 10PM",
-      link: "https://www.eventbrite.com",
+      link: EVENTBRITE_LISTING,
     },
     {
       date: "SAT • JAN 25",
       title: "Saturday Nights",
       desc: "Live Performance • VIP Tables",
-      link: "https://www.eventbrite.com",
+      link: EVENTBRITE_LISTING,
     },
     {
       date: "THU • JAN 30",
       title: "Industry Night",
       desc: "Hospitality • RSVP Required",
-      link: "https://www.eventbrite.com",
+      link: EVENTBRITE_LISTING,
     },
   ];
 
   return (
     <main className="min-h-screen bg-black text-white">
+      {/* Background glow */}
+      <div className="pointer-events-none fixed inset-0 -z-10">
+        <div className="absolute -top-40 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-purple-600/20 blur-3xl" />
+        <div className="absolute top-40 right-[-120px] h-[520px] w-[520px] rounded-full bg-blue-500/15 blur-3xl" />
+        <div className="absolute bottom-[-140px] left-[-140px] h-[520px] w-[520px] rounded-full bg-purple-500/10 blur-3xl" />
+      </div>
 
-      {/* ================= TOP NAV ================= */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-black/70 backdrop-blur border-b border-white/10">
-        <div className="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between">
+      {/* Sticky side actions (desktop) */}
+      <div className="fixed right-4 top-1/2 z-50 hidden -translate-y-1/2 flex-col gap-3 md:flex">
+        <SideButton label="Reservations" href="#reservations" />
+        <SideButton label="Menu" href="#menu" />
+        <SideButton label="Contact" href="#contact" />
+      </div>
 
-          {/* Logo */}
-          <div className="text-center">
-            <div className="font-italiana text-xl tracking-wide">Ukiyo</div>
-            <div className="text-[10px] uppercase tracking-[0.35em] text-white/60">
-              Virginia
-            </div>
+      {/* Hero */}
+      <section className="relative flex min-h-[92vh] items-center justify-center px-6">
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-700/10 to-black" />
+        </div>
+
+        <div className="mx-auto max-w-3xl text-center">
+          {/* Swap this block with an <img> logo later (public/logo.png) */}
+          <div className="mx-auto mb-4 inline-flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-10 py-8 shadow-[0_0_60px_rgba(147,51,234,0.18)] backdrop-blur">
+            <span className="text-5xl font-semibold tracking-tight">Ukiyo</span>
+          </div>
+
+          <div className="mb-10 font-serif text-sm tracking-[0.35em] text-white/80">
+            Virginia
+          </div>
+
+          <div className="mx-auto flex max-w-md flex-col gap-3 sm:flex-row sm:justify-center">
+            <PrimaryButton label="Reservations" href="#reservations" />
+            <GhostButton label="Upcoming Events" href="#events" />
           </div>
 
           {/* Nav Buttons */}
@@ -64,13 +91,27 @@ export default function Home() {
         </p>
       </section>
 
-      {/* ================= EVENTS ================= */}
-      <section id="events" className="mx-auto max-w-7xl px-6 py-20">
-        <h2 className="font-italiana mb-14 text-center text-4xl tracking-wide">
-          Upcoming Events
-        </h2>
+      {/* Events */}
+      <section id="events" className="mx-auto max-w-6xl px-6 py-16">
+        <div className="mb-8 flex items-end justify-between gap-4">
+          <div>
+            <h2 className="text-3xl font-semibold tracking-tight">Upcoming Events</h2>
+            <p className="mt-2 text-white/60">
+              Tickets powered by Eventbrite
+            </p>
+          </div>
 
-        <div className="space-y-10">
+          <a
+            className="hidden rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-sm text-white/80 backdrop-blur hover:bg-white/10 md:inline-block"
+            href={EVENTBRITE_LISTING}
+            target="_blank"
+            rel="noreferrer"
+          >
+            View All Events
+          </a>
+        </div>
+
+        <div className="space-y-4">
           {events.map((event) => (
             <a
               key={event.title}
@@ -79,18 +120,18 @@ export default function Home() {
               rel="noreferrer"
               className="group flex flex-col gap-6 rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur transition hover:border-white/30 hover:bg-white/10 md:flex-row"
             >
-              {/* Flyer Placeholder */}
-              <div className="h-[240px] w-full md:w-[180px] flex items-center justify-center rounded-xl bg-white/10 text-xs uppercase tracking-widest text-white/40">
+              {/* Flyer placeholder */}
+              <div className="flex h-[240px] w-full items-center justify-center rounded-xl bg-white/10 text-xs uppercase tracking-widest text-white/40 md:h-[180px] md:w-[180px]">
                 Event Flyer
               </div>
 
-              {/* Event Info */}
+              {/* Info */}
               <div className="flex flex-1 flex-col justify-between">
                 <div>
-                  <div className="text-xs tracking-widest text-white/60">
+                  <div className="text-xs uppercase tracking-widest text-white/60">
                     {event.date}
                   </div>
-                  <div className="font-italiana mt-2 text-2xl tracking-wide">
+                  <div className="mt-2 text-2xl font-semibold tracking-tight">
                     {event.title}
                   </div>
                   <div className="mt-1 text-sm text-white/60">
@@ -98,7 +139,7 @@ export default function Home() {
                   </div>
                 </div>
 
-                <span className="mt-6 inline-block w-fit rounded-xl bg-gradient-to-r from-purple-600 to-blue-500 px-6 py-3 text-sm font-semibold shadow-xl transition group-hover:brightness-110">
+                <span className="mt-6 inline-block w-fit rounded-xl bg-gradient-to-r from-purple-600 to-blue-500 px-6 py-3 text-sm font-semibold shadow-xl shadow-purple-600/20 transition group-hover:brightness-110">
                   Get Tickets
                 </span>
               </div>
@@ -107,21 +148,22 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= INSTAGRAM (UNCHANGED) ================= */}
-      <section id="instagram" className="border-t border-white/10 py-20 px-6">
-        <div className="mx-auto max-w-7xl text-center">
-          <h2 className="font-italiana text-4xl tracking-wide mb-10">
-            Instagram
-          </h2>
+      {/* Instagram */}
+      <section id="instagram" className="border-t border-white/10 px-6 py-16">
+        <div className="mx-auto max-w-6xl text-center">
+          <h2 className="text-3xl font-semibold tracking-tight">Instagram</h2>
+          <p className="mt-2 text-white/60">
+            Tap any tile to view the latest posts
+          </p>
 
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-            {[...Array(8)].map((_, i) => (
+          <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
+            {Array.from({ length: 8 }).map((_, i) => (
               <a
                 key={i}
-                href="https://www.instagram.com/ukiyo_virginia/"
+                href={INSTAGRAM_URL}
                 target="_blank"
-                rel="noopener noreferrer"
-                className="aspect-square rounded-xl bg-white/10 flex items-center justify-center text-xs uppercase tracking-widest text-white/40 hover:bg-white/20"
+                rel="noreferrer"
+                className="flex aspect-square items-center justify-center rounded-xl bg-white/10 text-xs uppercase tracking-widest text-white/40 hover:bg-white/20"
               >
                 Instagram Post
               </a>
@@ -130,7 +172,27 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= FOOTER ================= */}
+      {/* Reservations */}
+      <section id="reservations" className="mx-auto max-w-6xl px-6 py-16">
+        <div className="rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur">
+          <h3 className="text-2xl font-semibold">Reservations</h3>
+          <p className="mt-2 text-white/60">
+            We’ll connect your reservations link/embed here.
+          </p>
+        </div>
+      </section>
+
+      {/* Menu */}
+      <section id="menu" className="mx-auto max-w-6xl px-6 py-16">
+        <div className="rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur">
+          <h3 className="text-2xl font-semibold">Menu</h3>
+          <p className="mt-2 text-white/60">
+            We’ll link your menu (PDF) or build it directly here.
+          </p>
+        </div>
+      </section>
+
+      {/* Footer / Contact */}
       <footer id="contact" className="border-t border-white/10">
         <div className="mx-auto max-w-7xl px-6 py-16">
           <div className="grid gap-10 md:grid-cols-3">
@@ -150,11 +212,7 @@ export default function Home() {
               </div>
               <div className="mt-3 space-y-2 text-sm text-white/60">
                 <div>Address: (add client address)</div>
-                <a
-                  href="https://maps.google.com"
-                  target="_blank"
-                  className="block hover:text-white"
-                >
+                <a className="block hover:text-white" href="https://maps.google.com" target="_blank" rel="noreferrer">
                   Directions →
                 </a>
                 <div>Hours: (add hours)</div>
@@ -166,19 +224,9 @@ export default function Home() {
                 Connect
               </div>
               <div className="mt-3 space-y-2 text-sm text-white/60">
-                <a
-                  href="https://www.instagram.com/ukiyo_virginia/"
-                  target="_blank"
-                  className="block hover:text-white"
-                >
-                  Instagram
-                </a>
-                <a href="#" className="block hover:text-white">
-                  TikTok
-                </a>
-                <a href="#" className="block hover:text-white">
-                  Email
-                </a>
+                <a className="block hover:text-white" href={INSTAGRAM_URL} target="_blank" rel="noreferrer">Instagram</a>
+                <a className="block hover:text-white" href="#" target="_blank" rel="noreferrer">TikTok</a>
+                <a className="block hover:text-white" href="#" target="_blank" rel="noreferrer">Email</a>
               </div>
             </div>
 
@@ -193,13 +241,35 @@ export default function Home() {
   );
 }
 
+function SideButton({ label, href }: { label: string; href: string }) {
+  return (
+    <a
+      href={href}
+      className="rounded-2xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white/85 shadow-lg shadow-purple-600/10 backdrop-blur transition hover:bg-white/10"
+    >
+      {label}
+    </a>
+  );
+}
 
+function PrimaryButton({ label, href }: { label: string; href: string }) {
+  return (
+    <a
+      href={href}
+      className="rounded-2xl bg-gradient-to-r from-purple-600 to-blue-500 px-6 py-3 text-sm font-semibold text-white shadow-xl shadow-purple-600/20 transition hover:brightness-110"
+    >
+      {label}
+    </a>
+  );
+}
 
-
-
-
-
-
-
-
-
+function GhostButton({ label, href }: { label: string; href: string }) {
+  return (
+    <a
+      href={href}
+      className="rounded-2xl border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-white/85 backdrop-blur transition hover:bg-white/10"
+    >
+      {label}
+    </a>
+  );
+}
