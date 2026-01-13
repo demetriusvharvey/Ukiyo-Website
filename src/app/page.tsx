@@ -1,10 +1,28 @@
 export default function Home() {
-  const EVENTBRITE_URL = "https://www.eventbrite.com/d/va--portsmouth/ukiyo/";
+  const EVENTBRITE_LISTING = "https://www.eventbrite.com/d/va--portsmouth/ukiyo/";
+  const INSTAGRAM_URL = "https://www.instagram.com/ukiyo_virginia/";
 
+  // For MVP: you can keep these manual.
+  // Later: replace this array with Eventbrite API data so it auto-updates.
   const events = [
-    { date: "Fri • Jan 24", title: "Ukiyo Fridays", desc: "Guest DJ • Doors 10PM" },
-    { date: "Sat • Jan 25", title: "Saturday Nights", desc: "Live Set • VIP Tables" },
-    { date: "Thu • Jan 30", title: "Industry Night", desc: "Specials • RSVP Required" },
+    {
+      date: "FRI • JAN 24",
+      title: "Ukiyo Fridays",
+      desc: "Guest DJ • Doors 10PM",
+      link: EVENTBRITE_LISTING,
+    },
+    {
+      date: "SAT • JAN 25",
+      title: "Saturday Nights",
+      desc: "Live Performance • VIP Tables",
+      link: EVENTBRITE_LISTING,
+    },
+    {
+      date: "THU • JAN 30",
+      title: "Industry Night",
+      desc: "Hospitality • RSVP Required",
+      link: EVENTBRITE_LISTING,
+    },
   ];
 
   return (
@@ -30,6 +48,7 @@ export default function Home() {
         </div>
 
         <div className="mx-auto max-w-3xl text-center">
+          {/* Swap this block with an <img> logo later (public/logo.png) */}
           <div className="mx-auto mb-4 inline-flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-10 py-8 shadow-[0_0_60px_rgba(147,51,234,0.18)] backdrop-blur">
             <span className="text-5xl font-semibold tracking-tight">Ukiyo</span>
           </div>
@@ -60,38 +79,73 @@ export default function Home() {
           </div>
 
           <a
-            href={EVENTBRITE_URL}
+            className="hidden rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-sm text-white/80 backdrop-blur hover:bg-white/10 md:inline-block"
+            href={EVENTBRITE_LISTING}
             target="_blank"
             rel="noreferrer"
-            className="hidden rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-sm text-white/80 backdrop-blur hover:bg-white/10 md:inline-block"
           >
             View All Events
           </a>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-3">
-          {events.map((e) => (
-            <div
-              key={e.title}
-              className="group rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur transition hover:border-white/20 hover:bg-white/10"
+        <div className="space-y-4">
+          {events.map((event) => (
+            <a
+              key={event.title}
+              href={event.link}
+              target="_blank"
+              rel="noreferrer"
+              className="group flex flex-col gap-6 rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur transition hover:border-white/30 hover:bg-white/10 md:flex-row"
             >
-              <div className="text-xs uppercase tracking-widest text-white/60">{e.date}</div>
-              <div className="mt-2 text-xl font-semibold">{e.title}</div>
-              <div className="mt-1 text-sm text-white/60">{e.desc}</div>
-
-              <div className="mt-5 flex items-center justify-between">
-                <span className="text-xs text-white/50">Tickets via Eventbrite</span>
-                <a
-                  href={EVENTBRITE_URL}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="rounded-xl bg-gradient-to-r from-purple-600 to-blue-500 px-4 py-2 text-sm font-medium text-white shadow-lg shadow-purple-600/20 transition group-hover:brightness-110"
-                >
-                  Get Tickets
-                </a>
+              {/* Flyer placeholder */}
+              <div className="flex h-[240px] w-full items-center justify-center rounded-xl bg-white/10 text-xs uppercase tracking-widest text-white/40 md:h-[180px] md:w-[180px]">
+                Event Flyer
               </div>
-            </div>
+
+              {/* Info */}
+              <div className="flex flex-1 flex-col justify-between">
+                <div>
+                  <div className="text-xs uppercase tracking-widest text-white/60">
+                    {event.date}
+                  </div>
+                  <div className="mt-2 text-2xl font-semibold tracking-tight">
+                    {event.title}
+                  </div>
+                  <div className="mt-1 text-sm text-white/60">
+                    {event.desc}
+                  </div>
+                </div>
+
+                <span className="mt-6 inline-block w-fit rounded-xl bg-gradient-to-r from-purple-600 to-blue-500 px-6 py-3 text-sm font-semibold shadow-xl shadow-purple-600/20 transition group-hover:brightness-110">
+                  Get Tickets
+                </span>
+              </div>
+            </a>
           ))}
+        </div>
+      </section>
+
+      {/* Instagram */}
+      <section id="instagram" className="border-t border-white/10 px-6 py-16">
+        <div className="mx-auto max-w-6xl text-center">
+          <h2 className="text-3xl font-semibold tracking-tight">Instagram</h2>
+          <p className="mt-2 text-white/60">
+            Tap any tile to view the latest posts
+          </p>
+
+          <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <a
+                key={i}
+                href={INSTAGRAM_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="flex aspect-square items-center justify-center rounded-xl bg-white/10 text-xs uppercase tracking-widest text-white/40 hover:bg-white/20"
+              >
+                Instagram Post
+              </a>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -100,7 +154,7 @@ export default function Home() {
         <div className="rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur">
           <h3 className="text-2xl font-semibold">Reservations</h3>
           <p className="mt-2 text-white/60">
-            We’ll connect your reservations link here.
+            We’ll connect your reservations link/embed here.
           </p>
         </div>
       </section>
@@ -110,12 +164,12 @@ export default function Home() {
         <div className="rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur">
           <h3 className="text-2xl font-semibold">Menu</h3>
           <p className="mt-2 text-white/60">
-            Menu PDF or custom menu coming next.
+            We’ll link your menu (PDF) or build it directly here.
           </p>
         </div>
       </section>
 
-      {/* Footer */}
+      {/* Footer / Contact */}
       <footer id="contact" className="border-t border-white/10">
         <div className="mx-auto max-w-6xl px-6 py-14">
           <div className="grid gap-10 md:grid-cols-3">
@@ -130,7 +184,7 @@ export default function Home() {
               <div className="text-sm font-semibold text-white/80">Visit</div>
               <div className="mt-3 space-y-2 text-sm text-white/60">
                 <div>Address: (add client address)</div>
-                <a href="https://maps.google.com" target="_blank" className="block hover:text-white">
+                <a className="block hover:text-white" href="https://maps.google.com" target="_blank" rel="noreferrer">
                   Directions →
                 </a>
                 <div>Hours: (add hours)</div>
@@ -140,9 +194,9 @@ export default function Home() {
             <div>
               <div className="text-sm font-semibold text-white/80">Connect</div>
               <div className="mt-3 space-y-2 text-sm text-white/60">
-                <a href="#" target="_blank" className="block hover:text-white">Instagram</a>
-                <a href="#" target="_blank" className="block hover:text-white">TikTok</a>
-                <a href="#" target="_blank" className="block hover:text-white">Email</a>
+                <a className="block hover:text-white" href={INSTAGRAM_URL} target="_blank" rel="noreferrer">Instagram</a>
+                <a className="block hover:text-white" href="#" target="_blank" rel="noreferrer">TikTok</a>
+                <a className="block hover:text-white" href="#" target="_blank" rel="noreferrer">Email</a>
               </div>
             </div>
           </div>
@@ -197,14 +251,3 @@ function GhostButton({ label, href }: { label: string; href: string }) {
     </a>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
