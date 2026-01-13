@@ -1,65 +1,205 @@
-import Image from "next/image";
-
 export default function Home() {
+  const events = [
+    {
+      date: "FRI • JAN 24",
+      title: "Ukiyo Fridays",
+      desc: "Guest DJ • Doors 10PM",
+      link: "https://www.eventbrite.com",
+    },
+    {
+      date: "SAT • JAN 25",
+      title: "Saturday Nights",
+      desc: "Live Performance • VIP Tables",
+      link: "https://www.eventbrite.com",
+    },
+    {
+      date: "THU • JAN 30",
+      title: "Industry Night",
+      desc: "Hospitality • RSVP Required",
+      link: "https://www.eventbrite.com",
+    },
+  ];
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className="min-h-screen bg-black text-white">
+
+      {/* ================= TOP NAV ================= */}
+      <header className="fixed top-0 left-0 right-0 z-50 bg-black/70 backdrop-blur border-b border-white/10">
+        <div className="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between">
+
+          {/* Logo */}
+          <div className="text-center">
+            <div className="font-italiana text-xl tracking-wide">Ukiyo</div>
+            <div className="text-[10px] uppercase tracking-[0.35em] text-white/60">
+              Virginia
+            </div>
+          </div>
+
+          {/* Nav Buttons */}
+          <nav className="flex gap-8 text-xs uppercase tracking-widest text-white/70">
+            <a href="#events" className="hover:text-white transition">
+              Events
+            </a>
+            <a href="#venue" className="hover:text-white transition">
+              Venue
+            </a>
+            <a href="#reserve" className="hover:text-white transition">
+              Reserve
+            </a>
+            <a href="#menu" className="hover:text-white transition">
+              Menu
+            </a>
+            <a href="#faqs" className="hover:text-white transition">
+              FAQs
+            </a>
+          </nav>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </header>
+
+      {/* ================= HERO ================= */}
+      <section className="flex flex-col items-center justify-center min-h-screen text-center px-6 pt-24">
+        <h1 className="font-italiana text-7xl tracking-wider">Ukiyo</h1>
+        <p className="mt-2 text-sm uppercase tracking-[0.4em] text-white/60">
+          Virginia
+        </p>
+      </section>
+
+      {/* ================= EVENTS ================= */}
+      <section id="events" className="mx-auto max-w-7xl px-6 py-20">
+        <h2 className="font-italiana mb-14 text-center text-4xl tracking-wide">
+          Upcoming Events
+        </h2>
+
+        <div className="space-y-10">
+          {events.map((event) => (
+            <a
+              key={event.title}
+              href={event.link}
+              target="_blank"
+              rel="noreferrer"
+              className="group flex flex-col gap-6 rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur transition hover:border-white/30 hover:bg-white/10 md:flex-row"
+            >
+              {/* Flyer Placeholder */}
+              <div className="h-[240px] w-full md:w-[180px] flex items-center justify-center rounded-xl bg-white/10 text-xs uppercase tracking-widest text-white/40">
+                Event Flyer
+              </div>
+
+              {/* Event Info */}
+              <div className="flex flex-1 flex-col justify-between">
+                <div>
+                  <div className="text-xs tracking-widest text-white/60">
+                    {event.date}
+                  </div>
+                  <div className="font-italiana mt-2 text-2xl tracking-wide">
+                    {event.title}
+                  </div>
+                  <div className="mt-1 text-sm text-white/60">
+                    {event.desc}
+                  </div>
+                </div>
+
+                <span className="mt-6 inline-block w-fit rounded-xl bg-gradient-to-r from-purple-600 to-blue-500 px-6 py-3 text-sm font-semibold shadow-xl transition group-hover:brightness-110">
+                  Get Tickets
+                </span>
+              </div>
+            </a>
+          ))}
         </div>
-      </main>
-    </div>
+      </section>
+
+      {/* ================= INSTAGRAM (UNCHANGED) ================= */}
+      <section id="instagram" className="border-t border-white/10 py-20 px-6">
+        <div className="mx-auto max-w-7xl text-center">
+          <h2 className="font-italiana text-4xl tracking-wide mb-10">
+            Instagram
+          </h2>
+
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+            {[...Array(8)].map((_, i) => (
+              <a
+                key={i}
+                href="https://www.instagram.com/ukiyo_virginia/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="aspect-square rounded-xl bg-white/10 flex items-center justify-center text-xs uppercase tracking-widest text-white/40 hover:bg-white/20"
+              >
+                Instagram Post
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================= FOOTER ================= */}
+      <footer id="contact" className="border-t border-white/10">
+        <div className="mx-auto max-w-7xl px-6 py-16">
+          <div className="grid gap-10 md:grid-cols-3">
+
+            <div>
+              <div className="font-italiana text-2xl tracking-wide">
+                Ukiyo
+              </div>
+              <div className="mt-2 text-sm text-white/60">
+                Virginia nightlife • Events • Reservations
+              </div>
+            </div>
+
+            <div>
+              <div className="text-sm font-semibold text-white/80">
+                Visit
+              </div>
+              <div className="mt-3 space-y-2 text-sm text-white/60">
+                <div>Address: (add client address)</div>
+                <a
+                  href="https://maps.google.com"
+                  target="_blank"
+                  className="block hover:text-white"
+                >
+                  Directions →
+                </a>
+                <div>Hours: (add hours)</div>
+              </div>
+            </div>
+
+            <div>
+              <div className="text-sm font-semibold text-white/80">
+                Connect
+              </div>
+              <div className="mt-3 space-y-2 text-sm text-white/60">
+                <a
+                  href="https://www.instagram.com/ukiyo_virginia/"
+                  target="_blank"
+                  className="block hover:text-white"
+                >
+                  Instagram
+                </a>
+                <a href="#" className="block hover:text-white">
+                  TikTok
+                </a>
+                <a href="#" className="block hover:text-white">
+                  Email
+                </a>
+              </div>
+            </div>
+
+          </div>
+
+          <div className="mt-10 text-xs text-white/40">
+            © {new Date().getFullYear()} Ukiyo. All rights reserved.
+          </div>
+        </div>
+      </footer>
+    </main>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
