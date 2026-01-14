@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Italiana } from "next/font/google";
+import { Italiana, Inter } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
 
@@ -7,6 +7,12 @@ const italiana = Italiana({
   subsets: ["latin"],
   weight: "400",
   variable: "--font-italiana",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-inter",
 });
 
 export const metadata: Metadata = {
@@ -19,38 +25,59 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const INSTAGRAM_URL = "https://www.instagram.com/ukiyo_virginia/";
+
   return (
-    <html lang="en">
-      <body className={`${italiana.variable} antialiased bg-zinc-900 text-white`}>
-        {/* ================= HEADER / NAV ================= */}
-        <header className="fixed left-0 right-0 top-0 z-50 border-b border-white/10 bg-black/70 backdrop-blur">
+    <html lang="en" className="bg-zinc-900">
+      <body
+        className={`${italiana.variable} ${inter.variable} antialiased bg-zinc-900 text-white`}
+      >
+        {/* ================= TOP NAV ================= */}
+        <header className="fixed left-0 right-0 top-0 z-50 border-b border-white/10 bg-black">
           <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-            <Link href="/" className="text-center hover:opacity-90 transition">
-              <div className="text-xl tracking-wide">Ukiyo</div>
+            <Link href="/" className="text-center transition hover:opacity-90">
+              <div className="text-xl tracking-wide text-white">Ukiyo</div>
               <div className="text-[10px] uppercase tracking-[0.35em] text-white/60">
                 Virginia
               </div>
             </Link>
 
             <nav className="hidden gap-8 text-xs uppercase tracking-widest text-white/70 md:flex">
-              <a href="/events" className="transition hover:text-white">Events</a>
-              <a href="/venue" className="transition hover:text-white">Venue</a>
-              <a href="/reservations" className="transition hover:text-white">Reserve</a>
-              <a href="/menu" className="transition hover:text-white">Menu</a>
-              <a href="/faqs" className="transition hover:text-white">FAQs</a>
+              <Link href="/events" className="transition hover:text-white">
+                Events
+              </Link>
+              <Link href="/venue" className="transition hover:text-white">
+                Venue
+              </Link>
+              <Link href="/reservations" className="transition hover:text-white">
+                Reserve
+              </Link>
+              <Link href="/menu" className="transition hover:text-white">
+                Menu
+              </Link>
+              <Link href="/faqs" className="transition hover:text-white">
+                FAQs
+              </Link>
             </nav>
+
+            <a
+              href="#events"
+              className="rounded-xl border border-white/15 bg-white/5 px-3 py-2 text-xs text-white/80 hover:bg-white/10 md:hidden"
+            >
+              Events
+            </a>
           </div>
         </header>
 
         {/* ================= PAGE CONTENT ================= */}
-        <main className="pt-24">{children}</main>
+        <main className="min-h-screen bg-zinc-900 pt-24">{children}</main>
 
         {/* ================= FOOTER ================= */}
-        <footer className="border-t border-white/10 bg-black/70 backdrop-blur">
+        <footer id="contact" className="border-t border-white/10 bg-black">
           <div className="mx-auto max-w-7xl px-6 py-16">
             <div className="grid gap-10 md:grid-cols-3">
               <div>
-                <div className="text-2xl font-semibold">Ukiyo</div>
+                <div className="text-2xl font-semibold text-white">Ukiyo</div>
                 <div className="mt-2 text-sm text-white/60">
                   Virginia Nightlife • Events • Reservations
                 </div>
@@ -73,18 +100,24 @@ export default function RootLayout({
               </div>
 
               <div>
-                <div className="text-sm font-semibold text-white/80">Connect</div>
+                <div className="text-sm font-semibold text-white/80">
+                  Connect
+                </div>
                 <div className="mt-3 space-y-2 text-sm text-white/60">
                   <a
-                    href="https://www.instagram.com/ukiyo_virginia/"
+                    className="block hover:text-white"
+                    href={INSTAGRAM_URL}
                     target="_blank"
                     rel="noreferrer"
-                    className="block hover:text-white"
                   >
                     Instagram
                   </a>
-                  <a className="block hover:text-white" href="#">TikTok</a>
-                  <a className="block hover:text-white" href="#">Email</a>
+                  <a className="block hover:text-white" href="#">
+                    TikTok
+                  </a>
+                  <a className="block hover:text-white" href="#">
+                    Email
+                  </a>
                 </div>
               </div>
             </div>
@@ -98,8 +131,3 @@ export default function RootLayout({
     </html>
   );
 }
-
-
-
-
-
