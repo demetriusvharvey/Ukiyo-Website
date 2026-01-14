@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Home() {
  const EVENTBRITE_LISTING = "https://www.eventbrite.com/d/va--portsmouth/ukiyo/";
 const INSTAGRAM_URL = "https://www.instagram.com/ukiyo_virginia/";
@@ -43,12 +45,13 @@ return (
 </div>
 
 <nav className="hidden gap-8 text-xs uppercase tracking-widest text-white/70 md:flex">
-<a href="#events" className="transition hover:text-white">Events</a>
-<a href="#venue" className="transition hover:text-white">Venue</a>
-<a href="#reservations" className="transition hover:text-white">Reserve</a>
-<a href="#menu" className="transition hover:text-white">Menu</a>
-<a href="#faqs" className="transition hover:text-white">FAQs</a>
+  <Link href="/events" className="transition hover:text-white">Events</Link>
+  <Link href="/venue" className="transition hover:text-white">Venue</Link>
+  <Link href="/reservations" className="transition hover:text-white">Reserve</Link>
+  <Link href="/menu" className="transition hover:text-white">Menu</Link>
+  <Link href="/faqs" className="transition hover:text-white">FAQs</Link>
 </nav>
+
 
 <a
 href="#events"
