@@ -77,14 +77,13 @@ export default function Home() {
         style={{ backgroundColor: BAND_BG }}
       >
         <div className="mx-auto max-w-7xl">
-          <div className="mb-10 flex items-end justify-between gap-4">
-            <div>
-              <h2 className="text-3xl font-semibold tracking-tight text-white">
-                Upcoming Events
-              </h2>
-              <p className="mt-2 text-white/60">Tickets powered by Eventbrite</p>
-            </div>
-          </div>
+          <div className="mb-10 text-center">
+  <h2 className="text-3xl font-semibold tracking-tight text-white">
+    Upcoming Events
+  </h2>
+  <p className="mt-2 text-white/60">Tickets powered by Eventbrite</p>
+</div>
+
 
           <div className="space-y-6">
             {events.map((event) => (

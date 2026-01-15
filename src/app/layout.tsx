@@ -28,7 +28,7 @@ export default function RootLayout({
   const INSTAGRAM_URL = "https://www.instagram.com/ukiyo_virginia/";
 
   return (
-    <html lang="en" className="bg-zinc-900">
+    <html lang="en" className="bg-[#0B0D10]">
       <body
         className={`${italiana.variable} ${inter.variable} antialiased bg-zinc-900 text-white`}
       >
@@ -70,7 +70,7 @@ export default function RootLayout({
         </header>
 
         {/* ================= PAGE CONTENT ================= */}
-        <main className="min-h-screen bg-zinc-900 pt-24">{children}</main>
+        <main className="min-h-screen bg-zinc-900">{children}</main>
 
         {/* ================= FOOTER ================= */}
         <footer id="contact" className="border-t border-white/10 bg-black">
