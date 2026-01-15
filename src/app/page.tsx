@@ -6,7 +6,6 @@ export default function Home() {
   const EVENTBRITE_LISTING = "https://www.eventbrite.com/d/va--portsmouth/ukiyo/";
   const INSTAGRAM_URL = "https://www.instagram.com/ukiyo_virginia/";
 
-  // ✅ Added more events so the strip ALWAYS scrolls (for testing)
   const events = [
     { date: "FRI • JAN 24", title: "Ukiyo Fridays", desc: "Guest DJ • Doors 10PM", link: EVENTBRITE_LISTING },
     { date: "SAT • JAN 25", title: "Saturday Nights", desc: "Live Performance • VIP Tables", link: EVENTBRITE_LISTING },
@@ -20,51 +19,37 @@ export default function Home() {
   ];
 
   const faqs = [
-    {
-      q: "Dress code",
-      a: "Upscale nightlife attire recommended. No athletic wear, beachwear, or excessively casual outfits.",
-    },
+    { q: "Dress code", a: "Upscale nightlife attire recommended. No athletic wear, beachwear, or excessively casual outfits." },
     { q: "Age requirement", a: "21+ with valid government-issued ID required for entry." },
-    {
-      q: "VIP / Table reservations",
-      a: "Reserve VIP seating and tables on the Reservations page. Availability varies by event.",
-    },
+    { q: "VIP / Table reservations", a: "Reserve VIP seating and tables on the Reservations page. Availability varies by event." },
     { q: "Parking", a: "Street and nearby lot parking available. Please plan ahead for peak nights." },
     { q: "Entry time", a: "Doors typically open at 10PM. Event times may vary—check the event listing for details." },
   ];
 
-  const BAND_BG = "#061722";
+  // ✅ same color, but we’ll use transparency so the waves show through
+  const BAND_BG = "rgba(6, 23, 34, 0.92)";
 
   const scrollStrip = (dir: "left" | "right") => {
     const el = document.getElementById("events-strip");
     if (!el) return;
-    const amount = 520; // feels closer to LIV
+    const amount = 520;
     el.scrollBy({ left: dir === "left" ? -amount : amount, behavior: "smooth" });
   };
 
   return (
-    <main className="min-h-screen bg-[#0B0D10] text-white">
-      {/* Background glow */}
-      <div className="pointer-events-none fixed inset-0 -z-10">
-        <div className="absolute -top-40 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-purple-600/20 blur-3xl" />
-        <div className="absolute top-40 right-[-120px] h-[520px] w-[520px] rounded-full bg-blue-500/15 blur-3xl" />
-        <div className="absolute bottom-[-140px] left-[-140px] h-[520px] w-[520px] rounded-full bg-purple-500/10 blur-3xl" />
-      </div>
-
+    <main className="min-h-screen bg-transparent text-white">
       {/* ================= HERO ================= */}
       <section className="flex min-h-[70vh] flex-col items-center justify-center px-6 text-center">
         <h1 className="text-6xl font-semibold tracking-tight text-white sm:text-7xl">Ukiyo</h1>
         <p className="mt-3 text-sm uppercase tracking-[0.4em] text-white/60">Virginia</p>
       </section>
 
-      {/* ================= EVENTS BAND (LIV-LIKE STRIP + ARROWS) ================= */}
+      {/* ================= EVENTS BAND ================= */}
       <section id="events" className="pb-16 font-[var(--font-inter)]" style={{ backgroundColor: BAND_BG }}>
         <div className="relative">
-          {/* Edge fades like LIV */}
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-[#061722] to-transparent" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-[#061722] to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-[#061722] to-transparent opacity-80" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-[#061722] to-transparent opacity-80" />
 
-          {/* Arrows overlay */}
           <button
             type="button"
             aria-label="Scroll events left"
@@ -82,7 +67,6 @@ export default function Home() {
             ›
           </button>
 
-          {/* Scroll strip */}
           <div className="px-6">
             <div
               id="events-strip"
@@ -126,7 +110,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Event Calendar button */}
         <div className="mt-6 flex justify-center px-6">
           <Link
             href="/calendar"
@@ -178,10 +161,7 @@ export default function Home() {
 
           <div className="mx-auto max-w-3xl space-y-3">
             {faqs.map((item) => (
-              <details
-                key={item.q}
-                className="group rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur"
-              >
+              <details key={item.q} className="group rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur">
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-sm font-semibold text-white">
                   <span className="tracking-wide">{item.q}</span>
                   <span className="text-white/60 transition group-open:rotate-45">+</span>
