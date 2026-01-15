@@ -29,7 +29,12 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className={`${italiana.variable} ${inter.variable} antialiased text-white`}>
+      <body
+        className={`${italiana.variable} ${inter.variable} antialiased text-white`}
+      >
+        {/* Anchor target for back-to-top */}
+        <div id="top" />
+
         {/* 🌊 OCEAN VIDEO BACKGROUND */}
         <div className="fixed inset-0 -z-10 overflow-hidden">
           <video
@@ -49,14 +54,18 @@ export default function RootLayout({
         {/* ================= TOP NAV ================= */}
         <header className="fixed left-0 right-0 top-0 z-50 border-b border-white/10 bg-black/80 backdrop-blur">
           <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-            <Link href="/" className="text-center">
-              <div className="text-xl tracking-wide text-white">Ukiyo</div>
-              <div className="text-[10px] uppercase tracking-[0.35em] text-white/80">
+            {/* Logo - left aligned */}
+            <Link href="/" className="text-left">
+              <div className="text-3xl font-semibold tracking-wide text-white">
+                Ukiyo
+              </div>
+              <div className="text-[12px] uppercase tracking-[0.35em] text-white/80 mt-1">
                 Virginia
               </div>
             </Link>
 
-            <nav className="hidden gap-8 text-xs uppercase tracking-widest text-white md:flex">
+            {/* Navigation - larger font only */}
+            <nav className="flex gap-12 text-lg uppercase tracking-widest text-white">
               <Link href="/calendar">Events</Link>
               <Link href="/venue">Venue</Link>
               <Link href="/reservations">Reserve</Link>
@@ -67,12 +76,10 @@ export default function RootLayout({
         </header>
 
         {/* ================= PAGE CONTENT ================= */}
-        <main className="relative z-10 min-h-screen pt-24">
-          {children}
-        </main>
+        <main className="relative z-10 min-h-screen pt-24">{children}</main>
 
         {/* ================= FOOTER ================= */}
-        <footer className="border-t border-white/10 bg-black/90">
+        <footer className="relative border-t border-white/10 bg-black/90">
           <div className="mx-auto max-w-7xl px-6 py-16">
             <div className="grid gap-10 md:grid-cols-3">
               <div>
@@ -86,6 +93,7 @@ export default function RootLayout({
                 <div className="text-sm font-semibold">Visit</div>
                 <div className="mt-3 space-y-2 text-sm text-white/80">
                   <div>Address: 4592 George Washington Hwy, Portsmouth, VA</div>
+                  <div>Hours: Saturday & Sunday 10PM til 2AM</div>
                   <a
                     href="https://www.google.com/maps/place/Ukiyo+VA"
                     target="_blank"
@@ -107,6 +115,20 @@ export default function RootLayout({
               </div>
             </div>
 
+            {/* Back to Top Button */}
+            <div className="absolute right-10 bottom-12 flex flex-col items-center">
+              <span className="mb-1 text-xs text-white/70 uppercase tracking-wide">
+                Back to Top
+              </span>
+              <a
+                href="#top"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition text-2xl"
+                aria-label="Back to top"
+              >
+                ↑
+              </a>
+            </div>
+
             <div className="mt-10 text-xs text-white/50">
               © {new Date().getFullYear()} Ukiyo. All rights reserved.
             </div>
@@ -116,3 +138,10 @@ export default function RootLayout({
     </html>
   );
 }
+
+
+
+
+
+
+

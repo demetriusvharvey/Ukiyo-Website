@@ -122,7 +122,7 @@ export default function Home() {
       </section>
 
       {/* ================= INSTAGRAM BAND ================= */}
-      <section id="instagram" className="px-6 py-20 font-[var(--font-inter)] bg-black/40">
+      <section id="instagram" className="px-6 py-20 font-[var(--font-inter)] bg-[#0A0F2C]">
         <div className="mx-auto max-w-7xl text-center">
           <h2 className="text-3xl font-semibold tracking-tight text-white">Follow us on Instagram</h2>
           <p className="mt-2 text-white/60">Tap any tile to view @ukiyo_virginia</p>
@@ -167,4 +167,5 @@ export default function Home() {
     </main>
   );
 }
+
 
