@@ -43,7 +43,7 @@ export default function RootLayout({
             </Link>
 
             <nav className="hidden gap-8 text-xs uppercase tracking-widest text-white/70 md:flex">
-              <Link href="/events" className="transition hover:text-white">
+              <Link href="/calendar" className="transition hover:text-white">
                 Events
               </Link>
               <Link href="/venue" className="transition hover:text-white">
