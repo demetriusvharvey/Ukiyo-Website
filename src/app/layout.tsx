@@ -86,7 +86,7 @@ export default function RootLayout({
               <div>
                 <div className="text-sm font-semibold text-white/80">Visit</div>
                 <div className="mt-3 space-y-2 text-sm text-white/60">
-                  <div>Address: (add client address)</div>
+                  <div>Address: 4592 George Washington Hwy, Portsmouth, VA 23702</div>
                   <a
                     href="https://maps.google.com"
                     target="_blank"
@@ -95,7 +95,7 @@ export default function RootLayout({
                   >
                     Directions →
                   </a>
-                  <div>Hours: (add hours)</div>
+                  <div>Hours: Saturday & Sunday 10PM til 2PM</div>
                 </div>
               </div>
 
