@@ -1,67 +1,115 @@
 export default function CalendarPage() {
-  const months = [
-    { name: "January", days: 31 },
-    { name: "February", days: 28 },
-    { name: "March", days: 31 },
-  ];
+  const getWeekendsForMonth = (year: number, month: number) => {
+    const weekends: { saturday?: Date; sunday?: Date }[] = [];
+    let currentWeek: { saturday?: Date; sunday?: Date } = {};
+
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    for (let day = 1; day <= daysInMonth; day++) {
+      const date = new Date(year, month, day);
+      const dayOfWeek = date.getDay();
+
+      if (dayOfWeek === 6) currentWeek.saturday = date;
+      if (dayOfWeek === 0) {
+        currentWeek.sunday = date;
+        weekends.push(currentWeek);
+        currentWeek = {};
+      }
+    }
+
+    if (currentWeek.saturday) weekends.push(currentWeek);
+    return weekends;
+  };
+
+  const today = new Date();
+  const months = Array.from({ length: 3 }).map((_, i) => {
+    const date = new Date(today.getFullYear(), today.getMonth() + i, 1);
+    return {
+      name: date.toLocaleString("en-US", { month: "long" }),
+      year: date.getFullYear(),
+      month: date.getMonth(),
+      weekends: getWeekendsForMonth(date.getFullYear(), date.getMonth()),
+    };
+  });
 
   return (
     <main className="min-h-screen bg-zinc-900 text-white">
-      {/* Header */}
+      {/* ================= HEADER ================= */}
       <header className="border-b border-white/10 bg-black/70 backdrop-blur">
-        <div className="mx-auto max-w-7xl px-6 py-6">
+        <div className="mx-auto max-w-7xl px-6 py-6 text-center">
           <h1 className="text-3xl font-semibold tracking-tight">
             Event Calendar
           </h1>
           <p className="mt-1 text-white/60">
-            Upcoming weekends at Ukiyo
+            Saturdays & Sundays • Upcoming Events
           </p>
         </div>
       </header>
 
-      {/* Calendar Grid */}
-      <section className="mx-auto max-w-7xl px-6 py-16 space-y-20">
+      {/* ================= CALENDAR ================= */}
+      <section className="flex flex-col items-center px-6 py-16 space-y-28">
         {months.map((month) => (
-          <div key={month.name}>
-            <h2 className="mb-6 text-2xl font-semibold tracking-tight">
-              {month.name}
+          <div key={`${month.name}-${month.year}`} className="w-full max-w-5xl">
+            <h2 className="mb-10 text-2xl font-semibold tracking-tight text-center">
+              {month.name} {month.year}
             </h2>
 
-            <div className="grid grid-cols-7 gap-3 text-center text-sm">
-              {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
+            {/* Weekend rows */}
+            <div className="space-y-16">
+              {month.weekends.map((week, index) => (
                 <div
-                  key={day}
-                  className="text-xs uppercase tracking-widest text-white/40"
+                  key={index}
+                  className="flex flex-col md:flex-row md:justify-center md:gap-10 gap-6"
                 >
-                  {day}
+                  {/* ================= SATURDAY ================= */}
+                  {week.saturday && (
+                    <div className="border border-purple-500/40 bg-white/5 transition hover:bg-white/10 w-full md:w-64">
+                      {/* Flyer */}
+                      <div className="aspect-square bg-white/10 flex items-center justify-center text-sm uppercase tracking-widest text-white/40">
+                        Event Flyer
+                      </div>
+
+                      {/* Date */}
+                      <div className="p-4 text-center">
+                        <div className="text-2xl font-bold uppercase tracking-widest text-purple-400">
+                          {week.saturday.toLocaleDateString("en-US", {
+                            weekday: "short",
+                            month: "short",
+                            day: "numeric",
+                          })}
+                        </div>
+                        <div className="mt-2 text-sm text-white/70">
+                          Ukiyo Saturdays • 10PM
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* ================= SUNDAY ================= */}
+                  {week.sunday && (
+                    <div className="border border-blue-500/30 bg-white/5 transition hover:bg-white/10 w-full md:w-64">
+                      {/* Flyer */}
+                      <div className="aspect-square bg-white/10 flex items-center justify-center text-sm uppercase tracking-widest text-white/40">
+                        Event Flyer
+                      </div>
+
+                      {/* Date */}
+                      <div className="p-4 text-center">
+                        <div className="text-2xl font-bold uppercase tracking-widest text-blue-400">
+                          {week.sunday.toLocaleDateString("en-US", {
+                            weekday: "short",
+                            month: "short",
+                            day: "numeric",
+                          })}
+                        </div>
+                        <div className="mt-2 text-sm text-white/70">
+                          Sunday Vibes • 9PM
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               ))}
-
-              {Array.from({ length: month.days }).map((_, i) => {
-                const dayOfWeek = (i + 1) % 7;
-                const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
-
-                return (
-                  <div
-                    key={i}
-                    className={`h-24 rounded-xl border p-2 text-xs transition ${
-                      isWeekend
-                        ? "border-purple-500/40 bg-white/5 hover:bg-white/10"
-                        : "border-white/10 text-white/30"
-                    }`}
-                  >
-                    <div className="text-left text-white/50">
-                      {i + 1}
-                    </div>
-
-                    {isWeekend && (
-                      <div className="mt-2 rounded-md bg-gradient-to-r from-purple-600 to-blue-500 px-2 py-1 text-[10px] font-semibold">
-                        Ukiyo Nights
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
             </div>
           </div>
         ))}
@@ -69,3 +117,10 @@ export default function CalendarPage() {
     </main>
   );
 }
+
+
+
+
+
+
+
