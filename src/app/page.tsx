@@ -65,7 +65,6 @@ export default function Home() {
             ›
           </button>
 
-          {/* Centered scroll strip wrapper */}
           <div className="flex justify-center px-6">
             <div
               id="events-strip"
@@ -77,7 +76,7 @@ export default function Home() {
                 }
               }}
               className="flex gap-6 overflow-x-auto pb-6 snap-x snap-mandatory touch-pan-x
-                [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden max-w-[90vw]"
+              [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden max-w-[90vw]"
               style={{ overscrollBehaviorX: "contain" }}
             >
               {events.map((event, idx) => (
@@ -88,14 +87,12 @@ export default function Home() {
                   rel="noreferrer"
                   className="snap-start group min-w-[320px] sm:min-w-[360px] md:min-w-[420px] transition hover:brightness-105"
                 >
-                  {/* Event Flyer Placeholder */}
                   <div className="h-[350px] w-full bg-white/10 flex items-center justify-center text-xs uppercase tracking-widest text-white/40">
                     Event Flyer
                   </div>
 
-                  {/* Bottom section with solid black */}
                   <div className="bg-black p-4 flex items-center gap-3">
-                    <div className="flex flex-col text-xs uppercase tracking-widest text-white/100 font-bold">
+                    <div className="flex flex-col text-xs uppercase tracking-widest text-white font-bold">
                       <div>{event.date}</div>
                     </div>
                     <span className="text-white/30">|</span>
@@ -139,6 +136,9 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ✅ SMALL OCEAN GAP */}
+      <div className="h-4 md:h-6 bg-transparent" />
+
       {/* ================= FAQ BAND ================= */}
       <section id="faqs" className="border-t border-white/10 bg-[#05111A] px-6 py-20 font-[var(--font-inter)]">
         <div className="mx-auto max-w-7xl">
@@ -160,9 +160,13 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* ✅ SMALL OCEAN GAP BEFORE FOOTER */}
+      <div className="h-4 md:h-6 bg-transparent" />
     </main>
   );
 }
+
 
 
 
