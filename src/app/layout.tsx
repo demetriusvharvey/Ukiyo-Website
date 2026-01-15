@@ -85,7 +85,7 @@ export default function RootLayout({
               <div>
                 <div className="text-sm font-semibold">Visit</div>
                 <div className="mt-3 space-y-2 text-sm text-white/80">
-                  <div>4592 George Washington Hwy, Portsmouth, VA</div>
+                  <div>Address: 4592 George Washington Hwy, Portsmouth, VA</div>
                   <a
                     href="https://www.google.com/maps/place/Ukiyo+VA"
                     target="_blank"

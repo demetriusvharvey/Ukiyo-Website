@@ -26,9 +26,6 @@ export default function Home() {
     { q: "Entry time", a: "Doors typically open at 10PM. Event times may vary—check the event listing for details." },
   ];
 
-  // ✅ same color, but we’ll use transparency so the waves show through
-  const BAND_BG = "rgba(6, 23, 34, 0.92)";
-
   const scrollStrip = (dir: "left" | "right") => {
     const el = document.getElementById("events-strip");
     if (!el) return;
@@ -45,10 +42,13 @@ export default function Home() {
       </section>
 
       {/* ================= EVENTS BAND ================= */}
-      <section id="events" className="pb-16 font-[var(--font-inter)]" style={{ backgroundColor: BAND_BG }}>
+      <section
+        id="events"
+        className="pt-20 pb-16 font-[var(--font-inter)]"
+      >
         <div className="relative">
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-[#061722] to-transparent opacity-80" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-[#061722] to-transparent opacity-80" />
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-black/60 to-transparent opacity-80" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-black/60 to-transparent opacity-80" />
 
           <button
             type="button"
@@ -58,6 +58,7 @@ export default function Home() {
           >
             ‹
           </button>
+
           <button
             type="button"
             aria-label="Scroll events right"
@@ -88,10 +89,10 @@ export default function Home() {
                   target="_blank"
                   rel="noreferrer"
                   className="snap-start group min-w-[320px] sm:min-w-[360px] md:min-w-[420px]
-                    rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur transition
+                    border border-white/10 bg-white/5 p-6 backdrop-blur transition
                     hover:border-white/30 hover:bg-white/10"
                 >
-                  <div className="flex h-[320px] w-full items-center justify-center rounded-xl bg-white/10 text-xs uppercase tracking-widest text-white/40">
+                  <div className="flex h-[320px] w-full items-center justify-center bg-white/10 text-xs uppercase tracking-widest text-white/40">
                     Event Flyer
                   </div>
 
@@ -100,7 +101,7 @@ export default function Home() {
                     <div className="mt-2 text-2xl font-semibold tracking-tight text-white">{event.title}</div>
                     <div className="mt-1 text-sm text-white/60">{event.desc}</div>
 
-                    <span className="mt-6 inline-block w-fit rounded-xl bg-gradient-to-r from-purple-600 to-blue-500 px-6 py-3 text-sm font-semibold shadow-xl shadow-purple-600/20 transition group-hover:brightness-110">
+                    <span className="mt-6 inline-block w-fit bg-gradient-to-r from-purple-600 to-blue-500 px-6 py-3 text-sm font-semibold shadow-xl shadow-purple-600/20 transition group-hover:brightness-110">
                       Get Tickets
                     </span>
                   </div>
@@ -113,7 +114,7 @@ export default function Home() {
         <div className="mt-6 flex justify-center px-6">
           <Link
             href="/calendar"
-            className="rounded-xl border border-white/20 bg-transparent px-10 py-4 text-sm font-semibold uppercase tracking-widest text-white/90 transition hover:bg-white/10"
+            className="border border-white/20 bg-transparent px-10 py-4 text-sm font-semibold uppercase tracking-widest text-white/90 transition hover:bg-white/10"
           >
             Event Calendar
           </Link>
@@ -121,7 +122,7 @@ export default function Home() {
       </section>
 
       {/* ================= INSTAGRAM BAND ================= */}
-      <section id="instagram" className="px-6 py-20 font-[var(--font-inter)]" style={{ backgroundColor: BAND_BG }}>
+      <section id="instagram" className="px-6 py-20 font-[var(--font-inter)] bg-black/40">
         <div className="mx-auto max-w-7xl text-center">
           <h2 className="text-3xl font-semibold tracking-tight text-white">Follow us on Instagram</h2>
           <p className="mt-2 text-white/60">Tap any tile to view @ukiyo_virginia</p>
@@ -133,21 +134,12 @@ export default function Home() {
                 href={INSTAGRAM_URL}
                 target="_blank"
                 rel="noreferrer"
-                className="flex aspect-square items-center justify-center rounded-xl bg-white/10 text-xs uppercase tracking-widest text-white/40 hover:bg-white/20"
+                className="flex aspect-square items-center justify-center bg-white/10 text-xs uppercase tracking-widest text-white/40 hover:bg-white/20"
               >
                 Post
               </a>
             ))}
           </div>
-
-          <a
-            href={INSTAGRAM_URL}
-            target="_blank"
-            rel="noreferrer"
-            className="mx-auto mt-10 block w-full max-w-md rounded-2xl border border-white/15 bg-white/5 px-4 py-3 text-center text-sm font-semibold text-white/85 hover:bg-white/10"
-          >
-            Follow @ukiyo_virginia
-          </a>
         </div>
       </section>
 
@@ -161,7 +153,7 @@ export default function Home() {
 
           <div className="mx-auto max-w-3xl space-y-3">
             {faqs.map((item) => (
-              <details key={item.q} className="group rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur">
+              <details key={item.q} className="group border border-white/10 bg-white/5 p-5 backdrop-blur">
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-sm font-semibold text-white">
                   <span className="tracking-wide">{item.q}</span>
                   <span className="text-white/60 transition group-open:rotate-45">+</span>
@@ -175,3 +167,4 @@ export default function Home() {
     </main>
   );
 }
+
