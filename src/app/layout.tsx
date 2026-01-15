@@ -70,7 +70,7 @@ export default function RootLayout({
         </header>
 
         {/* ================= PAGE CONTENT ================= */}
-        <main className="min-h-screen bg-zinc-900">{children}</main>
+        <main className="min-h-screen bg-zinc-900 pt-18">{children}</main>
 
         {/* ================= FOOTER ================= */}
         <footer id="contact" className="border-t border-white/10 bg-black">
