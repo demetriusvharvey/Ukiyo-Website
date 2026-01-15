@@ -7,15 +7,15 @@ export default function Home() {
   const INSTAGRAM_URL = "https://www.instagram.com/ukiyo_virginia/";
 
   const events = [
-    { date: "FRI • JAN 24", title: "Ukiyo Fridays", desc: "Guest DJ • Doors 10PM", link: EVENTBRITE_LISTING },
-    { date: "SAT • JAN 25", title: "Saturday Nights", desc: "Live Performance • VIP Tables", link: EVENTBRITE_LISTING },
-    { date: "SUN • JAN 26", title: "Sunday Sessions", desc: "Late Night Vibes • Doors 9PM", link: EVENTBRITE_LISTING },
-    { date: "FRI • JAN 31", title: "Neon Fridays", desc: "Guest DJ • Doors 10PM", link: EVENTBRITE_LISTING },
-    { date: "SAT • FEB 01", title: "Saturday Nights", desc: "Live Performance • VIP Tables", link: EVENTBRITE_LISTING },
-    { date: "SUN • FEB 02", title: "Ukiyo Sundays", desc: "Industry + Friends • Doors 9PM", link: EVENTBRITE_LISTING },
-    { date: "FRI • FEB 07", title: "Ukiyo Fridays", desc: "Guest DJ • Doors 10PM", link: EVENTBRITE_LISTING },
-    { date: "SAT • FEB 08", title: "Saturday Nights", desc: "Live Performance • VIP Tables", link: EVENTBRITE_LISTING },
-    { date: "SUN • FEB 09", title: "Sunday Sessions", desc: "Late Night Vibes • Doors 9PM", link: EVENTBRITE_LISTING },
+    { date: "FRI • JAN 24", title: "Ukiyo Fridays", link: EVENTBRITE_LISTING },
+    { date: "SAT • JAN 25", title: "Saturday Nights", link: EVENTBRITE_LISTING },
+    { date: "SUN • JAN 26", title: "Sunday Sessions", link: EVENTBRITE_LISTING },
+    { date: "FRI • JAN 31", title: "Neon Fridays", link: EVENTBRITE_LISTING },
+    { date: "SAT • FEB 01", title: "Saturday Nights", link: EVENTBRITE_LISTING },
+    { date: "SUN • FEB 02", title: "Ukiyo Sundays", link: EVENTBRITE_LISTING },
+    { date: "FRI • FEB 07", title: "Ukiyo Fridays", link: EVENTBRITE_LISTING },
+    { date: "SAT • FEB 08", title: "Saturday Nights", link: EVENTBRITE_LISTING },
+    { date: "SUN • FEB 09", title: "Sunday Sessions", link: EVENTBRITE_LISTING },
   ];
 
   const faqs = [
@@ -42,10 +42,7 @@ export default function Home() {
       </section>
 
       {/* ================= EVENTS BAND ================= */}
-      <section
-        id="events"
-        className="pt-20 pb-16 font-[var(--font-inter)]"
-      >
+      <section id="events" className="pt-20 pb-16 font-[var(--font-inter)]">
         <div className="relative">
           <div className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-black/60 to-transparent opacity-80" />
           <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-black/60 to-transparent opacity-80" />
@@ -68,7 +65,8 @@ export default function Home() {
             ›
           </button>
 
-          <div className="px-6">
+          {/* Centered scroll strip wrapper */}
+          <div className="flex justify-center px-6">
             <div
               id="events-strip"
               onWheel={(e) => {
@@ -79,7 +77,7 @@ export default function Home() {
                 }
               }}
               className="flex gap-6 overflow-x-auto pb-6 snap-x snap-mandatory touch-pan-x
-                [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden max-w-[90vw]"
               style={{ overscrollBehaviorX: "contain" }}
             >
               {events.map((event, idx) => (
@@ -88,22 +86,20 @@ export default function Home() {
                   href={event.link}
                   target="_blank"
                   rel="noreferrer"
-                  className="snap-start group min-w-[320px] sm:min-w-[360px] md:min-w-[420px]
-                    border border-white/10 bg-white/5 p-6 backdrop-blur transition
-                    hover:border-white/30 hover:bg-white/10"
+                  className="snap-start group min-w-[320px] sm:min-w-[360px] md:min-w-[420px] transition hover:brightness-105"
                 >
-                  <div className="flex h-[320px] w-full items-center justify-center bg-white/10 text-xs uppercase tracking-widest text-white/40">
+                  {/* Event Flyer Placeholder */}
+                  <div className="h-[350px] w-full bg-white/10 flex items-center justify-center text-xs uppercase tracking-widest text-white/40">
                     Event Flyer
                   </div>
 
-                  <div className="mt-5">
-                    <div className="text-xs uppercase tracking-widest text-white/60">{event.date}</div>
-                    <div className="mt-2 text-2xl font-semibold tracking-tight text-white">{event.title}</div>
-                    <div className="mt-1 text-sm text-white/60">{event.desc}</div>
-
-                    <span className="mt-6 inline-block w-fit bg-gradient-to-r from-purple-600 to-blue-500 px-6 py-3 text-sm font-semibold shadow-xl shadow-purple-600/20 transition group-hover:brightness-110">
-                      Get Tickets
-                    </span>
+                  {/* Bottom section with solid black */}
+                  <div className="bg-black p-4 flex items-center gap-3">
+                    <div className="flex flex-col text-xs uppercase tracking-widest text-white/100 font-bold">
+                      <div>{event.date}</div>
+                    </div>
+                    <span className="text-white/30">|</span>
+                    <div className="text-lg font-bold tracking-tight text-white">{event.title}</div>
                   </div>
                 </a>
               ))}
@@ -167,5 +163,10 @@ export default function Home() {
     </main>
   );
 }
+
+
+
+
+
 
 
