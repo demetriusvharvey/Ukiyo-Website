@@ -70,21 +70,13 @@ export default function Home() {
         </p>
       </section>
 
-      {/* ================= EVENTS BAND helps match LIV (same as Instagram) ================= */}
+      {/* ================= EVENTS BAND ================= */}
       <section
         id="events"
         className="px-6 pb-16 font-[var(--font-inter)]"
         style={{ backgroundColor: BAND_BG }}
       >
         <div className="mx-auto max-w-7xl">
-          <div className="mb-10 text-center">
-  <h2 className="text-3xl font-semibold tracking-tight text-white">
-    Upcoming Events
-  </h2>
-  <p className="mt-2 text-white/60">Tickets powered by Eventbrite</p>
-</div>
-
-
           <div className="space-y-6">
             {events.map((event) => (
               <a
@@ -106,7 +98,9 @@ export default function Home() {
                     <div className="mt-2 text-2xl font-semibold tracking-tight text-white">
                       {event.title}
                     </div>
-                    <div className="mt-1 text-sm text-white/60">{event.desc}</div>
+                    <div className="mt-1 text-sm text-white/60">
+                      {event.desc}
+                    </div>
                   </div>
 
                   <span className="mt-6 inline-block w-fit rounded-xl bg-gradient-to-r from-purple-600 to-blue-500 px-6 py-3 text-sm font-semibold shadow-xl shadow-purple-600/20 transition group-hover:brightness-110">
@@ -117,7 +111,7 @@ export default function Home() {
             ))}
           </div>
 
-          {/* Event Calendar button (under events) */}
+          {/* Event Calendar button */}
           <div className="mt-12 flex justify-center">
             <Link
               href="/calendar"
@@ -129,7 +123,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= INSTAGRAM BAND (same exact color as Events) ================= */}
+      {/* ================= INSTAGRAM BAND ================= */}
       <section
         id="instagram"
         className="px-6 py-20 font-[var(--font-inter)]"
@@ -143,7 +137,6 @@ export default function Home() {
             Tap any tile to view @ukiyo_virginia
           </p>
 
-          {/* 4x2 grid (8 tiles) */}
           <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
             {Array.from({ length: 8 }).map((_, i) => (
               <a
@@ -169,7 +162,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= FAQ BAND (leave the same) ================= */}
+      {/* ================= FAQ BAND ================= */}
       <section
         id="faqs"
         className="border-t border-white/10 bg-[#05111A] px-6 py-20 font-[var(--font-inter)]"
@@ -179,7 +172,9 @@ export default function Home() {
             <h2 className="text-3xl font-semibold tracking-tight text-white">
               Frequently Asked Questions
             </h2>
-            <p className="mt-2 text-white/60">Quick answers before you pull up.</p>
+            <p className="mt-2 text-white/60">
+              Quick answers before you pull up.
+            </p>
           </div>
 
           <div className="mx-auto max-w-3xl space-y-3">
