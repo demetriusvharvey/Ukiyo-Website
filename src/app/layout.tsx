@@ -37,12 +37,12 @@ export default function RootLayout({
           <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
             <Link href="/" className="text-center transition hover:opacity-90">
               <div className="text-xl tracking-wide text-white">Ukiyo</div>
-              <div className="text-[10px] uppercase tracking-[0.35em] text-white/60">
+              <div className="text-[10px] uppercase tracking-[0.35em] text-white/90">
                 Virginia
               </div>
             </Link>
 
-            <nav className="hidden gap-8 text-xs uppercase tracking-widest text-white/70 md:flex">
+            <nav className="hidden gap-8 text-xs uppercase tracking-widest text-white/90 md:flex">
               <Link href="/calendar" className="transition hover:text-white">
                 Events
               </Link>
@@ -84,8 +84,8 @@ export default function RootLayout({
               </div>
 
               <div>
-                <div className="text-sm font-semibold text-white/80">Visit</div>
-                <div className="mt-3 space-y-2 text-sm text-white/60">
+                <div className="text-sm font-semibold text-white/90">Visit</div>
+                <div className="mt-3 space-y-2 text-sm text-white/90">
                   <div>Address: 4592 George Washington Hwy, Portsmouth, VA 23702</div>
                   <a
                     href="https://www.google.com/maps/place/Ukiyo+VA/@36.7993748,-76.3295071,17z/data=!3m1!4b1!4m6!3m5!1s0x89baa300754dc2e3:0xe0168d819f872700!8m2!3d36.7993705!4d-76.3269322!16s%2Fg%2F11vrfshwf0?entry=ttu&g_ep=EgoyMDI2MDExMS4wIKXMDSoKLDEwMDc5MjA2N0gBUAM%3D"
@@ -95,15 +95,15 @@ export default function RootLayout({
                   >
                     Directions →
                   </a>
-                  <div>Hours: Saturday & Sunday 10PM til 2PM</div>
+                  <div>Hours: Saturday & Sunday 10PM til 2AM</div>
                 </div>
               </div>
 
               <div>
-                <div className="text-sm font-semibold text-white/80">
+                <div className="text-sm font-semibold text-white">
                   Connect
                 </div>
-                <div className="mt-3 space-y-2 text-sm text-white/60">
+                <div className="mt-3 space-y-2 text-sm text-white">
                   <a
                     className="block hover:text-white"
                     href={INSTAGRAM_URL}
@@ -122,7 +122,7 @@ export default function RootLayout({
               </div>
             </div>
 
-            <div className="mt-10 text-xs text-white/40">
+            <div className="mt-10 text-xs text-white">
               © {new Date().getFullYear()} Ukiyo. All rights reserved.
             </div>
           </div>
