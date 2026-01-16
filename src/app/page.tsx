@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
@@ -29,7 +30,10 @@ export default function Home() {
       q: "Dress code",
       a: "Upscale nightlife attire recommended. No athletic wear, beachwear, or excessively casual outfits.",
     },
-    { q: "Age requirement", a: "21+ with valid government-issued ID required for entry." },
+    {
+      q: "Age requirement",
+      a: "21+ with valid government-issued ID required for entry.",
+    },
     {
       q: "VIP / Table reservations",
       a: "Reserve VIP seating and tables on the Reservations page. Availability varies by event.",
@@ -43,6 +47,8 @@ export default function Home() {
       a: "Doors typically open at 10PM. Event times may vary—check the event listing for details.",
     },
   ];
+
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
     <main className="min-h-screen bg-transparent text-white">
@@ -141,60 +147,63 @@ export default function Home() {
         className="border-t border-white/10 bg-[#05111A] px-6 py-20 font-[var(--font-inter)]"
       >
         <div className="mx-auto max-w-7xl">
-          <div className="mb-10 text-center">
-            <h2 className="text-3xl font-semibold tracking-tight">
-              Frequently Asked Questions
-            </h2>
-            <p className="mt-2 text-white/60">
-              Quick answers before you pull up.
-            </p>
-          </div>
+          <div className="grid gap-10 lg:grid-cols-[380px_1fr] lg:items-start">
+            {/* LEFT */}
+            <div className="lg:sticky lg:top-24">
+              <h2 className="text-3xl font-semibold tracking-tight">
+                Frequently Asked Questions
+              </h2>
+              <p className="mt-3 max-w-sm text-sm leading-relaxed text-white/60">
+                Quick answers before you pull up.
+              </p>
 
-          <div className="mx-auto max-w-3xl space-y-3">
-            {faqs.map((item) => (
-              <details
-                key={item.q}
-                className="group border border-white/10 bg-white/5 p-5 backdrop-blur"
-              >
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-sm font-semibold">
-                  <span className="tracking-wide">{item.q}</span>
-                  <span className="text-white/60 transition group-open:rotate-45">
-                    +
-                  </span>
-                </summary>
-                <div className="mt-3 text-sm text-white/60">
-                  {item.a}
-                </div>
-              </details>
-            ))}
+              <div className="mt-6">
+                <Link
+                  href="/faqs"
+                  className="inline-flex items-center justify-center border border-white/20 px-6 py-3 text-xs font-semibold uppercase tracking-widest transition hover:bg-white/10"
+                >
+                  All FAQs
+                </Link>
+              </div>
+            </div>
+
+            {/* RIGHT — custom accordion (no dots, + on right) */}
+            <div>
+              {faqs.map((item, idx) => {
+                const isOpen = openIndex === idx;
+
+                return (
+                  <div key={item.q} className="border-b border-white/10 py-5">
+                    <button
+                      type="button"
+                      onClick={() => setOpenIndex(isOpen ? null : idx)}
+                      className="flex w-full items-center gap-6 text-left text-sm font-semibold"
+                      aria-expanded={isOpen}
+                    >
+                      <span className="tracking-wide">{item.q}</span>
+
+                      <span
+                        className={`ml-auto flex h-8 w-8 items-center justify-center text-xl leading-none text-white/70 transition ${
+                          isOpen ? "rotate-45" : ""
+                        }`}
+                        aria-hidden="true"
+                      >
+                        +
+                      </span>
+                    </button>
+
+                    {isOpen && (
+                      <div className="mt-3 max-w-2xl text-sm leading-relaxed text-white/60">
+                        {item.a}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </section>
     </main>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
