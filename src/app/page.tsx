@@ -81,12 +81,10 @@ export default function Home() {
                   rel="noreferrer"
                   className="block transition hover:brightness-105"
                 >
-                  {/* Flyer */}
                   <div className="h-[360px] w-full bg-white/10 flex items-center justify-center text-xs uppercase tracking-widest text-white/40">
                     Event Flyer
                   </div>
 
-                  {/* Date + Title */}
                   <div className="bg-black p-4 flex items-center gap-3">
                     <div className="text-xs font-bold uppercase tracking-widest">
                       {event.date}
@@ -118,9 +116,25 @@ export default function Home() {
         className="px-6 py-20 font-[var(--font-inter)] bg-[#0A0F2C]"
       >
         <div className="mx-auto max-w-7xl text-center">
-          <h2 className="text-3xl font-semibold tracking-tight">
-            Follow us on Instagram
-          </h2>
+          <a
+            href={INSTAGRAM_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-3 text-3xl font-semibold tracking-tight hover:opacity-80 transition"
+          >
+            {/* Instagram Icon */}
+            <svg
+              className="h-7 w-7"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path d="M12 2.2c3.2 0 3.584.012 4.85.07 1.366.062 2.633.35 3.608 1.325.975.975 1.263 2.242 1.325 3.608.058 1.266.07 1.65.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.35 2.633-1.325 3.608-.975.975-2.242 1.263-3.608 1.325-1.266.058-1.65.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.35-3.608-1.325-.975-.975-1.263-2.242-1.325-3.608C2.212 15.584 2.2 15.2 2.2 12s.012-3.584.07-4.85c.062-1.366.35-2.633 1.325-3.608C4.57 2.62 5.837 2.332 7.203 2.27 8.469 2.212 8.853 2.2 12 2.2Zm0 3.3a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13Zm0 10.7a4.2 4.2 0 1 1 0-8.4 4.2 4.2 0 0 1 0 8.4Zm6.75-11.05a1.55 1.55 0 1 1-3.1 0 1.55 1.55 0 0 1 3.1 0Z" />
+            </svg>
+
+            <span>Follow us on Instagram</span>
+          </a>
+
           <p className="mt-2 text-white/60">
             Tap any tile to view @ukiyo_virginia
           </p>
@@ -148,7 +162,6 @@ export default function Home() {
       >
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-10 lg:grid-cols-[380px_1fr] lg:items-start">
-            {/* LEFT */}
             <div className="lg:sticky lg:top-24">
               <h2 className="text-3xl font-semibold tracking-tight">
                 Frequently Asked Questions
@@ -167,7 +180,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* RIGHT — custom accordion (no dots, + on right) */}
             <div>
               {faqs.map((item, idx) => {
                 const isOpen = openIndex === idx;
@@ -178,15 +190,12 @@ export default function Home() {
                       type="button"
                       onClick={() => setOpenIndex(isOpen ? null : idx)}
                       className="flex w-full items-center gap-6 text-left text-sm font-semibold"
-                      aria-expanded={isOpen}
                     >
                       <span className="tracking-wide">{item.q}</span>
-
                       <span
-                        className={`ml-auto flex h-8 w-8 items-center justify-center text-xl leading-none text-white/70 transition ${
+                        className={`ml-auto flex h-8 w-8 items-center justify-center text-xl text-white/70 transition ${
                           isOpen ? "rotate-45" : ""
                         }`}
-                        aria-hidden="true"
                       >
                         +
                       </span>
@@ -207,3 +216,4 @@ export default function Home() {
     </main>
   );
 }
+
