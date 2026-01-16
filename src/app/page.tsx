@@ -53,13 +53,13 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-transparent text-white">
       {/* ================= HERO ================= */}
-      <section className="flex min-h-[70vh] flex-col items-center justify-center px-6 text-center">
-        <h1 className="text-6xl font-semibold tracking-tight sm:text-7xl">
-          Ukiyo
-        </h1>
-        <p className="mt-3 text-sm uppercase tracking-[0.4em] text-white/60">
-          Virginia
-        </p>
+      <section className="relative min-h-[100vh] w-full overflow-hidden">
+        <img
+          src="/moneyshot.png"
+          alt="Ukiyo"
+          className="absolute inset-0 h-full w-full object-cover object-top"
+        />
+        <div className="absolute inset-0 bg-black/25" />
       </section>
 
       {/* ================= EVENTS BAND ================= */}
@@ -122,16 +122,6 @@ export default function Home() {
             rel="noreferrer"
             className="inline-flex items-center gap-3 text-3xl font-semibold tracking-tight hover:opacity-80 transition"
           >
-            {/* Instagram Icon */}
-            <svg
-              className="h-7 w-7"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              aria-hidden="true"
-            >
-              <path d="M12 2.2c3.2 0 3.584.012 4.85.07 1.366.062 2.633.35 3.608 1.325.975.975 1.263 2.242 1.325 3.608.058 1.266.07 1.65.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.35 2.633-1.325 3.608-.975.975-2.242 1.263-3.608 1.325-1.266.058-1.65.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.35-3.608-1.325-.975-.975-1.263-2.242-1.325-3.608C2.212 15.584 2.2 15.2 2.2 12s.012-3.584.07-4.85c.062-1.366.35-2.633 1.325-3.608C4.57 2.62 5.837 2.332 7.203 2.27 8.469 2.212 8.853 2.2 12 2.2Zm0 3.3a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13Zm0 10.7a4.2 4.2 0 1 1 0-8.4 4.2 4.2 0 0 1 0 8.4Zm6.75-11.05a1.55 1.55 0 1 1-3.1 0 1.55 1.55 0 0 1 3.1 0Z" />
-            </svg>
-
             <span>Follow us on Instagram</span>
           </a>
 
@@ -190,12 +180,14 @@ export default function Home() {
                       type="button"
                       onClick={() => setOpenIndex(isOpen ? null : idx)}
                       className="flex w-full items-center gap-6 text-left text-sm font-semibold"
+                      aria-expanded={isOpen}
                     >
                       <span className="tracking-wide">{item.q}</span>
                       <span
                         className={`ml-auto flex h-8 w-8 items-center justify-center text-xl text-white/70 transition ${
                           isOpen ? "rotate-45" : ""
                         }`}
+                        aria-hidden="true"
                       >
                         +
                       </span>
@@ -216,4 +208,3 @@ export default function Home() {
     </main>
   );
 }
-
