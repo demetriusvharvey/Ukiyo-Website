@@ -137,8 +137,14 @@ export default function Home() {
       {/* ================= INSTAGRAM BAND (back) ================= */}
       <section
         id="instagram"
-        className="px-6 py-20 font-[var(--font-inter)] bg-[#0A0F2C]"
+        className="px-6 py-20 font-[var(--font-inter)] bg-[#12051F]/95"
       >
+
+
+
+
+
+
         <div className="mx-auto max-w-7xl text-center">
           <a
             href={INSTAGRAM_URL}
@@ -216,9 +222,8 @@ export default function Home() {
                     >
                       <span className="tracking-wide">{item.q}</span>
                       <span
-                        className={`ml-auto flex h-8 w-8 items-center justify-center text-xl text-white/70 transition ${
-                          isOpen ? "rotate-45" : ""
-                        }`}
+                        className={`ml-auto flex h-8 w-8 items-center justify-center text-xl text-white/70 transition ${isOpen ? "rotate-45" : ""
+                          }`}
                         aria-hidden="true"
                       >
                         +
