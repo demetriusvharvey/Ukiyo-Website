@@ -27,6 +27,12 @@ export default function RootLayout({
 }) {
   const INSTAGRAM_URL = "https://www.instagram.com/ukiyo_virginia/";
 
+  const GOOGLE_MAPS_URL =
+    "https://www.google.com/maps/dir/?api=1&destination=4592+George+Washington+Hwy,+Portsmouth,+VA";
+
+  const APPLE_MAPS_URL =
+    "https://maps.apple.com/directions?destination=Ukiyo+Va%2C+4592+George+Washington+Hwy+Portsmouth%2C+VA++23702+United+States&destination-place-id=IC1D4D0DD38EE3658&mode=driving";
+
   return (
     <html lang="en">
       <body
@@ -98,14 +104,27 @@ export default function RootLayout({
                     <div>
                       Hours: Saturday & Sunday 10PM til 2AM
                     </div>
-                    <a
-                      href="https://www.google.com/maps/place/Ukiyo+VA"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="hover:text-white"
-                    >
-                      Directions →
-                    </a>
+
+                    <div className="flex items-center gap-2">
+                      <span>Directions →</span>
+                      <a
+                        href={GOOGLE_MAPS_URL}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="hover:text-white underline"
+                      >
+                        Google Maps
+                      </a>
+                      <span className="text-white/40">|</span>
+                      <a
+                        href={APPLE_MAPS_URL}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="hover:text-white underline"
+                      >
+                        Apple Maps
+                      </a>
+                    </div>
                   </div>
                 </div>
 
@@ -147,6 +166,12 @@ export default function RootLayout({
     </html>
   );
 }
+
+
+
+
+
+
 
 
 
