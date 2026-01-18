@@ -7,36 +7,36 @@ export default function MenuPage() {
 
   return (
     <main className="w-full text-white">
-      {/* ================= HERO (CENTERED LIKE FAQS) ================= */}
-      <section className="relative w-full overflow-hidden h-[360px] md:h-[420px]">
+      {/* ================= HERO (TIGHT, CUT FROM BOTTOM) ================= */}
+      <section className="relative w-full overflow-hidden h-[260px] md:h-[300px]">
         <Image
           src={HERO_BG}
           alt="Ukiyo Menu"
           fill
           priority
-          className="object-cover object-[50%_25%]"
+          className="object-cover object-[50%_15%]"
         />
 
         {/* overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#070B10]/90 via-[#0A1220]/75 to-transparent" />
 
-        {/* centered content */}
+        {/* centered hero content */}
         <div className="relative mx-auto max-w-5xl h-full px-6 flex flex-col items-center justify-center text-center">
           <div className="text-xs font-semibold uppercase tracking-[0.35em] text-white/70">
             Menu
           </div>
 
-          <h1 className="mt-4 text-2xl font-semibold tracking-tight md:text-4xl">
+          <h1 className="mt-3 text-2xl font-semibold tracking-tight md:text-4xl">
             Drinks, bottles, and specialty offerings
           </h1>
 
-          <p className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-white/70 md:text-base">
+          <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-white/70 md:text-base">
             Explore our drinks, bottles, and specialty offerings.
           </p>
         </div>
       </section>
 
-      {/* ================= MENU CONTENT (CENTERED GLASS, WATER SHOWS) ================= */}
+      {/* ================= MENU CONTENT (CENTERED, WATER BACKGROUND) ================= */}
       <section className="w-full">
         <div className="relative mx-auto max-w-6xl px-6 py-16 md:py-20">
           <div className="mx-auto max-w-3xl rounded border border-white/15 bg-black/35 backdrop-blur p-10 text-center">

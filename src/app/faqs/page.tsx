@@ -66,28 +66,28 @@ export default function FAQsPage() {
 
   return (
     <main className="w-full text-white">
-      {/* ================= HERO (VENUE-SIZED) ================= */}
-      <section className="relative w-full overflow-hidden h-[360px] md:h-[420px]">
+      {/* ================= HERO (TIGHT, CUT FROM BOTTOM) ================= */}
+      <section className="relative w-full overflow-hidden h-[260px] md:h-[300px]">
         <Image
           src={HERO_BG}
           alt="Ukiyo FAQs"
           fill
           priority
-          className="object-cover object-[50%_25%]"
+          className="object-cover object-[50%_15%]"
         />
 
         <div className="absolute inset-0 bg-gradient-to-b from-[#070B10]/90 via-[#0A1220]/75 to-transparent" />
 
-        <div className="relative mx-auto max-w-5xl px-6 h-full flex flex-col items-center justify-center text-center">
+        <div className="relative mx-auto max-w-5xl h-full px-6 flex flex-col items-center justify-center text-center">
           <h1 className="text-xs font-semibold uppercase tracking-[0.35em] text-white/70">
             FAQs
           </h1>
 
-          <h2 className="mt-4 text-2xl font-semibold tracking-tight md:text-4xl">
+          <h2 className="mt-3 text-2xl font-semibold tracking-tight md:text-4xl">
             Everything you need to know
           </h2>
 
-          <p className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-white/70 md:text-base">
+          <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-white/70 md:text-base">
             Dress code, entry, hours, tickets, and reservations.
           </p>
         </div>
@@ -144,7 +144,7 @@ export default function FAQsPage() {
         </div>
       </section>
 
-      {/* ================= MAP SECTION (STAYS THE SAME) ================= */}
+      {/* ================= MAP SECTION ================= */}
       <section className="relative w-full bg-[#141414]">
         <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent" />
         <div className="relative mx-auto max-w-7xl px-6 py-12">
