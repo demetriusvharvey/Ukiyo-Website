@@ -18,11 +18,11 @@ export default function ReservationsPage() {
 
         <div className="relative mx-auto max-w-5xl px-6 py-20 md:py-24 text-center text-white">
           <div className="text-xs font-semibold uppercase tracking-[0.35em] text-white/70">
-            Reserve
+            
           </div>
 
           <h1 className="mt-4 text-2xl font-semibold tracking-tight md:text-4xl">
-            Reserve your VIP table
+            Table Reservations
           </h1>
 
           <p className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-white/70 md:text-base">
@@ -37,7 +37,7 @@ export default function ReservationsPage() {
         <div className="mx-auto max-w-7xl px-6 py-20 text-white">
           <div className="mx-auto max-w-3xl">
             <div className="text-xs font-semibold uppercase tracking-[0.35em] text-white/70">
-              Table Reservations
+              
             </div>
 
             <h1 className="mt-4 text-4xl font-semibold tracking-tight">
