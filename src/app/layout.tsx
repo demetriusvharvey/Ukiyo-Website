@@ -26,6 +26,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const INSTAGRAM_URL = "https://www.instagram.com/ukiyo_virginia/";
+  const FACEBOOK_URL = "https://www.facebook.com/UkiyoVa/";
 
   const GOOGLE_MAPS_URL =
     "https://www.google.com/maps/dir/?api=1&destination=4592+George+Washington+Hwy,+Portsmouth,+VA";
@@ -59,9 +60,7 @@ export default function RootLayout({
         <header className="fixed left-0 right-0 top-0 z-50 border-b border-white/10 bg-black/80 backdrop-blur">
           <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
             <Link href="/" className="text-left">
-              <div className="text-3xl font-semibold tracking-wide">
-                Ukiyo
-              </div>
+              <div className="text-3xl font-semibold tracking-wide">Ukiyo</div>
               <div className="mt-1 text-[12px] uppercase tracking-[0.35em] text-white/80">
                 Virginia
               </div>
@@ -84,7 +83,6 @@ export default function RootLayout({
 
         {/* ================= FOOTER ================= */}
         <footer className="border-t border-white/10 bg-black/90">
-          {/* ⬇️ Center wrapper */}
           <div className="flex justify-center">
             <div className="relative w-full max-w-7xl px-6 py-16">
               <div className="grid gap-10 md:grid-cols-3">
@@ -101,9 +99,7 @@ export default function RootLayout({
                     <div>
                       Address: 4592 George Washington Hwy, Portsmouth, VA
                     </div>
-                    <div>
-                      Hours: Saturday & Sunday 10PM til 2AM
-                    </div>
+                    <div>Hours: Saturday & Sunday 10PM til 2AM</div>
 
                     <div className="flex items-center gap-2">
                       <span>Directions →</span>
@@ -135,14 +131,23 @@ export default function RootLayout({
                       href={INSTAGRAM_URL}
                       target="_blank"
                       rel="noreferrer"
+                      className="block hover:underline"
                     >
                       Instagram
+                    </a>
+                    <a
+                      href={FACEBOOK_URL}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="block hover:underline"
+                    >
+                      Facebook
                     </a>
                   </div>
                 </div>
               </div>
 
-              {/* Back to Top — now centered relative to footer container */}
+              {/* Back to Top */}
               <div className="absolute right-6 bottom-12 flex flex-col items-center">
                 <span className="mb-1 text-xs uppercase tracking-wide text-white/70">
                   Back to Top
@@ -166,6 +171,8 @@ export default function RootLayout({
     </html>
   );
 }
+
+
 
 
 

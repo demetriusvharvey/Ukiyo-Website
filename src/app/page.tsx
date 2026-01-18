@@ -25,37 +25,13 @@ export default function Home() {
     { date: "SAT • FEB 21", title: "Event Name", link: EVENTBRITE_LISTING },
   ];
 
-  const faqs = [
-    {
-      q: "Dress code",
-      a: "Upscale nightlife attire recommended. No athletic wear, beachwear, or excessively casual outfits.",
-    },
-    {
-      q: "Age requirement",
-      a: "21+ with valid government-issued ID required for entry.",
-    },
-    {
-      q: "VIP / Table reservations",
-      a: "Reserve VIP seating and tables on the Reservations page. Availability varies by event.",
-    },
-    {
-      q: "Parking",
-      a: "Street and nearby lot parking available. Please plan ahead for peak nights.",
-    },
-    {
-      q: "Entry time",
-      a: "Doors typically open at 10PM. Event times may vary—check the event listing for details.",
-    },
-  ];
-
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
     <main className="min-h-screen bg-transparent text-white">
-      {/* ================= HERO (FULL WIDTH, 3 IMAGES) ================= */}
+      {/* ================= HERO ================= */}
       <section className="w-screen overflow-hidden bg-black">
         <div className="grid h-[65vh] grid-cols-3">
-          {/* LEFT */}
           <div className="relative">
             <img
               src="/moneyshot2.png"
@@ -63,8 +39,6 @@ export default function Home() {
               className="absolute inset-0 h-full w-full object-cover"
             />
           </div>
-
-          {/* MIDDLE */}
           <div className="relative">
             <img
               src="/moneyshot3.png"
@@ -72,8 +46,6 @@ export default function Home() {
               className="absolute inset-0 h-full w-full object-cover"
             />
           </div>
-
-          {/* RIGHT */}
           <div className="relative">
             <img
               src="/moneyshot.png"
@@ -84,7 +56,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= EVENTS BAND (keep transparent so water shows) ================= */}
+      {/* ================= EVENTS BAND ================= */}
       <section id="events" className="pt-20 pb-16 font-[var(--font-inter)]">
         <div className="relative mx-auto max-w-7xl px-6">
           <Swiper
@@ -101,14 +73,12 @@ export default function Home() {
                   href={event.link}
                   target="_blank"
                   rel="noreferrer"
-                  className="block transition hover:brightness-105"
+                  className="group block transition hover:brightness-105"
                 >
-                  {/* Flyer */}
                   <div className="h-[360px] w-full bg-white/10 flex items-center justify-center text-xs uppercase tracking-widest text-white/40">
                     Event Flyer
                   </div>
 
-                  {/* Date + Title */}
                   <div className="bg-black p-4 flex items-center gap-3">
                     <div className="text-xs font-bold uppercase tracking-widest">
                       {event.date}
@@ -118,33 +88,33 @@ export default function Home() {
                       {event.title}
                     </div>
                   </div>
+
+                  {/* wipe glow */}
+                  <div className="relative h-[2px] w-full overflow-hidden bg-purple-500/70 shadow-[0_0_18px_rgba(168,85,247,0.95)]">
+                    <span className="absolute inset-0 origin-left scale-x-0 bg-black transition-transform duration-500 ease-out group-hover:scale-x-100" />
+                  </div>
                 </a>
               </SwiperSlide>
             ))}
           </Swiper>
         </div>
 
-        <div className="mt-6 flex justify-center px-6">
+        {/* EVENT CALENDAR BUTTON */}
+        <div className="mt-8 flex justify-center px-6">
           <Link
             href="/calendar"
-            className="border border-white/20 px-10 py-4 text-sm font-semibold uppercase tracking-widest transition hover:bg-white/10"
+            className="relative bg-black px-12 py-4 text-sm font-semibold uppercase tracking-widest border border-purple-500 text-white transition-all duration-300 shadow-[0_0_18px_rgba(168,85,247,0.7)] hover:bg-purple-600 hover:shadow-[0_0_32px_rgba(168,85,247,1)]"
           >
             Event Calendar
           </Link>
         </div>
       </section>
 
-      {/* ================= INSTAGRAM BAND (back) ================= */}
+      {/* ================= INSTAGRAM (RESTORED) ================= */}
       <section
         id="instagram"
         className="px-6 py-20 font-[var(--font-inter)] bg-[#12051F]/95"
       >
-
-
-
-
-
-
         <div className="mx-auto max-w-7xl text-center">
           <a
             href={INSTAGRAM_URL}
@@ -165,8 +135,11 @@ export default function Home() {
             <span>Follow us on Instagram</span>
           </a>
 
-          <p className="mt-2 text-white/60">Tap any tile to view @ukiyo_virginia</p>
+          <p className="mt-2 text-white/60">
+            Tap any tile to view @ukiyo_virginia
+          </p>
 
+          {/* Instagram Post Placeholders */}
           <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
             {Array.from({ length: 8 }).map((_, i) => (
               <a
@@ -174,7 +147,7 @@ export default function Home() {
                 href={INSTAGRAM_URL}
                 target="_blank"
                 rel="noreferrer"
-                className="flex aspect-square items-center justify-center bg-white/10 text-xs uppercase tracking-widest text-white/40 hover:bg-white/20"
+                className="flex aspect-square items-center justify-center bg-white/10 text-xs uppercase tracking-widest text-white/40 hover:bg-white/20 transition"
               >
                 Post
               </a>
@@ -182,66 +155,10 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* ================= FAQ BAND ================= */}
-      <section
-        id="faqs"
-        className="border-t border-white/10 bg-[#05111A] px-6 py-20 font-[var(--font-inter)]"
-      >
-        <div className="mx-auto max-w-7xl">
-          <div className="grid gap-10 lg:grid-cols-[380px_1fr] lg:items-start">
-            <div className="lg:sticky lg:top-24">
-              <h2 className="text-3xl font-semibold tracking-tight">
-                Frequently Asked Questions
-              </h2>
-              <p className="mt-3 max-w-sm text-sm leading-relaxed text-white/60">
-                Quick answers before you pull up.
-              </p>
-
-              <div className="mt-6">
-                <Link
-                  href="/faqs"
-                  className="inline-flex items-center justify-center border border-white/20 px-6 py-3 text-xs font-semibold uppercase tracking-widest transition hover:bg-white/10"
-                >
-                  All FAQs
-                </Link>
-              </div>
-            </div>
-
-            <div>
-              {faqs.map((item, idx) => {
-                const isOpen = openIndex === idx;
-
-                return (
-                  <div key={item.q} className="border-b border-white/10 py-5">
-                    <button
-                      type="button"
-                      onClick={() => setOpenIndex(isOpen ? null : idx)}
-                      className="flex w-full items-center gap-6 text-left text-sm font-semibold"
-                      aria-expanded={isOpen}
-                    >
-                      <span className="tracking-wide">{item.q}</span>
-                      <span
-                        className={`ml-auto flex h-8 w-8 items-center justify-center text-xl text-white/70 transition ${isOpen ? "rotate-45" : ""
-                          }`}
-                        aria-hidden="true"
-                      >
-                        +
-                      </span>
-                    </button>
-
-                    {isOpen && (
-                      <div className="mt-3 max-w-2xl text-sm leading-relaxed text-white/60">
-                        {item.a}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </section>
     </main>
   );
 }
+
+
+
+

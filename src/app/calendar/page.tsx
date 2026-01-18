@@ -84,44 +84,58 @@ export default function CalendarPage() {
                   >
                     {/* SATURDAY */}
                     {week.saturday && (
-                      <div className="border border-purple-500/40 bg-white/5 transition hover:bg-white/10 w-full md:w-64">
-                        <div className="aspect-square bg-white/10 flex items-center justify-center text-sm uppercase tracking-widest text-white/40">
-                          Event Flyer
+                      <div className="group transition hover:brightness-105 w-full md:w-64">
+                        <div className="border border-purple-500/40 bg-white/5 transition hover:bg-white/10 w-full">
+                          <div className="aspect-square bg-white/10 flex items-center justify-center text-sm uppercase tracking-widest text-white/40">
+                            Event Flyer
+                          </div>
+
+                          <div className="p-4 text-center">
+                            <div className="text-2xl font-bold uppercase tracking-widest text-purple-400">
+                              {week.saturday.toLocaleDateString("en-US", {
+                                weekday: "short",
+                                month: "short",
+                                day: "numeric",
+                              })}
+                            </div>
+                            <div className="mt-2 text-sm text-white/70">
+                              Ukiyo Saturdays • 10PM
+                            </div>
+                          </div>
                         </div>
 
-                        <div className="p-4 text-center">
-                          <div className="text-2xl font-bold uppercase tracking-widest text-purple-400">
-                            {week.saturday.toLocaleDateString("en-US", {
-                              weekday: "short",
-                              month: "short",
-                              day: "numeric",
-                            })}
-                          </div>
-                          <div className="mt-2 text-sm text-white/70">
-                            Ukiyo Saturdays • 10PM
-                          </div>
+                        {/* Glowing purple line under event (wipes out left -> right on hover) */}
+                        <div className="relative h-[2px] w-full overflow-hidden bg-purple-500/70 shadow-[0_0_18px_rgba(168,85,247,0.95)]">
+                          <span className="absolute inset-0 origin-left scale-x-0 bg-[#070B10] transition-transform duration-500 ease-out group-hover:scale-x-100" />
                         </div>
                       </div>
                     )}
 
                     {/* SUNDAY */}
                     {week.sunday && (
-                      <div className="border border-blue-500/30 bg-white/5 transition hover:bg-white/10 w-full md:w-64">
-                        <div className="aspect-square bg-white/10 flex items-center justify-center text-sm uppercase tracking-widest text-white/40">
-                          Event Flyer
+                      <div className="group transition hover:brightness-105 w-full md:w-64">
+                        <div className="border border-blue-500/30 bg-white/5 transition hover:bg-white/10 w-full">
+                          <div className="aspect-square bg-white/10 flex items-center justify-center text-sm uppercase tracking-widest text-white/40">
+                            Event Flyer
+                          </div>
+
+                          <div className="p-4 text-center">
+                            <div className="text-2xl font-bold uppercase tracking-widest text-blue-400">
+                              {week.sunday.toLocaleDateString("en-US", {
+                                weekday: "short",
+                                month: "short",
+                                day: "numeric",
+                              })}
+                            </div>
+                            <div className="mt-2 text-sm text-white/70">
+                              Sunday Vibes • 9PM
+                            </div>
+                          </div>
                         </div>
 
-                        <div className="p-4 text-center">
-                          <div className="text-2xl font-bold uppercase tracking-widest text-blue-400">
-                            {week.sunday.toLocaleDateString("en-US", {
-                              weekday: "short",
-                              month: "short",
-                              day: "numeric",
-                            })}
-                          </div>
-                          <div className="mt-2 text-sm text-white/70">
-                            Sunday Vibes • 9PM
-                          </div>
+                        {/* Same wipe animation */}
+                        <div className="relative h-[2px] w-full overflow-hidden bg-purple-500/70 shadow-[0_0_18px_rgba(168,85,247,0.95)]">
+                          <span className="absolute inset-0 origin-left scale-x-0 bg-[#070B10] transition-transform duration-500 ease-out group-hover:scale-x-100" />
                         </div>
                       </div>
                     )}
@@ -135,3 +149,6 @@ export default function CalendarPage() {
     </div>
   );
 }
+
+
+
