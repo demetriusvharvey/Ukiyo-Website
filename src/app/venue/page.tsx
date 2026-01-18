@@ -47,13 +47,13 @@ export default function VenuePage() {
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <Link
-              href="/reserve"
+              href="/reservations"
               className="inline-flex items-center justify-center border border-white/25 px-6 py-3 text-xs font-semibold uppercase tracking-[0.25em] transition hover:bg-white/10"
             >
               Reserve
             </Link>
             <Link
-              href="/events"
+              href="/calendar"
               className="inline-flex items-center justify-center border border-white/25 px-6 py-3 text-xs font-semibold uppercase tracking-[0.25em] transition hover:bg-white/10"
             >
               View events
