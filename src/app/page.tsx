@@ -1,16 +1,14 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
+import { Navigation, Autoplay } from "swiper/modules";
 
 import "swiper/css";
 import "swiper/css/navigation";
 
 export default function Home() {
-  const EVENTBRITE_LISTING =
-    "https://www.eventbrite.com/d/va--portsmouth/ukiyo/";
+  const EVENTBRITE_LISTING = "https://www.eventbrite.com/d/va--portsmouth/ukiyo/";
   const INSTAGRAM_URL = "https://www.instagram.com/ukiyo_virginia/";
 
   const events = [
@@ -25,46 +23,101 @@ export default function Home() {
     { date: "SAT • FEB 21", title: "Event Name", link: EVENTBRITE_LISTING },
   ];
 
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-
   return (
-    <main className="min-h-screen bg-transparent text-white">
+    <main className="min-h-screen bg-transparent text-white overflow-x-hidden">
       {/* ================= HERO ================= */}
-      <section className="w-screen overflow-hidden bg-black">
-        <div className="grid h-[65vh] grid-cols-3">
-          <div className="relative">
+      <section className="w-full overflow-hidden bg-black">
+        {/* Mobile: carousel (starts on far-right image) */}
+        <div className="sm:hidden">
+          <Swiper
+            modules={[Autoplay]}
+            slidesPerView={1}
+            spaceBetween={0}
+            loop
+            initialSlide={2} // far-right image first
+            autoplay={{
+              delay: 3500,
+              disableOnInteraction: false,
+              pauseOnMouseEnter: true,
+            }}
+            className="w-full"
+          >
+            <SwiperSlide>
+              <div className="relative aspect-[16/10]">
+                <img
+                  src="/moneyshot2.png"
+                  alt="Ukiyo hero left"
+                  className="absolute inset-0 h-full w-full object-cover object-center"
+                />
+              </div>
+            </SwiperSlide>
+
+            <SwiperSlide>
+              <div className="relative aspect-[16/10]">
+                <img
+                  src="/moneyshot3.png"
+                  alt="Ukiyo hero middle"
+                  className="absolute inset-0 h-full w-full object-cover object-center"
+                />
+              </div>
+            </SwiperSlide>
+
+            <SwiperSlide>
+              <div className="relative aspect-[16/10]">
+                <img
+                  src="/moneyshot.png"
+                  alt="Ukiyo hero right"
+                  className="absolute inset-0 h-full w-full object-cover object-center"
+                />
+              </div>
+            </SwiperSlide>
+          </Swiper>
+        </div>
+
+        {/* Desktop: 3 columns (unchanged) */}
+        <div className="hidden sm:grid grid-cols-3">
+          <div className="relative sm:aspect-auto sm:h-[65vh]">
             <img
               src="/moneyshot2.png"
               alt="Ukiyo hero left"
-              className="absolute inset-0 h-full w-full object-cover"
+              className="absolute inset-0 h-full w-full object-cover object-center"
             />
           </div>
-          <div className="relative">
+
+          <div className="relative sm:aspect-auto sm:h-[65vh]">
             <img
               src="/moneyshot3.png"
               alt="Ukiyo hero middle"
-              className="absolute inset-0 h-full w-full object-cover"
+              className="absolute inset-0 h-full w-full object-cover object-center"
             />
           </div>
-          <div className="relative">
+
+          <div className="relative sm:aspect-auto sm:h-[65vh]">
             <img
               src="/moneyshot.png"
               alt="Ukiyo hero right"
-              className="absolute inset-0 h-full w-full object-cover"
+              className="absolute inset-0 h-full w-full object-cover object-center"
             />
           </div>
         </div>
       </section>
 
       {/* ================= EVENTS BAND ================= */}
-      <section id="events" className="pt-20 pb-16 font-[var(--font-inter)]">
-        <div className="relative mx-auto max-w-7xl px-6">
+      <section
+        id="events"
+        className="pt-12 sm:pt-20 pb-14 sm:pb-16 font-[var(--font-inter)]"
+      >
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
           <Swiper
             modules={[Navigation]}
             navigation
-            slidesPerView={2}
-            slidesPerGroup={2}
-            spaceBetween={24}
+            spaceBetween={16}
+            slidesPerView={1}
+            slidesPerGroup={1}
+            breakpoints={{
+              640: { slidesPerView: 2, slidesPerGroup: 2, spaceBetween: 20 },
+              1024: { slidesPerView: 2, slidesPerGroup: 2, spaceBetween: 24 },
+            }}
             className="overflow-hidden"
           >
             {events.map((event, idx) => (
@@ -75,7 +128,8 @@ export default function Home() {
                   rel="noreferrer"
                   className="group block transition hover:brightness-105"
                 >
-                  <div className="h-[360px] w-full bg-white/10 flex items-center justify-center text-xs uppercase tracking-widest text-white/40">
+                  {/* Flyer: responsive height so it’s not huge on mobile */}
+                  <div className="h-[240px] sm:h-[320px] md:h-[360px] w-full bg-white/10 flex items-center justify-center text-xs uppercase tracking-widest text-white/40">
                     Event Flyer
                   </div>
 
@@ -84,7 +138,7 @@ export default function Home() {
                       {event.date}
                     </div>
                     <span className="text-white/30">|</span>
-                    <div className="text-lg font-bold tracking-tight">
+                    <div className="text-base sm:text-lg font-bold tracking-tight">
                       {event.title}
                     </div>
                   </div>
@@ -100,31 +154,30 @@ export default function Home() {
         </div>
 
         {/* EVENT CALENDAR BUTTON */}
-        <div className="mt-8 flex justify-center px-6">
+        <div className="mt-8 flex justify-center px-4 sm:px-6">
           <Link
             href="/calendar"
-            className="relative bg-black px-12 py-4 text-sm font-semibold uppercase tracking-widest border border-purple-500 text-white transition-all duration-300 shadow-[0_0_18px_rgba(168,85,247,0.7)] hover:bg-purple-600 hover:shadow-[0_0_32px_rgba(168,85,247,1)]"
+            className="relative bg-black px-10 sm:px-12 py-4 text-sm font-semibold uppercase tracking-widest border border-purple-500 text-white transition-all duration-300 shadow-[0_0_18px_rgba(168,85,247,0.7)] hover:bg-purple-600 hover:shadow-[0_0_32px_rgba(168,85,247,1)]"
           >
             Event Calendar
           </Link>
         </div>
       </section>
 
-      {/* ================= INSTAGRAM (RESTORED) ================= */}
+      {/* ================= INSTAGRAM ================= */}
       <section
         id="instagram"
-        className="px-6 py-20 font-[var(--font-inter)] bg-[#12051F]/95"
+        className="px-4 sm:px-6 py-16 sm:py-20 font-[var(--font-inter)] bg-[#12051F]/95"
       >
         <div className="mx-auto max-w-7xl text-center">
           <a
             href={INSTAGRAM_URL}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-3 text-3xl font-semibold tracking-tight hover:opacity-80 transition"
+            className="inline-flex items-center gap-3 text-2xl sm:text-3xl font-semibold tracking-tight hover:opacity-80 transition"
           >
-            {/* Instagram Icon */}
             <svg
-              className="h-7 w-7"
+              className="h-6 w-6 sm:h-7 sm:w-7"
               viewBox="0 0 24 24"
               fill="currentColor"
               aria-hidden="true"
@@ -135,11 +188,8 @@ export default function Home() {
             <span>Follow us on Instagram</span>
           </a>
 
-          <p className="mt-2 text-white/60">
-            Tap any tile to view @ukiyo_virginia
-          </p>
+          <p className="mt-2 text-white/60">Tap any tile to view @ukiyo_virginia</p>
 
-          {/* Instagram Post Placeholders */}
           <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
             {Array.from({ length: 8 }).map((_, i) => (
               <a
@@ -158,6 +208,8 @@ export default function Home() {
     </main>
   );
 }
+
+
 
 
 

@@ -58,26 +58,39 @@ export default function RootLayout({
 
         {/* ================= TOP NAV ================= */}
         <header className="fixed left-0 right-0 top-0 z-50 border-b border-white/10 bg-black/80 backdrop-blur">
-          <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-            <Link href="/" className="text-left">
-              <div className="text-3xl font-semibold tracking-wide">Ukiyo</div>
-              <div className="mt-1 text-[12px] uppercase tracking-[0.35em] text-white/80">
-                Virginia
-              </div>
-            </Link>
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 py-4">
+            <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+              {/* LOGO — centered on mobile only */}
+              <Link href="/" className="text-center md:text-left mx-auto md:mx-0">
+                <div className="text-3xl font-semibold tracking-wide">Ukiyo</div>
+                <div className="mt-1 text-[12px] uppercase tracking-[0.35em] text-white/80">
+                  Virginia
+                </div>
+              </Link>
 
-            <nav className="flex gap-12 text-lg uppercase tracking-widest">
-              <Link href="/calendar">Events</Link>
-              <Link href="/venue">Venue</Link>
-              <Link href="/reservations">Reserve</Link>
-              <Link href="/menu">Menu</Link>
-              <Link href="/faqs">FAQs</Link>
-            </nav>
+              {/* Desktop nav (unchanged) */}
+              <nav className="hidden md:flex gap-12 text-lg uppercase tracking-widest">
+                <Link href="/calendar">Events</Link>
+                <Link href="/venue">Venue</Link>
+                <Link href="/reservations">Reserve</Link>
+                <Link href="/menu">Menu</Link>
+                <Link href="/faqs">FAQs</Link>
+              </nav>
+
+              {/* Mobile nav — CENTERED, WRAPS (no cutoff) */}
+              <nav className="md:hidden flex flex-wrap justify-center gap-x-6 gap-y-3 text-sm uppercase tracking-widest">
+                <Link href="/calendar">Events</Link>
+                <Link href="/venue">Venue</Link>
+                <Link href="/reservations">Reserve</Link>
+                <Link href="/menu">Menu</Link>
+                <Link href="/faqs">FAQs</Link>
+              </nav>
+            </div>
           </div>
         </header>
 
         {/* ================= PAGE CONTENT ================= */}
-        <main className="relative z-10 min-h-screen pt-24">
+        <main className="relative z-10 min-h-screen pt-24 overflow-x-hidden">
           {children}
         </main>
 
@@ -171,6 +184,9 @@ export default function RootLayout({
     </html>
   );
 }
+
+
+
 
 
 
