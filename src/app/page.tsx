@@ -10,7 +10,8 @@ import "swiper/css";
 import "swiper/css/navigation";
 
 export default function Home() {
-  const EVENTBRITE_LISTING = "https://www.eventbrite.com/d/va--portsmouth/ukiyo/";
+  const EVENTBRITE_LISTING =
+    "https://www.eventbrite.com/d/va--portsmouth/ukiyo/";
   const INSTAGRAM_URL = "https://www.instagram.com/ukiyo_virginia/";
 
   // ✅ fallback placeholders (used only if API hasn’t loaded / returns empty)
@@ -239,16 +240,18 @@ export default function Home() {
             <span>Follow us on Instagram</span>
           </a>
 
-          <p className="mt-2 text-white/60">Tap any tile to view @ukiyo_virginia</p>
+          <p className="mt-2 text-white/60">
+            Tap any tile to view @ukiyo_virginia
+          </p>
 
-          {/* LightWidget */}
+          {/* LightWidget (mobile-correct version you provided) */}
           <div className="mt-10">
             <Script
               src="https://cdn.lightwidget.com/widgets/lightwidget.js"
               strategy="lazyOnload"
             />
             <iframe
-              src="//lightwidget.com/widgets/1b9413908e225109b546c310877fa21b.html"
+              src="//lightwidget.com/widgets/7ab45c70662d5a98a162ea67be210e2f.html"
               scrolling="no"
               allowtransparency="true"
               className="lightwidget-widget w-full border-0 overflow-hidden"
