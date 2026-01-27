@@ -188,13 +188,14 @@ export default function Home() {
           <div className="mt-10">
             <Script
               src="https://cdn.lightwidget.com/widgets/lightwidget.js"
-              strategy="afterInteractive"
+              strategy="lazyOnload"
             />
             <iframe
               src="//lightwidget.com/widgets/1b9413908e225109b546c310877fa21b.html"
               scrolling="no"
               allowtransparency="true"
               className="lightwidget-widget w-full border-0 overflow-hidden"
+              style={{ minHeight: 600 }}
             />
           </div>
         </div>
