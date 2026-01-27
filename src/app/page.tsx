@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import Script from "next/script";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -13,6 +13,7 @@ export default function Home() {
   const EVENTBRITE_LISTING = "https://www.eventbrite.com/d/va--portsmouth/ukiyo/";
   const INSTAGRAM_URL = "https://www.instagram.com/ukiyo_virginia/";
 
+  // ✅ fallback placeholders (used only if API hasn’t loaded / returns empty)
   const events = [
     { date: "SAT • JAN 24", title: "Event Name", link: EVENTBRITE_LISTING },
     { date: "SUN • JAN 25", title: "Event Name", link: EVENTBRITE_LISTING },
@@ -25,12 +26,15 @@ export default function Home() {
     { date: "SAT • FEB 21", title: "Event Name", link: EVENTBRITE_LISTING },
   ];
 
+  // ✅ NEW: Eventbrite events
+  const [eventbriteEvents, setEventbriteEvents] = useState<any[]>([]);
+
   useEffect(() => {
     async function loadEventbrite() {
       try {
         const res = await fetch("/api/eventbrite/events");
         const data = await res.json();
-        console.log("Eventbrite API data:", data);
+        setEventbriteEvents(Array.isArray(data?.events) ? data.events : []);
       } catch (err) {
         console.error("Eventbrite fetch failed:", err);
       }
@@ -39,6 +43,34 @@ export default function Home() {
     loadEventbrite();
   }, []);
 
+  // ✅ NEW: Convert Eventbrite -> your card format (next 9 upcoming)
+  const cards = useMemo(() => {
+    const list = [...eventbriteEvents];
+
+    list.sort((a, b) => {
+      const da = new Date(a?.start?.local || 0).getTime();
+      const db = new Date(b?.start?.local || 0).getTime();
+      return da - db;
+    });
+
+    return list.slice(0, 9).map((ev) => {
+      const d = new Date(ev?.start?.local);
+      const dateLabel = d.toLocaleDateString("en-US", {
+        weekday: "short",
+        month: "short",
+        day: "2-digit",
+      });
+
+      return {
+        date: dateLabel.toUpperCase().replace(",", " •"), // "SAT • JAN 27"
+        title: ev?.name?.text ?? "Event",
+        link: ev?.url ?? EVENTBRITE_LISTING,
+        flyer: ev?.logo?.url ?? null,
+      };
+    });
+  }, [eventbriteEvents]);
+
+  const displayEvents = cards.length ? cards : events;
 
   return (
     <main className="min-h-screen bg-transparent text-white overflow-x-hidden">
@@ -133,7 +165,7 @@ export default function Home() {
             }}
             className="overflow-hidden"
           >
-            {events.map((event, idx) => (
+            {displayEvents.map((event: any, idx: number) => (
               <SwiperSlide key={idx}>
                 <a
                   href={event.link}
@@ -141,8 +173,17 @@ export default function Home() {
                   rel="noreferrer"
                   className="group block transition hover:brightness-105"
                 >
-                  <div className="h-[240px] sm:h-[320px] md:h-[360px] w-full bg-white/10 flex items-center justify-center text-xs uppercase tracking-widest text-white/40">
-                    Event Flyer
+                  {/* Flyer */}
+                  <div className="h-[240px] sm:h-[320px] md:h-[360px] w-full bg-white/10 flex items-center justify-center text-xs uppercase tracking-widest text-white/40 overflow-hidden">
+                    {event.flyer ? (
+                      <img
+                        src={event.flyer}
+                        alt={event.title}
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      <>Event Flyer</>
+                    )}
                   </div>
 
                   <div className="bg-black p-4 flex items-center gap-3">

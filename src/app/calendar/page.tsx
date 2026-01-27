@@ -1,7 +1,64 @@
 "use client";
 
+import { useEffect, useMemo, useState } from "react";
+
 export default function CalendarPage() {
   const HERO_BG = "/hero-events.png";
+
+  // ================= EVENTBRITE (NEW) =================
+  const [eventbriteEvents, setEventbriteEvents] = useState<any[]>([]);
+
+  useEffect(() => {
+    async function loadEventbrite() {
+      try {
+        const res = await fetch("/api/eventbrite/events");
+        const data = await res.json();
+        setEventbriteEvents(Array.isArray(data?.events) ? data.events : []);
+      } catch (err) {
+        console.error("Eventbrite fetch failed:", err);
+      }
+    }
+    loadEventbrite();
+  }, []);
+
+  // Date helpers
+  const startOfDay = (d: Date) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  const toYMD = (d: Date) =>
+    `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+
+  // Build map: "YYYY-MM-DD" -> { flyer, link, title } (picks earliest event per day)
+  const eventByDay = useMemo(() => {
+    const map: Record<
+      string,
+      { flyer: string | null; link: string | null; title: string | null; startMs: number }
+    > = {};
+
+    for (const ev of eventbriteEvents) {
+      const startLocal = ev?.start?.local;
+      if (!startLocal) continue;
+
+      const d = new Date(startLocal);
+      const ms = d.getTime();
+      if (Number.isNaN(ms)) continue;
+
+      const key = toYMD(d);
+
+      const candidate = {
+        flyer: ev?.logo?.url ?? null,
+        link: ev?.url ?? null,
+        title: ev?.name?.text ?? null,
+        startMs: ms,
+      };
+
+      // keep earliest event on that day
+      if (!map[key] || candidate.startMs < map[key].startMs) {
+        map[key] = candidate;
+      }
+    }
+
+    return map;
+  }, [eventbriteEvents]);
+  // ====================================================
 
   const getWeekendsForMonth = (year: number, month: number) => {
     const weekends: { saturday?: Date; sunday?: Date }[] = [];
@@ -26,6 +83,8 @@ export default function CalendarPage() {
   };
 
   const today = new Date();
+  const today0 = startOfDay(today);
+
   const months = Array.from({ length: 3 }).map((_, i) => {
     const date = new Date(today.getFullYear(), today.getMonth() + i, 1);
     return {
@@ -77,70 +136,114 @@ export default function CalendarPage() {
               </h2>
 
               <div className="space-y-16">
-                {month.weekends.map((week, index) => (
-                  <div
-                    key={index}
-                    className="flex flex-col md:flex-row md:justify-center md:gap-10 gap-6"
-                  >
-                    {/* SATURDAY */}
-                    {week.saturday && (
-                      <div className="group transition hover:brightness-105 w-full md:w-64">
-                        <div className="border border-purple-500/40 bg-white/5 transition hover:bg-white/10 w-full">
-                          <div className="aspect-square bg-white/10 flex items-center justify-center text-sm uppercase tracking-widest text-white/40">
-                            Event Flyer
-                          </div>
+                {month.weekends
+                  .filter((week) => {
+                    const satOk =
+                      week.saturday && startOfDay(week.saturday).getTime() >= today0.getTime();
+                    const sunOk =
+                      week.sunday && startOfDay(week.sunday).getTime() >= today0.getTime();
+                    return Boolean(satOk || sunOk); // hide past weekends
+                  })
+                  .map((week, index) => {
+                    const satKey = week.saturday ? toYMD(week.saturday) : null;
+                    const sunKey = week.sunday ? toYMD(week.sunday) : null;
 
-                          <div className="p-4 text-center">
-                            <div className="text-2xl font-bold uppercase tracking-widest text-purple-400">
-                              {week.saturday.toLocaleDateString("en-US", {
-                                weekday: "short",
-                                month: "short",
-                                day: "numeric",
-                              })}
-                            </div>
-                            <div className="mt-2 text-sm text-white/70">
-                              Ukiyo Saturdays • 10PM
-                            </div>
-                          </div>
-                        </div>
+                    const satEvent = satKey ? eventByDay[satKey] : null;
+                    const sunEvent = sunKey ? eventByDay[sunKey] : null;
 
-                        {/* Glowing purple line under event (wipes out left -> right on hover) */}
-                        <div className="relative h-[2px] w-full overflow-hidden bg-purple-500/70 shadow-[0_0_18px_rgba(168,85,247,0.95)]">
-                          <span className="absolute inset-0 origin-left scale-x-0 bg-[#070B10] transition-transform duration-500 ease-out group-hover:scale-x-100" />
-                        </div>
+                    return (
+                      <div
+                        key={index}
+                        className="flex flex-col md:flex-row md:justify-center md:gap-10 gap-6"
+                      >
+                        {/* SATURDAY */}
+                        {week.saturday && (
+                          <a
+                            href={satEvent?.link || undefined}
+                            target={satEvent?.link ? "_blank" : undefined}
+                            rel={satEvent?.link ? "noreferrer" : undefined}
+                            className="group transition hover:brightness-105 w-full md:w-64"
+                            style={{ pointerEvents: satEvent?.link ? "auto" : "none" }}
+                          >
+                            <div className="border border-purple-500/40 bg-white/5 transition hover:bg-white/10 w-full">
+                              <div className="aspect-square bg-white/10 flex items-center justify-center text-sm uppercase tracking-widest text-white/40 overflow-hidden">
+                                {satEvent?.flyer ? (
+                                  <img
+                                    src={satEvent.flyer}
+                                    alt={satEvent.title || "Event flyer"}
+                                    className="h-full w-full object-cover"
+                                  />
+                                ) : (
+                                  <>Event Flyer</>
+                                )}
+                              </div>
+
+                              <div className="p-4 text-center">
+                                <div className="text-2xl font-bold uppercase tracking-widest text-purple-400">
+                                  {week.saturday.toLocaleDateString("en-US", {
+                                    weekday: "short",
+                                    month: "short",
+                                    day: "numeric",
+                                  })}
+                                </div>
+                                <div className="mt-2 text-sm text-white/70">
+                                  {satEvent?.title ? satEvent.title : "Ukiyo Saturdays • 10PM"}
+                                </div>
+                              </div>
+                            </div>
+
+                            {/* Glowing purple line under event (wipes out left -> right on hover) */}
+                            <div className="relative h-[2px] w-full overflow-hidden bg-purple-500/70 shadow-[0_0_18px_rgba(168,85,247,0.95)]">
+                              <span className="absolute inset-0 origin-left scale-x-0 bg-[#070B10] transition-transform duration-500 ease-out group-hover:scale-x-100" />
+                            </div>
+                          </a>
+                        )}
+
+                        {/* SUNDAY */}
+                        {week.sunday && (
+                          <a
+                            href={sunEvent?.link || undefined}
+                            target={sunEvent?.link ? "_blank" : undefined}
+                            rel={sunEvent?.link ? "noreferrer" : undefined}
+                            className="group transition hover:brightness-105 w-full md:w-64"
+                            style={{ pointerEvents: sunEvent?.link ? "auto" : "none" }}
+                          >
+                            <div className="border border-blue-500/30 bg-white/5 transition hover:bg-white/10 w-full">
+                              <div className="aspect-square bg-white/10 flex items-center justify-center text-sm uppercase tracking-widest text-white/40 overflow-hidden">
+                                {sunEvent?.flyer ? (
+                                  <img
+                                    src={sunEvent.flyer}
+                                    alt={sunEvent.title || "Event flyer"}
+                                    className="h-full w-full object-cover"
+                                  />
+                                ) : (
+                                  <>Event Flyer</>
+                                )}
+                              </div>
+
+                              <div className="p-4 text-center">
+                                <div className="text-2xl font-bold uppercase tracking-widest text-blue-400">
+                                  {week.sunday.toLocaleDateString("en-US", {
+                                    weekday: "short",
+                                    month: "short",
+                                    day: "numeric",
+                                  })}
+                                </div>
+                                <div className="mt-2 text-sm text-white/70">
+                                  {sunEvent?.title ? sunEvent.title : "Sunday Vibes • 9PM"}
+                                </div>
+                              </div>
+                            </div>
+
+                            {/* Same wipe animation */}
+                            <div className="relative h-[2px] w-full overflow-hidden bg-purple-500/70 shadow-[0_0_18px_rgba(168,85,247,0.95)]">
+                              <span className="absolute inset-0 origin-left scale-x-0 bg-[#070B10] transition-transform duration-500 ease-out group-hover:scale-x-100" />
+                            </div>
+                          </a>
+                        )}
                       </div>
-                    )}
-
-                    {/* SUNDAY */}
-                    {week.sunday && (
-                      <div className="group transition hover:brightness-105 w-full md:w-64">
-                        <div className="border border-blue-500/30 bg-white/5 transition hover:bg-white/10 w-full">
-                          <div className="aspect-square bg-white/10 flex items-center justify-center text-sm uppercase tracking-widest text-white/40">
-                            Event Flyer
-                          </div>
-
-                          <div className="p-4 text-center">
-                            <div className="text-2xl font-bold uppercase tracking-widest text-blue-400">
-                              {week.sunday.toLocaleDateString("en-US", {
-                                weekday: "short",
-                                month: "short",
-                                day: "numeric",
-                              })}
-                            </div>
-                            <div className="mt-2 text-sm text-white/70">
-                              Sunday Vibes • 9PM
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Same wipe animation */}
-                        <div className="relative h-[2px] w-full overflow-hidden bg-purple-500/70 shadow-[0_0_18px_rgba(168,85,247,0.95)]">
-                          <span className="absolute inset-0 origin-left scale-x-0 bg-[#070B10] transition-transform duration-500 ease-out group-hover:scale-x-100" />
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                ))}
+                    );
+                  })}
               </div>
             </div>
           ))}
@@ -149,6 +252,3 @@ export default function CalendarPage() {
     </div>
   );
 }
-
-
-
