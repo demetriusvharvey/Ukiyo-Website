@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Script from "next/script";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 
@@ -27,14 +28,13 @@ export default function Home() {
     <main className="min-h-screen bg-transparent text-white overflow-x-hidden">
       {/* ================= HERO ================= */}
       <section className="w-full overflow-hidden bg-black">
-        {/* Mobile: carousel (starts on far-right image) */}
         <div className="sm:hidden">
           <Swiper
             modules={[Autoplay]}
             slidesPerView={1}
             spaceBetween={0}
             loop
-            initialSlide={2} // far-right image first
+            initialSlide={2}
             autoplay={{
               delay: 3500,
               disableOnInteraction: false,
@@ -74,25 +74,22 @@ export default function Home() {
           </Swiper>
         </div>
 
-        {/* Desktop: 3 columns (unchanged) */}
         <div className="hidden sm:grid grid-cols-3">
-          <div className="relative sm:aspect-auto sm:h-[65vh]">
+          <div className="relative sm:h-[65vh]">
             <img
               src="/moneyshot2.png"
               alt="Ukiyo hero left"
               className="absolute inset-0 h-full w-full object-cover object-center"
             />
           </div>
-
-          <div className="relative sm:aspect-auto sm:h-[65vh]">
+          <div className="relative sm:h-[65vh]">
             <img
               src="/moneyshot3.png"
               alt="Ukiyo hero middle"
               className="absolute inset-0 h-full w-full object-cover object-center"
             />
           </div>
-
-          <div className="relative sm:aspect-auto sm:h-[65vh]">
+          <div className="relative sm:h-[65vh]">
             <img
               src="/moneyshot.png"
               alt="Ukiyo hero right"
@@ -128,7 +125,6 @@ export default function Home() {
                   rel="noreferrer"
                   className="group block transition hover:brightness-105"
                 >
-                  {/* Flyer: responsive height so it’s not huge on mobile */}
                   <div className="h-[240px] sm:h-[320px] md:h-[360px] w-full bg-white/10 flex items-center justify-center text-xs uppercase tracking-widest text-white/40">
                     Event Flyer
                   </div>
@@ -143,7 +139,6 @@ export default function Home() {
                     </div>
                   </div>
 
-                  {/* wipe glow */}
                   <div className="relative h-[2px] w-full overflow-hidden bg-purple-500/70 shadow-[0_0_18px_rgba(168,85,247,0.95)]">
                     <span className="absolute inset-0 origin-left scale-x-0 bg-black transition-transform duration-500 ease-out group-hover:scale-x-100" />
                   </div>
@@ -153,7 +148,6 @@ export default function Home() {
           </Swiper>
         </div>
 
-        {/* EVENT CALENDAR BUTTON */}
         <div className="mt-8 flex justify-center px-4 sm:px-6">
           <Link
             href="/calendar"
@@ -182,7 +176,7 @@ export default function Home() {
               fill="currentColor"
               aria-hidden="true"
             >
-              <path d="M12 2.2c3.2 0 3.584.012 4.85.07 1.366.062 2.633.35 3.608 1.325.975.975 1.263 2.242 1.325 3.608.058 1.266.07 1.65.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.35 2.633-1.325 3.608-.975.975-2.242 1.263-3.608 1.325-1.266.058-1.65.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.35-3.608-1.325-.975-.975-1.263-2.242-1.325-3.608C2.212 15.584 2.2 15.2 2.2 12s.012-3.584.07-4.85c.062-1.366.35-2.633 1.325-3.608C4.57 2.62 5.837 2.332 7.203 2.27 8.469 2.212 8.853 2.2 12 2.2Zm0 3.3a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13Zm0 10.7a4.2 4.2 0 1 1 0-8.4 4.2 4.2 0 0 1 0 8.4Zm6.75-11.05a1.55 1.55 0 1 1-3.1 0 1.55 1.55 0 0 1 3.1 0Z" />
+              <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2Zm0 1.8A3.95 3.95 0 0 0 3.8 7.75v8.5A3.95 3.95 0 0 0 7.75 20.2h8.5a3.95 3.95 0 0 0 3.95-3.95v-8.5A3.95 3.95 0 0 0 16.25 3.8h-8.5Zm4.25 3.2a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 1.8a3.2 3.2 0 1 0 0 6.4 3.2 3.2 0 0 0 0-6.4Zm5.25-2.05a1.15 1.15 0 1 1 0 2.3 1.15 1.15 0 0 1 0-2.3Z" />
             </svg>
 
             <span>Follow us on Instagram</span>
@@ -190,27 +184,21 @@ export default function Home() {
 
           <p className="mt-2 text-white/60">Tap any tile to view @ukiyo_virginia</p>
 
-          <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
-            {Array.from({ length: 8 }).map((_, i) => (
-              <a
-                key={i}
-                href={INSTAGRAM_URL}
-                target="_blank"
-                rel="noreferrer"
-                className="flex aspect-square items-center justify-center bg-white/10 text-xs uppercase tracking-widest text-white/40 hover:bg-white/20 transition"
-              >
-                Post
-              </a>
-            ))}
+          {/* LightWidget */}
+          <div className="mt-10">
+            <Script
+              src="https://cdn.lightwidget.com/widgets/lightwidget.js"
+              strategy="afterInteractive"
+            />
+            <iframe
+              src="//lightwidget.com/widgets/1b9413908e225109b546c310877fa21b.html"
+              scrolling="no"
+              allowtransparency="true"
+              className="lightwidget-widget w-full border-0 overflow-hidden"
+            />
           </div>
         </div>
       </section>
     </main>
   );
 }
-
-
-
-
-
-
