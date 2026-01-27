@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import Link from "next/link";
 import Script from "next/script";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -23,6 +24,21 @@ export default function Home() {
     { date: "SUN • FEB 15", title: "Event Name", link: EVENTBRITE_LISTING },
     { date: "SAT • FEB 21", title: "Event Name", link: EVENTBRITE_LISTING },
   ];
+
+  useEffect(() => {
+    async function loadEventbrite() {
+      try {
+        const res = await fetch("/api/eventbrite/events");
+        const data = await res.json();
+        console.log("Eventbrite API data:", data);
+      } catch (err) {
+        console.error("Eventbrite fetch failed:", err);
+      }
+    }
+
+    loadEventbrite();
+  }, []);
+
 
   return (
     <main className="min-h-screen bg-transparent text-white overflow-x-hidden">
