@@ -9,6 +9,13 @@ import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 
+function slugify(text: string) {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+}
+
 export default function Home() {
   const EVENTBRITE_LISTING =
     "https://www.eventbrite.com/d/va--portsmouth/ukiyo/";
@@ -59,9 +66,13 @@ export default function Home() {
         day: "2-digit",
       });
 
+      const title = ev?.name?.text ?? "Event";
+
       return {
+        id: ev?.id,
+        slug: slugify(title),
         date: dateLabel.toUpperCase().replace(",", " •"),
-        title: ev?.name?.text ?? "Event",
+        title,
         link: ev?.url ?? EVENTBRITE_LISTING,
         flyer: ev?.logo?.original?.url ?? ev?.logo?.url ?? null,
       };
@@ -168,9 +179,13 @@ export default function Home() {
             {displayEvents.map((event: any, idx: number) => (
               <SwiperSlide key={idx}>
                 <a
-                  href={event.link}
-                  target="_blank"
-                  rel="noreferrer"
+                  href={
+                    event?.id && event?.slug
+                      ? `/events/${event.id}/${event.slug}`
+                      : event.link
+                  }
+                  target={event?.id && event?.slug ? undefined : "_blank"}
+                  rel={event?.id && event?.slug ? undefined : "noreferrer"}
                   className="group block transition hover:brightness-105"
                 >
                   {/* Flyer (Eventbrite-style fit) */}

@@ -72,7 +72,7 @@ export default function RootLayout({
               <nav className="hidden md:flex gap-12 text-lg uppercase tracking-widest">
                 <Link href="/calendar">Events</Link>
                 <Link href="/venue">Venue</Link>
-                <Link href="/reservations">Reserve</Link>
+                <Link href="/reservations">VIP</Link>
                 <Link href="/menu">Menu</Link>
                 <Link href="/faqs">FAQs</Link>
               </nav>
