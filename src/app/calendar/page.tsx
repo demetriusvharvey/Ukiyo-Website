@@ -2,6 +2,13 @@
 
 import { useEffect, useState } from "react";
 
+function slugify(text: string) {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+}
+
 export default function CalendarPage() {
   const HERO_BG = "/hero-events.png";
   const [events, setEvents] = useState<any[]>([]);
@@ -22,11 +29,15 @@ export default function CalendarPage() {
             const ms = d.getTime();
             if (!Number.isFinite(ms)) return null;
 
+            const title = ev?.name?.text ?? "Ukiyo Event";
+
             return {
+              id: ev?.id,
+              slug: slugify(title),
               date: d,
               ms,
               flyer: ev?.logo?.original?.url ?? ev?.logo?.url ?? null,
-              title: ev?.name?.text ?? "Ukiyo Event",
+              title,
               link: ev?.url ?? "#",
             };
           })
@@ -76,9 +87,13 @@ export default function CalendarPage() {
               return (
                 <a
                   key={idx}
-                  href={event.link}
-                  target="_blank"
-                  rel="noreferrer"
+                  href={
+                    event?.id && event?.slug
+                      ? `/events/${event.id}/${event.slug}`
+                      : event.link
+                  }
+                  target={event?.id && event?.slug ? undefined : "_blank"}
+                  rel={event?.id && event?.slug ? undefined : "noreferrer"}
                   // tap/press feedback like LIV
                   className="group block select-none touch-manipulation active:scale-[0.98] active:brightness-110 transition-transform duration-150"
                   style={{ WebkitTapHighlightColor: "transparent" }}
