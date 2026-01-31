@@ -10,6 +10,7 @@ export async function GET() {
   }
 
   const ORG_ID = "252110687260";
+  const UKIYO_KEYWORD = "ukiyo";
 
   const url =
     `https://www.eventbriteapi.com/v3/organizations/${ORG_ID}/events/` +
@@ -21,5 +22,19 @@ export async function GET() {
   });
 
   const data = await r.json();
-  return NextResponse.json(data, { status: r.ok ? 200 : r.status });
+
+  // ✅ FILTER SERVER-SIDE
+  const events = Array.isArray(data?.events) ? data.events : [];
+
+  const filteredEvents = events.filter((e: any) => {
+    const title = (e?.name?.text ?? "").toLowerCase();
+    const summary = (e?.summary ?? "").toLowerCase();
+    return title.includes(UKIYO_KEYWORD) || summary.includes(UKIYO_KEYWORD);
+  });
+
+  return NextResponse.json(
+    { ...data, events: filteredEvents },
+    { status: r.ok ? 200 : r.status }
+  );
 }
+
