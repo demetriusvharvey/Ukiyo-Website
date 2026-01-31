@@ -80,7 +80,7 @@ export default function RootLayout({
               <nav className="md:hidden flex flex-wrap justify-center gap-x-6 gap-y-3 text-sm uppercase tracking-widest">
                 <Link href="/calendar">Events</Link>
                 <Link href="/venue">Venue</Link>
-                <Link href="/reservations">Reserve</Link>
+                <Link href="/reservations">VIP</Link>
                 <Link href="/menu">Menu</Link>
                 <Link href="/faqs">FAQs</Link>
               </nav>
