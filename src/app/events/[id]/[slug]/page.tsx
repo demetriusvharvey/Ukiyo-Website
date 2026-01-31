@@ -86,8 +86,12 @@ export default async function EventPage({ params }: PageProps) {
 
   const title: string = ev?.name?.text ?? "Event";
   const summary: string = ev?.summary ?? "";
-  const descriptionHtml: string = ev?.description?.html ?? "";
-  const flyer: string = ev?.logo?.url ?? "/hero-reserve.png";
+  const descriptionHtmlRaw: string = ev?.description?.html ?? "";
+
+  // ✅ Use the FULL/ORIGINAL flyer if available (fixes “banner/cropped” look)
+  const flyer: string =
+    ev?.logo?.original?.url ?? ev?.logo?.url ?? "/hero-reserve.png";
+
   const eventbriteUrl: string = ev?.url ?? "#";
 
   const startLocal = ev?.start?.local ? new Date(ev.start.local) : null;
@@ -100,6 +104,11 @@ export default async function EventPage({ params }: PageProps) {
       month: "long",
       day: "2-digit",
       year: "numeric",
+    });
+
+  const startTimeLine =
+    startLocal &&
+    startLocal.toLocaleString("en-US", {
       hour: "numeric",
       minute: "2-digit",
     });
@@ -111,61 +120,170 @@ export default async function EventPage({ params }: PageProps) {
       minute: "2-digit",
     });
 
+  // ✅ Venue + directions links
+  const venueName = "Ukiyo";
+  const venueAddress = "4592 George Washington Hwy, Portsmouth, VA 23702";
+
+  const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+    venueAddress
+  )}`;
+
+  const appleMapsUrl = `https://maps.apple.com/?address=${encodeURIComponent(
+    venueAddress
+  )}`;
+
+  // ✅ De-dupe summary vs description (prevents double "Join us..." issues)
+  const summaryClean = (summary ?? "").trim();
+  const descriptionHtml = (descriptionHtmlRaw ?? "").trim();
+  const descriptionLower = descriptionHtml.toLowerCase();
+
+  const shouldShowSummary =
+    summaryClean.length > 0 &&
+    !(descriptionLower && descriptionLower.includes(summaryClean.toLowerCase()));
+
+  // ✅ Remove duplicate “Join us…” phrase if it repeats
+  const dupPhrase =
+    "Join us each and every Saturday for the hottest venue in Virginia !";
+
+  function dedupePhrase(html: string, phrase: string) {
+    if (!html || !phrase) return html;
+    const lower = html.toLowerCase();
+    const pLower = phrase.toLowerCase();
+    const first = lower.indexOf(pLower);
+    if (first === -1) return html;
+    const second = lower.indexOf(pLower, first + pLower.length);
+    if (second === -1) return html;
+    return html.slice(0, second) + html.slice(second + phrase.length);
+  }
+
+  const cleanedDescriptionHtml = dedupePhrase(descriptionHtml, dupPhrase);
+
+  // ✅ Dress Code (hardcoded as requested)
+  const dressCodeText =
+    "Upscale and stylish nightlife fashion. We do NOT allow athletic wear, sports jerseys, plain t-shirts, skullies, flat sandals, sneakers and/or flat boots for women. Oversized jackets and bags are prohibited.";
+
   return (
     <main className="min-h-screen bg-black text-white">
-      <section className="relative w-full overflow-hidden">
-        <img
-          src={flyer}
-          alt={title}
-          className="absolute inset-0 h-full w-full object-cover object-center"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#070B10]/90 via-[#0A1220]/75 to-black" />
+      {/* Top: split layout (details left, flyer right) */}
+      <section className="mx-auto max-w-5xl px-6 pt-16 pb-10 md:pt-20 md:pb-14">
+        <div className="grid gap-10 md:grid-cols-2 md:items-start">
+          {/* LEFT: Title + meta + buttons + Event Details */}
+          <div className="md:pr-4">
+            <div className="text-xs font-semibold uppercase tracking-[0.35em] text-white/70">
+              Event
+            </div>
 
-        <div className="relative mx-auto max-w-5xl px-6 py-20 md:py-24">
-          <div className="text-xs font-semibold uppercase tracking-[0.35em] text-white/70">
-            Event
+            <h1 className="mt-4 text-3xl font-semibold tracking-tight md:text-5xl">
+              {title}
+            </h1>
+
+            {(dateLine || startTimeLine) ? (
+              <p className="mt-5 text-sm text-white/80 md:text-base">
+                {dateLine ? dateLine : ""}
+                {startTimeLine ? ` • ${startTimeLine}` : ""}
+                {endLine ? ` — ${endLine}` : ""}
+              </p>
+            ) : null}
+
+            <div className="mt-10 flex flex-wrap gap-3">
+              <a
+                href={eventbriteUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="border border-white/30 bg-white/10 px-6 py-4 text-xs font-semibold uppercase tracking-[0.35em] transition hover:bg-white/20"
+              >
+                Tickets
+              </a>
+
+              <Link
+                href="/reservations"
+                className="border border-purple-500 bg-black px-6 py-4 text-xs font-semibold uppercase tracking-[0.35em] transition hover:bg-purple-600"
+              >
+                Reserve a Table
+              </Link>
+            </div>
+
+            {/* ✅ Event Details block */}
+            <div className="mt-10 border border-white/10 bg-white/5 p-6">
+              <div className="text-sm font-semibold text-white/90">
+                Event Details:
+              </div>
+
+              <ul className="mt-4 space-y-2 text-sm text-white/75 leading-relaxed">
+                <li>
+                  <span className="text-white/90">- Date:</span>{" "}
+                  {dateLine ?? "TBA"}
+                </li>
+                <li>
+                  <span className="text-white/90">- Time:</span>{" "}
+                  Doors open at {startTimeLine ?? "TBA"}
+                </li>
+                <li>
+                  <span className="text-white/90">- Location:</span>{" "}
+                  {venueName}
+                  <span className="ml-2 text-white/60">—</span>
+                  <a
+                    href={googleMapsUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="ml-2 underline text-white/80 hover:text-white"
+                  >
+                    Get Directions
+                  </a>
+                  <span className="mx-2 text-white/40">|</span>
+                  <a
+                    href={appleMapsUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="underline text-white/80 hover:text-white"
+                  >
+                    Apple Maps
+                  </a>
+                </li>
+                <li>
+                  <span className="text-white/90">- Age Requirement:</span>{" "}
+                  21 and over
+                </li>
+              </ul>
+            </div>
           </div>
 
-          <h1 className="mt-4 text-3xl font-semibold tracking-tight md:text-5xl">
-            {title}
-          </h1>
+          {/* RIGHT: Flyer + Dress Code under it */}
+          <div className="md:pl-4 space-y-6">
+            {/* Flyer */}
+            <div className="border border-white/10 bg-white/5 p-3">
+              <img
+                src={flyer}
+                alt={title}
+                className="w-full h-auto object-contain"
+                style={{ maxHeight: "78vh" }}
+              />
+            </div>
 
-          {dateLine ? (
-            <p className="mt-5 text-sm text-white/80 md:text-base">
-              {dateLine}
-              {endLine ? ` — ${endLine}` : ""}
-            </p>
-          ) : null}
+            {/* ✅ Dress Code */}
+            <div className="border border-white/10 bg-white/5 p-6">
+              <div className="text-xs font-semibold uppercase tracking-[0.35em] text-white/70">
+                Dress Code
+              </div>
 
-          <div className="mt-10 flex flex-wrap gap-3">
-            <a
-              href={eventbriteUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="border border-white/30 bg-white/10 px-6 py-4 text-xs font-semibold uppercase tracking-[0.35em] transition hover:bg-white/20"
-            >
-              Tickets
-            </a>
-
-            <Link
-              href="/reservations"
-              className="border border-purple-500 bg-black px-6 py-4 text-xs font-semibold uppercase tracking-[0.35em] transition hover:bg-purple-600"
-            >
-              Reserve a Table
-            </Link>
+              <p className="mt-4 text-sm text-white/75 leading-relaxed">
+                {dressCodeText}
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-5xl px-6 py-12">
-        {summary ? (
-          <p className="text-white/70 leading-relaxed">{summary}</p>
+      {/* Bottom: Description */}
+      <section className="mx-auto max-w-5xl px-6 pb-12">
+        {shouldShowSummary ? (
+          <p className="text-white/70 leading-relaxed">{summaryClean}</p>
         ) : null}
 
-        {descriptionHtml ? (
+        {cleanedDescriptionHtml ? (
           <div
             className="mt-10 prose prose-invert max-w-none"
-            dangerouslySetInnerHTML={{ __html: descriptionHtml }}
+            dangerouslySetInnerHTML={{ __html: cleanedDescriptionHtml }}
           />
         ) : (
           <p className="mt-10 text-white/60">No description available.</p>
@@ -183,3 +301,8 @@ export default async function EventPage({ params }: PageProps) {
     </main>
   );
 }
+
+
+
+
+
