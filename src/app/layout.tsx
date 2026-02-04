@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Italiana, Inter } from "next/font/google";
+import { Italiana, Inter, Montserrat } from "next/font/google";
 import Link from "next/link";
 import CookieBanner from "./components/CookieBanner";
 import "./globals.css";
@@ -14,6 +14,12 @@ const inter = Inter({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
   variable: "--font-inter",
+});
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-montserrat",
 });
 
 export const metadata: Metadata = {
@@ -37,33 +43,28 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className={`${italiana.variable} ${inter.variable} antialiased text-white`}>
+      <body
+        className={`${italiana.variable} ${inter.variable} ${montserrat.variable} antialiased text-white`}
+      >
         {/* Anchor for Back to Top */}
         <div id="top" />
-
-        {/* 🌊 OCEAN VIDEO BACKGROUND */}
-        <div className="fixed inset-0 -z-10 overflow-hidden">
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="absolute inset-0 h-full w-full object-cover"
-          >
-            <source src="/ocean.mp4" type="video/mp4" />
-          </video>
-          <div className="absolute inset-0 bg-black/65" />
-        </div>
 
         {/* ================= TOP NAV ================= */}
         <header className="fixed left-0 right-0 top-0 z-50 border-b border-white/10 bg-black/80 backdrop-blur">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 py-4">
             <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-              {/* LOGO */}
-              <Link href="/" className="text-center md:text-left mx-auto md:mx-0">
-                <div className="text-3xl font-semibold tracking-wide">Ukiyo</div>
-                <div className="mt-1 text-[12px] uppercase tracking-[0.35em] text-white/80">
-                  Virginia
+              {/* LOGO + CENTERED TEXT UNDERNEATH */}
+              <Link
+                href="/"
+                className="mx-auto md:mx-0 flex flex-col items-center"
+              >
+                <img
+                  src="/ukiyologo.PNG"
+                  alt="Ukiyo Virginia logo"
+                  className="h-10 sm:h-12 w-auto"
+                />
+                <div className="mt-1 text-[11px] sm:text-[12px] uppercase tracking-[0.35em] text-white/85 whitespace-nowrap text-center">
+                  UKIYO&nbsp;VIRGINIA
                 </div>
               </Link>
 
@@ -156,22 +157,33 @@ export default function RootLayout({
                 <div className="pt-6">
                   <div className="text-sm font-semibold">Legal</div>
                   <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2 text-sm text-white/70">
-                    <Link href="/privacy" className="hover:text-white hover:underline">
+                    <Link
+                      href="/privacy"
+                      className="hover:text-white hover:underline"
+                    >
                       Privacy
                     </Link>
-                    <Link href="/cookies" className="hover:text-white hover:underline">
+                    <Link
+                      href="/cookies"
+                      className="hover:text-white hover:underline"
+                    >
                       Cookies
                     </Link>
-                    <Link href="/terms" className="hover:text-white hover:underline">
+                    <Link
+                      href="/terms"
+                      className="hover:text-white hover:underline"
+                    >
                       Terms
                     </Link>
-                    <Link href="/accessibility" className="hover:text-white hover:underline">
+                    <Link
+                      href="/accessibility"
+                      className="hover:text-white hover:underline"
+                    >
                       Accessibility
                     </Link>
                   </div>
                 </div>
               </div>
-
             </div>
 
             <div className="mt-10 text-xs text-white/50">
