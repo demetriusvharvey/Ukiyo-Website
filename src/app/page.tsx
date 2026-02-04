@@ -99,8 +99,41 @@ export default function Home() {
 
   const displayEvents = cards.length ? cards : fallbackEvents;
 
+  const faqItems = [
+    {
+      q: "Dress Code",
+      a: "Upscale nightlife attire. Management reserves the right to refuse entry.",
+    },
+    {
+      q: "Hours of Operation",
+      a: "Saturday & Sunday • 10PM–2AM (hours may vary for special events).",
+    },
+    {
+      q: "Age Requirements",
+      a: "21+ with valid government-issued ID required.",
+    },
+    {
+      q: "What type of music is featured at Ukiyo?",
+      a: "High-energy nightlife with rotating DJs and special guest performances.",
+    },
+  ];
+
   return (
     <main className="min-h-screen bg-transparent text-white overflow-x-hidden">
+      {/* ================= FLOATING TICKETS BUTTON ================= */}
+      <Link
+        href="/calendar"
+        aria-label="Tickets and Tables"
+        className="fixed right-6 top-28 z-[60] hidden sm:flex h-24 w-24 items-center justify-center rounded-full border border-white/20 bg-white/15 backdrop-blur-sm hover:bg-white/25 transition"
+      >
+        <span className="text-[12px] font-semibold uppercase tracking-widest text-white/90 text-center leading-4">
+          Tickets
+          <br />&amp;
+          <br />
+          Tables
+        </span>
+      </Link>
+
       {/* ================= HERO ================= */}
       <section className="relative w-full h-[70vh] sm:h-[80vh] bg-black overflow-hidden">
         <img
@@ -170,11 +203,12 @@ export default function Home() {
               rewind={true}
               watchOverflow={true}
               loop={false}
-              spaceBetween={28}
+              // ✅ Spacing tuned to match LIV-style tighter layout
+              spaceBetween={10}
               slidesPerView={1}
               breakpoints={{
-                640: { slidesPerView: 2, spaceBetween: 24 },
-                1024: { slidesPerView: 3, spaceBetween: 28 },
+                640: { slidesPerView: 2, spaceBetween: 12 },
+                1024: { slidesPerView: 3, spaceBetween: 14 },
               }}
               className="overflow-hidden"
             >
@@ -195,7 +229,8 @@ export default function Home() {
                       rel={isInternal ? undefined : "noreferrer"}
                       className="group block"
                     >
-                      <div className="mx-auto w-full max-w-[320px]">
+                      {/* ✅ Remove tight max-width so spacing/scale matches LIV */}
+                      <div className="mx-auto w-full max-w-[360px]">
                         <div className="relative bg-black overflow-hidden">
                           <div className="relative aspect-[1/1] w-full bg-black overflow-hidden">
                             {event.flyer ? (
@@ -302,6 +337,60 @@ export default function Home() {
             allowtransparency="true"
             className="lightwidget-widget w-full border-0 overflow-hidden"
           />
+        </div>
+      </section>
+
+      {/* ================= FAQ (LIV-STYLE) ================= */}
+      <section className="bg-[#0b0b0f]">
+        <div className="mx-auto max-w-7xl px-4 py-20">
+          {/* ✅ centered on mobile, unchanged on lg+ */}
+          <div className="grid gap-12 text-center lg:grid-cols-2 lg:items-start lg:text-left">
+            {/* Left */}
+            <div className="flex flex-col items-center lg:items-start">
+              <div className="text-2xl sm:text-3xl font-semibold uppercase tracking-widest">
+                Frequently Asked
+                <br />
+                Questions
+              </div>
+              <p className="mt-4 text-sm text-white/60 max-w-md">
+                Answers to all your Ukiyo nightlife questions and more. If you
+                haven’t found what you’re looking for, please contact us or
+                visit the FAQs page.
+              </p>
+
+              <div className="mt-8">
+                <Link
+                  href="/faqs"
+                  className="inline-flex items-center justify-center px-10 py-3 text-xs font-semibold uppercase tracking-widest border border-white/30 hover:border-white/60 hover:bg-white/5 transition"
+                >
+                  All FAQs
+                </Link>
+              </div>
+            </div>
+
+            {/* Right accordion */}
+            <div className="divide-y divide-white/15 border-t border-white/15 mx-auto w-full max-w-xl lg:max-w-none text-left">
+              {faqItems.map((item) => (
+                <details key={item.q} className="group py-6">
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
+                    <span className="text-xs sm:text-sm font-semibold uppercase tracking-widest text-white/85">
+                      {item.q}
+                    </span>
+
+                    {/* plus icon */}
+                    <span className="relative h-6 w-6 shrink-0 text-white/70">
+                      <span className="absolute inset-x-0 top-1/2 h-[2px] -translate-y-1/2 bg-current" />
+                      <span className="absolute inset-y-0 left-1/2 w-[2px] -translate-x-1/2 bg-current transition-transform duration-200 group-open:scale-y-0" />
+                    </span>
+                  </summary>
+
+                  <div className="mt-4 text-sm text-white/60 leading-relaxed">
+                    {item.a}
+                  </div>
+                </details>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
     </main>

@@ -67,7 +67,7 @@ export default function CalendarPage() {
 
         <div className="relative mx-auto max-w-5xl px-6 py-24 text-center">
           <h1 className="text-xs uppercase tracking-[0.35em] text-white/70">
-            Events
+            
           </h1>
           <h2 className="mt-4 text-3xl md:text-5xl font-semibold">
             Upcoming Events
@@ -75,12 +75,10 @@ export default function CalendarPage() {
         </div>
       </section>
 
-      {/* ================= EVENTS GRID (LIV-ISH SIZE + TOUCH) ================= */}
+      {/* ================= EVENTS GRID (4 PER ROW ON MD+ / LIV-ISH) ================= */}
       <section className="w-full py-10">
-        {/* edge-to-edge like LIV */}
         <div className="mx-auto max-w-6xl px-0 sm:px-4">
-          {/* tighter grid spacing like LIV */}
-          <div className="grid grid-cols-2 gap-[2px] sm:gap-3 md:grid-cols-3 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-[2px] sm:gap-3 md:grid-cols-4">
             {events.map((event: any, idx: number) => {
               const d: Date = event.date;
 
@@ -94,12 +92,12 @@ export default function CalendarPage() {
                   }
                   target={event?.id && event?.slug ? undefined : "_blank"}
                   rel={event?.id && event?.slug ? undefined : "noreferrer"}
-                  // tap/press feedback like LIV
-                  className="group block select-none touch-manipulation active:scale-[0.98] active:brightness-110 transition-transform duration-150"
+                  className="group block select-none touch-manipulation active:scale-[0.98] transition-transform duration-150"
                   style={{ WebkitTapHighlightColor: "transparent" }}
                 >
-                  <div className="border border-white/10 bg-black">
-                    {/* ================= FLYER (same fit fix, but LIV-ish sizing) ================= */}
+                  {/* ✅ same “card feel” + hover treatment like homepage */}
+                  <div className="border border-white/10 bg-black transition-transform duration-200 group-hover:brightness-110">
+                    {/* ================= FLYER ================= */}
                     <div className="relative h-[210px] sm:h-[240px] md:h-[260px] overflow-hidden bg-black">
                       {event.flyer ? (
                         <>
@@ -123,8 +121,8 @@ export default function CalendarPage() {
                       )}
                     </div>
 
-                    {/* ================= TITLE (UNCHANGED LOOK) ================= */}
-                    <div className="p-3 text-center bg-black">
+                    {/* ================= TITLE ================= */}
+                    <div className="p-3 text-center bg-black border-t border-white/10">
                       <div className="text-xs uppercase tracking-widest text-white/60">
                         {d.toLocaleDateString("en-US", { weekday: "short" })}
                       </div>
@@ -137,6 +135,11 @@ export default function CalendarPage() {
                       <div className="mt-2 text-sm font-semibold uppercase">
                         {event.title}
                       </div>
+                    </div>
+
+                    {/* ✅ same purple “underline/glow” hover effect as homepage cards */}
+                    <div className="relative h-[2px] w-full overflow-hidden bg-purple-500/70 shadow-[0_0_18px_rgba(168,85,247,0.95)]">
+                      <span className="absolute inset-0 origin-left scale-x-0 bg-black transition-transform duration-500 ease-out group-hover:scale-x-100" />
                     </div>
                   </div>
                 </a>

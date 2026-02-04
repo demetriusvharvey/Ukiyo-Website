@@ -44,16 +44,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${italiana.variable} ${inter.variable} ${montserrat.variable} antialiased text-white`}
+        className={`${italiana.variable} ${inter.variable} ${montserrat.variable} antialiased text-white bg-black`}
       >
         {/* Anchor for Back to Top */}
         <div id="top" />
 
         {/* ================= TOP NAV ================= */}
-        <header className="fixed left-0 right-0 top-0 z-50 border-b border-white/10 bg-black/80 backdrop-blur">
+        <header className="fixed left-0 right-0 top-0 z-50 border-b border-white/10 bg-black">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 py-4">
             <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-              {/* LOGO + CENTERED TEXT UNDERNEATH */}
+              {/* LOGO */}
               <Link
                 href="/"
                 className="mx-auto md:mx-0 flex flex-col items-center"
@@ -63,7 +63,7 @@ export default function RootLayout({
                   alt="Ukiyo Virginia logo"
                   className="h-10 sm:h-12 w-auto"
                 />
-                <div className="mt-1 text-[11px] sm:text-[12px] uppercase tracking-[0.35em] text-white/85 whitespace-nowrap text-center">
+                <div className="mt-1 text-[11px] sm:text-[12px] uppercase tracking-[0.35em] text-white/85 text-center">
                   UKIYO&nbsp;VIRGINIA
                 </div>
               </Link>
@@ -90,27 +90,30 @@ export default function RootLayout({
         </header>
 
         {/* ================= PAGE CONTENT ================= */}
-        <main className="relative z-10 min-h-screen pt-24 overflow-x-hidden">
+        <main className="relative z-10 min-h-screen pt-24 bg-black overflow-x-hidden">
           {children}
         </main>
 
         {/* ================= FOOTER ================= */}
-        <footer className="border-t border-white/10 bg-black/90">
+        <footer className="border-t border-white/10 bg-black">
           <div className="mx-auto max-w-7xl px-6 py-16">
-            <div className="grid gap-10 md:grid-cols-3">
-              <div>
+            {/* ✅ centered on mobile, unchanged on md+ */}
+            <div className="grid gap-10 text-center md:grid-cols-3 md:text-left">
+              {/* Column 1 */}
+              <div className="flex flex-col items-center md:items-start">
                 <div className="text-2xl font-semibold">Ukiyo</div>
                 <div className="mt-2 text-sm text-white/60">
                   Virginia Nightlife • Events • Reservations
                 </div>
               </div>
 
-              <div>
+              {/* Column 2 */}
+              <div className="flex flex-col items-center md:items-start">
                 <div className="text-sm font-semibold">Visit</div>
-                <div className="mt-3 space-y-2 text-sm text-white/80">
+                <div className="mt-3 space-y-2 text-sm text-white/80 text-center md:text-left">
                   <div>4592 George Washington Hwy, Portsmouth, VA</div>
                   <div>Saturday & Sunday • 10PM–2AM</div>
-                  <div className="flex gap-2">
+                  <div className="flex justify-center md:justify-start gap-2">
                     <a
                       href={GOOGLE_MAPS_URL}
                       target="_blank"
@@ -132,7 +135,8 @@ export default function RootLayout({
                 </div>
               </div>
 
-              <div>
+              {/* Column 3 */}
+              <div className="flex flex-col items-center md:items-start">
                 <div className="text-sm font-semibold">Connect</div>
                 <div className="mt-3 space-y-2 text-sm">
                   <a
@@ -156,29 +160,17 @@ export default function RootLayout({
                 {/* Legal */}
                 <div className="pt-6">
                   <div className="text-sm font-semibold">Legal</div>
-                  <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2 text-sm text-white/70">
-                    <Link
-                      href="/privacy"
-                      className="hover:text-white hover:underline"
-                    >
+                  <div className="mt-3 flex flex-wrap justify-center md:justify-start gap-x-4 gap-y-2 text-sm text-white/70">
+                    <Link href="/privacy" className="hover:underline">
                       Privacy
                     </Link>
-                    <Link
-                      href="/cookies"
-                      className="hover:text-white hover:underline"
-                    >
+                    <Link href="/cookies" className="hover:underline">
                       Cookies
                     </Link>
-                    <Link
-                      href="/terms"
-                      className="hover:text-white hover:underline"
-                    >
+                    <Link href="/terms" className="hover:underline">
                       Terms
                     </Link>
-                    <Link
-                      href="/accessibility"
-                      className="hover:text-white hover:underline"
-                    >
+                    <Link href="/accessibility" className="hover:underline">
                       Accessibility
                     </Link>
                   </div>
@@ -186,13 +178,14 @@ export default function RootLayout({
               </div>
             </div>
 
-            <div className="mt-10 text-xs text-white/50">
+            {/* ✅ centered copyright on mobile */}
+            <div className="mt-10 text-xs text-white/50 text-center">
               © {new Date().getFullYear()} Ukiyo. All rights reserved.
             </div>
           </div>
         </footer>
 
-        {/* 🍪 COOKIE BANNER — MOUNTED GLOBALLY */}
+        {/* 🍪 COOKIE BANNER */}
         <CookieBanner />
       </body>
     </html>
