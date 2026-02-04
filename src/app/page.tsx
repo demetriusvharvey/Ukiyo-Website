@@ -117,6 +117,7 @@ export default function Home() {
               alt="Ukiyo logo"
               className="w-[300px] sm:w-[380px] md:w-[440px] drop-shadow-[0_0_26px_rgba(0,0,0,0.8)]"
             />
+
             <div className="mt-8 ml-0 sm:ml-24 text-[16px] sm:text-4xl md:text-5xl uppercase whitespace-nowrap text-center tracking-[0.25em] sm:tracking-[0.6em]">
               <span>UKIYO</span>
               <span className="inline-block mx-4 sm:mx-16 md:mx-20">
@@ -131,22 +132,27 @@ export default function Home() {
       <section id="events" className="pt-12 pb-16 bg-[#0b0b0f]">
         <div className="mx-auto max-w-7xl px-4">
           <div className="relative">
+            {/* ✅ Mobile + desktop arrows (no longer hidden) */}
             <button
               ref={prevRef}
-              className="hidden md:flex items-center justify-center absolute left-0 top-1/2 -translate-y-1/2 z-10 h-10 w-10 rounded-full bg-black/70 border border-white/15 hover:bg-black/90"
+              className="flex items-center justify-center absolute left-2 sm:left-0 top-1/2 -translate-y-1/2 z-10 h-9 w-9 sm:h-10 sm:w-10 rounded-full bg-black/70 border border-white/15 hover:bg-black/90"
               aria-label="Previous"
               type="button"
             >
-              <span className="text-white/90 text-xl leading-none">‹</span>
+              <span className="text-white/90 text-lg sm:text-xl leading-none">
+                ‹
+              </span>
             </button>
 
             <button
               ref={nextRef}
-              className="hidden md:flex items-center justify-center absolute right-0 top-1/2 -translate-y-1/2 z-10 h-10 w-10 rounded-full bg-black/70 border border-white/15 hover:bg-black/90"
+              className="flex items-center justify-center absolute right-2 sm:right-0 top-1/2 -translate-y-1/2 z-10 h-9 w-9 sm:h-10 sm:w-10 rounded-full bg-black/70 border border-white/15 hover:bg-black/90"
               aria-label="Next"
               type="button"
             >
-              <span className="text-white/90 text-xl leading-none">›</span>
+              <span className="text-white/90 text-lg sm:text-xl leading-none">
+                ›
+              </span>
             </button>
 
             <Swiper
@@ -160,7 +166,6 @@ export default function Home() {
                 prevEl: prevRef.current,
                 nextEl: nextRef.current,
               }}
-              // ✅ KEY FIXES (no blank space)
               centeredSlides={false}
               rewind={true}
               watchOverflow={true}
@@ -192,7 +197,6 @@ export default function Home() {
                     >
                       <div className="mx-auto w-full max-w-[320px]">
                         <div className="relative bg-black overflow-hidden">
-                          {/* ✅ 4:4 square tile */}
                           <div className="relative aspect-[1/1] w-full bg-black overflow-hidden">
                             {event.flyer ? (
                               <img
