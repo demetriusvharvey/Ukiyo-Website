@@ -127,26 +127,31 @@ export default function Home() {
           href="/calendar"
           aria-label="Tickets and Tables"
           className="
-    absolute right-10 top-14 z-[60]
+    absolute right-10 top-4 z-[60]
     hidden sm:flex
+
     h-36 w-36
     items-center justify-center
     rounded-full
 
     bg-white/20
-    shadow-none
+    backdrop-blur-md
 
     transition-all duration-300 ease-out
-    hover:rotate-12 hover:scale-105
-    hover:bg-purple-600/70
+    hover:rotate-[25deg] hover:scale-105
+
+    hover:bg-purple-600/60
+    hover:shadow-[0_0_40px_rgba(168,85,247,0.95)]
   "
         >
-          <span className="text-center uppercase tracking-widest font-semibold text-white/90 leading-[1.15] text-[14px]">
+          <span className="text-center uppercase tracking-widest font-semibold text-white/95 leading-[1.1] text-[18px]">
             TICKETS&nbsp;&amp;
             <br />
             TABLES
           </span>
         </Link>
+
+
 
         <img
           src="/moneyshot3.png"
