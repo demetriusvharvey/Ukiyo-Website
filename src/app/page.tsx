@@ -138,7 +138,7 @@ export default function Home() {
     backdrop-blur-md
 
     transition-all duration-300 ease-out
-    hover:rotate-[25deg] hover:scale-105
+    hover:rotate-[2deg] hover:scale-105
 
     hover:bg-purple-600/60
     hover:shadow-[0_0_40px_rgba(168,85,247,0.95)]
@@ -150,8 +150,6 @@ export default function Home() {
             TABLES
           </span>
         </Link>
-
-
 
         <img
           src="/moneyshot3.png"
@@ -181,7 +179,8 @@ export default function Home() {
 
       {/* ================= EVENTS ================= */}
       <section id="events" className="pt-12 pb-16 bg-[#0b0b0f]">
-        <div className="mx-auto max-w-7xl px-4">
+        {/* LIV-tight: nearly no side padding + wider max width */}
+        <div className="mx-auto max-w-[1600px] px-0 sm:px-1">
           <div className="relative">
             <button
               ref={prevRef}
@@ -220,11 +219,11 @@ export default function Home() {
               rewind={true}
               watchOverflow={true}
               loop={false}
-              spaceBetween={10}
+              spaceBetween={2}
               slidesPerView={1}
               breakpoints={{
-                640: { slidesPerView: 2, spaceBetween: 12 },
-                1024: { slidesPerView: 3, spaceBetween: 14 },
+                640: { slidesPerView: 2, spaceBetween: 4 },
+                1024: { slidesPerView: 3, spaceBetween: 6 },
               }}
               className="overflow-hidden"
             >
@@ -245,7 +244,7 @@ export default function Home() {
                       rel={isInternal ? undefined : "noreferrer"}
                       className="group block"
                     >
-                      <div className="mx-auto w-full max-w-[360px]">
+                      <div className="mx-auto w-full max-w-[420px]">
                         <div className="relative bg-black overflow-hidden">
                           <div className="relative aspect-[1/1] w-full bg-black overflow-hidden">
                             {event.flyer ? (
