@@ -58,18 +58,11 @@ export default function CalendarPage() {
     <div className="w-full bg-[#070B10] text-white">
       {/* ================= HERO ================= */}
       <section className="relative w-full overflow-hidden bg-black h-[260px] sm:h-[340px] md:h-[420px]">
-        {/* blurred background fill */}
-        <img
-          src={HERO_BG}
-          alt=""
-          className="absolute inset-0 h-full w-full object-cover blur-xl scale-110 opacity-40"
-        />
-
-        {/* foreground full image (NO CROP) */}
+        {/* hero image fills section (NO BLUR) */}
         <img
           src={HERO_BG}
           alt="Ukiyo Events"
-          className="absolute inset-0 h-full w-full object-contain object-center"
+          className="absolute inset-0 h-full w-full object-cover object-top"
         />
 
         <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/60 to-transparent" />

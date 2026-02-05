@@ -205,28 +205,33 @@ export default function Home() {
             </button>
 
             <Swiper
-              modules={[Navigation]}
-              onBeforeInit={(swiper: any) => {
-                swiper.params.navigation = swiper.params.navigation || {};
-                swiper.params.navigation.prevEl = prevRef.current;
-                swiper.params.navigation.nextEl = nextRef.current;
-              }}
-              navigation={{
-                prevEl: prevRef.current,
-                nextEl: nextRef.current,
-              }}
-              centeredSlides={false}
-              rewind={true}
-              watchOverflow={true}
-              loop={false}
-              spaceBetween={2}
-              slidesPerView={1}
-              breakpoints={{
-                640: { slidesPerView: 2, spaceBetween: 4 },
-                1024: { slidesPerView: 3, spaceBetween: 6 },
-              }}
-              className="overflow-hidden"
-            >
+  modules={[Navigation]}
+  onBeforeInit={(swiper: any) => {
+    swiper.params.navigation = swiper.params.navigation || {};
+    swiper.params.navigation.prevEl = prevRef.current;
+    swiper.params.navigation.nextEl = nextRef.current;
+  }}
+  navigation={{
+    prevEl: prevRef.current,
+    nextEl: nextRef.current,
+  }}
+  centeredSlides={false}
+  rewind={true}
+  watchOverflow={true}
+  loop={false}
+
+  /* 🔥 HALF-INCH SPACING */
+  spaceBetween={48}
+
+  slidesPerView={1}
+  breakpoints={{
+    640: { slidesPerView: 2, spaceBetween: 48 },
+    1024: { slidesPerView: 3, spaceBetween: 48 },
+  }}
+
+  className="overflow-hidden"
+>
+
               {displayEvents.map((event: any, idx: number) => {
                 const { top, bottom } = splitDateLabel(event?.date || "");
                 const href =
@@ -244,7 +249,7 @@ export default function Home() {
                       rel={isInternal ? undefined : "noreferrer"}
                       className="group block"
                     >
-                      <div className="mx-auto w-full max-w-[420px]">
+                      <div className="mx-auto w-full">
                         <div className="relative bg-black overflow-hidden">
                           <div className="relative aspect-[1/1] w-full bg-black overflow-hidden">
                             {event.flyer ? (

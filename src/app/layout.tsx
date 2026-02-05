@@ -52,45 +52,40 @@ export default function RootLayout({
 
         {/* ================= HEADER ================= */}
         <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-black">
-          <div className="relative mx-auto w-full max-w-[1180px]">
-            {/* LOGO */}
-            <Link
-              href="/"
-              className="absolute left-3 md:left-[-48px] top-1/2 -translate-y-1/2 flex flex-col items-center"
-            >
-              {/* Logo image */}
+          {/* FULL WIDTH ROW (logo left / nav right) */}
+          <div className="mx-auto flex h-[72px] w-full items-center px-6">
+            {/* LOGO — LEFT */}
+            <Link href="/" className="flex flex-col items-center">
               <img
                 src="/ukiyologo.PNG"
                 alt="Ukiyo Virginia logo"
                 className="h-9 w-auto md:h-11"
               />
 
-              {/* Subtitle — DESKTOP ONLY, UNDER LOGO */}
+              {/* Subtitle — desktop only */}
               <div className="mt-[2px] hidden md:block text-center text-[9px] uppercase tracking-[0.32em] text-white/60 whitespace-nowrap">
                 UKIYO VIRGINIA
               </div>
             </Link>
 
-            {/* NAV ROW */}
-            <div className="flex h-[72px] items-center px-3 sm:px-4">
-              <nav className="ml-auto hidden md:flex items-center gap-12 pt-[10px] text-sm uppercase tracking-[0.25em]">
-                <Link href="/calendar" className="nav-link">
-                  Events
-                </Link>
-                <Link href="/venue" className="nav-link">
-                  Venue
-                </Link>
-                <Link href="/reservations" className="nav-link">
-                  VIP
-                </Link>
-                <Link href="/menu" className="nav-link">
-                  Menu
-                </Link>
-                <Link href="/faqs" className="nav-link">
-                  FAQs
-                </Link>
-              </nav>
-            </div>
+            {/* NAV — RIGHT */}
+            <nav className="ml-auto mr-[96px] hidden md:flex items-center gap-12 pt-[10px] text-sm uppercase tracking-[0.25em]">
+              <Link href="/calendar" className="nav-link">
+                Events
+              </Link>
+              <Link href="/venue" className="nav-link">
+                Venue
+              </Link>
+              <Link href="/reservations" className="nav-link">
+                VIP
+              </Link>
+              <Link href="/menu" className="nav-link">
+                Menu
+              </Link>
+              <Link href="/faqs" className="nav-link">
+                FAQs
+              </Link>
+            </nav>
           </div>
         </header>
 
