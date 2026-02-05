@@ -63,8 +63,10 @@ export default function RootLayout({
                   alt="Ukiyo Virginia logo"
                   className="h-10 sm:h-12 w-auto"
                 />
-                <div className="mt-1 text-[11px] sm:text-[12px] uppercase tracking-[0.35em] text-white/85 text-center">
-                  UKIYO&nbsp;VIRGINIA
+
+                {/* ✅ FIX: prevent “VIRGINIA” from getting cut off at 100% zoom */}
+                <div className="mt-1 px-2 text-[10px] sm:text-[12px] uppercase tracking-[0.22em] sm:tracking-[0.35em] text-white/85 text-center whitespace-nowrap">
+                  UKIYO VIRGINIA
                 </div>
               </Link>
 
@@ -97,9 +99,7 @@ export default function RootLayout({
         {/* ================= FOOTER ================= */}
         <footer className="border-t border-white/10 bg-black">
           <div className="mx-auto max-w-7xl px-6 py-16">
-            {/* ✅ centered on mobile, unchanged on md+ */}
             <div className="grid gap-10 text-center md:grid-cols-3 md:text-left">
-              {/* Column 1 */}
               <div className="flex flex-col items-center md:items-start">
                 <div className="text-2xl font-semibold">Ukiyo</div>
                 <div className="mt-2 text-sm text-white/60">
@@ -107,7 +107,6 @@ export default function RootLayout({
                 </div>
               </div>
 
-              {/* Column 2 */}
               <div className="flex flex-col items-center md:items-start">
                 <div className="text-sm font-semibold">Visit</div>
                 <div className="mt-3 space-y-2 text-sm text-white/80 text-center md:text-left">
@@ -135,7 +134,6 @@ export default function RootLayout({
                 </div>
               </div>
 
-              {/* Column 3 */}
               <div className="flex flex-col items-center md:items-start">
                 <div className="text-sm font-semibold">Connect</div>
                 <div className="mt-3 space-y-2 text-sm">
@@ -157,7 +155,6 @@ export default function RootLayout({
                   </a>
                 </div>
 
-                {/* Legal */}
                 <div className="pt-6">
                   <div className="text-sm font-semibold">Legal</div>
                   <div className="mt-3 flex flex-wrap justify-center md:justify-start gap-x-4 gap-y-2 text-sm text-white/70">
@@ -178,14 +175,12 @@ export default function RootLayout({
               </div>
             </div>
 
-            {/* ✅ centered copyright on mobile */}
             <div className="mt-10 text-xs text-white/50 text-center">
               © {new Date().getFullYear()} Ukiyo. All rights reserved.
             </div>
           </div>
         </footer>
 
-        {/* 🍪 COOKIE BANNER */}
         <CookieBanner />
       </body>
     </html>

@@ -120,22 +120,34 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-transparent text-white overflow-x-hidden">
-      {/* ================= FLOATING TICKETS BUTTON ================= */}
-      <Link
-        href="/calendar"
-        aria-label="Tickets and Tables"
-        className="fixed right-6 top-28 z-[60] hidden sm:flex h-24 w-24 items-center justify-center rounded-full border border-white/20 bg-white/15 backdrop-blur-sm hover:bg-white/25 transition"
-      >
-        <span className="text-[12px] font-semibold uppercase tracking-widest text-white/90 text-center leading-4">
-          Tickets
-          <br />&amp;
-          <br />
-          Tables
-        </span>
-      </Link>
-
       {/* ================= HERO ================= */}
-      <section className="relative w-full h-[70vh] sm:h-[80vh] bg-black overflow-hidden">
+      <section className="relative w-full h-[78vh] sm:h-[86vh] bg-black overflow-hidden">
+        {/* ✅ HERO-ONLY TICKETS BUTTON (scrolls away after hero) */}
+        <Link
+          href="/calendar"
+          aria-label="Tickets and Tables"
+          className="
+    absolute right-10 top-14 z-[60]
+    hidden sm:flex
+    h-36 w-36
+    items-center justify-center
+    rounded-full
+
+    bg-white/20
+    shadow-none
+
+    transition-all duration-300 ease-out
+    hover:rotate-12 hover:scale-105
+    hover:bg-purple-600/70
+  "
+        >
+          <span className="text-center uppercase tracking-widest font-semibold text-white/90 leading-[1.15] text-[14px]">
+            TICKETS&nbsp;&amp;
+            <br />
+            TABLES
+          </span>
+        </Link>
+
         <img
           src="/moneyshot3.png"
           alt="Ukiyo hero"
@@ -144,14 +156,15 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/35 to-black/85" />
 
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="flex flex-col items-center">
+          {/* ✅ FIX: nudge whole hero stack up so it matches your “awesome” screenshot at 100% zoom */}
+          <div className="flex flex-col items-center -translate-y-8 sm:-translate-y-10 md:-translate-y-12">
             <img
               src="/ukiyologo.PNG"
               alt="Ukiyo logo"
               className="w-[300px] sm:w-[380px] md:w-[440px] drop-shadow-[0_0_26px_rgba(0,0,0,0.8)]"
             />
 
-            <div className="mt-8 ml-0 sm:ml-24 text-[16px] sm:text-4xl md:text-5xl uppercase whitespace-nowrap text-center tracking-[0.25em] sm:tracking-[0.6em]">
+            <div className="mt-6 ml-0 sm:ml-24 text-[16px] sm:text-4xl md:text-5xl uppercase whitespace-nowrap text-center tracking-[0.25em] sm:tracking-[0.6em]">
               <span>UKIYO</span>
               <span className="inline-block mx-4 sm:mx-16 md:mx-20">
                 VIRGINIA
@@ -165,7 +178,6 @@ export default function Home() {
       <section id="events" className="pt-12 pb-16 bg-[#0b0b0f]">
         <div className="mx-auto max-w-7xl px-4">
           <div className="relative">
-            {/* ✅ Mobile + desktop arrows (no longer hidden) */}
             <button
               ref={prevRef}
               className="flex items-center justify-center absolute left-2 sm:left-0 top-1/2 -translate-y-1/2 z-10 h-9 w-9 sm:h-10 sm:w-10 rounded-full bg-black/70 border border-white/15 hover:bg-black/90"
@@ -203,7 +215,6 @@ export default function Home() {
               rewind={true}
               watchOverflow={true}
               loop={false}
-              // ✅ Spacing tuned to match LIV-style tighter layout
               spaceBetween={10}
               slidesPerView={1}
               breakpoints={{
@@ -229,7 +240,6 @@ export default function Home() {
                       rel={isInternal ? undefined : "noreferrer"}
                       className="group block"
                     >
-                      {/* ✅ Remove tight max-width so spacing/scale matches LIV */}
                       <div className="mx-auto w-full max-w-[360px]">
                         <div className="relative bg-black overflow-hidden">
                           <div className="relative aspect-[1/1] w-full bg-black overflow-hidden">
@@ -343,9 +353,7 @@ export default function Home() {
       {/* ================= FAQ (LIV-STYLE) ================= */}
       <section className="bg-[#0b0b0f]">
         <div className="mx-auto max-w-7xl px-4 py-20">
-          {/* ✅ centered on mobile, unchanged on lg+ */}
           <div className="grid gap-12 text-center lg:grid-cols-2 lg:items-start lg:text-left">
-            {/* Left */}
             <div className="flex flex-col items-center lg:items-start">
               <div className="text-2xl sm:text-3xl font-semibold uppercase tracking-widest">
                 Frequently Asked
@@ -368,7 +376,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Right accordion */}
             <div className="divide-y divide-white/15 border-t border-white/15 mx-auto w-full max-w-xl lg:max-w-none text-left">
               {faqItems.map((item) => (
                 <details key={item.q} className="group py-6">
@@ -377,7 +384,6 @@ export default function Home() {
                       {item.q}
                     </span>
 
-                    {/* plus icon */}
                     <span className="relative h-6 w-6 shrink-0 text-white/70">
                       <span className="absolute inset-x-0 top-1/2 h-[2px] -translate-y-1/2 bg-current" />
                       <span className="absolute inset-y-0 left-1/2 w-[2px] -translate-x-1/2 bg-current transition-transform duration-200 group-open:scale-y-0" />
