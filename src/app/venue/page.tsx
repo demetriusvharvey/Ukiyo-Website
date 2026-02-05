@@ -3,7 +3,7 @@
 import Link from "next/link";
 
 export default function VenuePage() {
-  const HERO_BG = "/moneyshot3.png"; // venue hero image
+  const HERO_BG = "/moneyshot2.png"; // venue hero image
 
   const highlightsLeft = [
     "Upscale nightlife atmosphere",
@@ -22,42 +22,55 @@ export default function VenuePage() {
   return (
     <main className="min-h-screen bg-black text-white">
       {/* ================= HERO ================= */}
-      <section className="relative w-full overflow-hidden">
+      <section className="relative w-full overflow-hidden bg-black h-[520px] sm:h-[560px] md:h-[420px] -mt-[72px] sm:-mt-[80px]">
+        {/* blurred background fill */}
+        <img
+          src={HERO_BG}
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover blur-xl scale-110 opacity-40"
+        />
+
+        {/* foreground image */}
+        {/* MOBILE = COVER (prevents blurred gap) | DESKTOP = CONTAIN */}
         <img
           src={HERO_BG}
           alt="Ukiyo Venue"
-          className="absolute inset-0 h-full w-full object-cover"
+          className="absolute inset-0 h-full w-full object-cover md:object-contain object-center"
         />
+
         <div className="absolute inset-0 bg-black/65" />
 
-        <div className="relative mx-auto max-w-5xl px-6 py-20 md:py-24 text-center">
-          <h1 className="text-xs font-semibold uppercase tracking-[0.35em] text-white/70">
-            Venue
-          </h1>
+        {/* text container */}
+        <div className="relative mx-auto px-6 h-full flex items-center justify-center">
+          <div className="w-full max-w-[520px] sm:max-w-[560px] md:max-w-[620px] text-center">
+            <h1 className="text-xs font-semibold uppercase tracking-[0.35em] text-white/70">
+              
+            </h1>
 
-          <h2 className="mt-4 text-2xl font-semibold tracking-tight md:text-4xl">
-            The definitive Virginia nightlife experience
-          </h2>
+            <h2 className="mt-4 text-2xl font-semibold tracking-tight md:text-4xl">
+              The definitive Virginia nightlife experience
+            </h2>
 
-          <p className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-white/70 md:text-base">
-            Ukiyo is designed for elevated nights—premium sound, immersive
-            lighting, and an atmosphere built for unforgettable experiences.
-            Discover the venue and plan your night out.
-          </p>
+            <p className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-white/70 md:text-base">
+              Ukiyo is designed for elevated nights—premium sound, immersive
+              lighting, and an atmosphere built for unforgettable experiences.
+              Discover the venue and plan your night out.
+            </p>
 
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            <Link
-              href="/reservations"
-              className="inline-flex items-center justify-center border border-white/25 px-6 py-3 text-xs font-semibold uppercase tracking-[0.25em] transition hover:bg-white/10"
-            >
-              Reserve
-            </Link>
-            <Link
-              href="/calendar"
-              className="inline-flex items-center justify-center border border-white/25 px-6 py-3 text-xs font-semibold uppercase tracking-[0.25em] transition hover:bg-white/10"
-            >
-              View events
-            </Link>
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+              <Link
+                href="/reservations"
+                className="inline-flex items-center justify-center border border-white/25 px-6 py-3 text-xs font-semibold uppercase tracking-[0.25em] transition hover:bg-white/10"
+              >
+                Reserve
+              </Link>
+              <Link
+                href="/calendar"
+                className="inline-flex items-center justify-center border border-white/25 px-6 py-3 text-xs font-semibold uppercase tracking-[0.25em] transition hover:bg-white/10"
+              >
+                View events
+              </Link>
+            </div>
           </div>
         </div>
       </section>

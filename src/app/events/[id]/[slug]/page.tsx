@@ -140,7 +140,6 @@ export default async function EventPage({ params }: PageProps) {
   const dressCodeText =
     "Upscale and stylish nightlife fashion. We do NOT allow athletic wear, sports jerseys, plain t-shirts, skullies, flat sandals, sneakers and/or flat boots for women. Oversized jackets and bags are prohibited.";
 
-  // ✅ Removed Restaurants
   const actions = [
     { label: "Tickets", href: eventbriteUrl },
     { label: "Mezzanine Tables", href: "/reservations" },
@@ -208,8 +207,6 @@ export default async function EventPage({ params }: PageProps) {
                   <span className="text-white/70">Ages 21 &amp; over</span>
                 </p>
               ) : null}
-
-              
             </div>
 
             {/* Right flyer in hero (like LIV) */}
@@ -318,15 +315,6 @@ export default async function EventPage({ params }: PageProps) {
                     f
                   </a>
                 </div>
-
-                <a
-                  href={eventbriteUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-xs text-white/60 hover:text-white underline underline-offset-4 transition"
-                >
-                  
-                </a>
               </div>
 
               <div className="my-4 h-px bg-white/10" />
@@ -376,19 +364,11 @@ export default async function EventPage({ params }: PageProps) {
                 <div className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/60">
                   Dress Code
                 </div>
-                <a
-                  href="#dress-code"
-                  className="text-xs text-white/60 hover:text-white underline underline-offset-4 transition"
-                >
-                  
-                </a>
               </div>
 
               <p className="mt-3 text-sm text-white/70 leading-relaxed" id="dress-code">
                 {dressCodeText}
               </p>
-
-             
             </div>
           </div>
         </div>

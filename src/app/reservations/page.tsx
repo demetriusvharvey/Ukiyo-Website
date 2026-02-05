@@ -8,7 +8,7 @@ export default function ReservationsPage() {
   // ✅ Eventbrite events for the "Event" dropdown
   const [eventbriteEvents, setEventbriteEvents] = useState<any[]>([]);
 
-  // ✅ NEW: submission state + form ref
+  // ✅ submission state + form ref
   const formRef = useRef<HTMLFormElement | null>(null);
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">(
     "idle"
@@ -59,7 +59,7 @@ export default function ReservationsPage() {
     });
   }, [eventbriteEvents]);
 
-  // ✅ NEW: Submit via fetch so we stay on our site
+  // ✅ Submit via fetch so we stay on our site
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setStatus("sending");
@@ -100,27 +100,29 @@ export default function ReservationsPage() {
   return (
     <main className="w-full">
       {/* ================= HERO ================= */}
-      <section className="relative w-full overflow-hidden">
+      <section className="relative w-full h-[260px] sm:h-[340px] md:h-[420px] overflow-hidden">
         <img
           src={HERO_BG}
           alt="Ukiyo Reservations"
-          className="absolute inset-0 h-full w-full object-cover object-[50%_25%]"
+          className="absolute inset-0 h-full w-full object-cover"
         />
 
         {/* Hero overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#070B10]/90 via-[#0A1220]/75 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/80" />
 
-        <div className="relative mx-auto max-w-5xl px-6 py-20 md:py-24 text-center text-white">
-          <div className="text-xs font-semibold uppercase tracking-[0.35em] text-white/70"></div>
+        <div className="relative h-full flex items-center justify-center text-center px-6 text-white">
+          <div className="max-w-2xl">
+            <div className="text-xs font-semibold uppercase tracking-[0.35em] text-white/70"></div>
 
-          <h1 className="mt-4 text-2xl font-semibold tracking-tight md:text-4xl">
-            VIP Section Reservations
-          </h1>
+            <h1 className="mt-4 text-2xl font-semibold tracking-tight md:text-4xl">
+              VIP Section Reservations
+            </h1>
 
-          <p className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-white/70 md:text-base">
-            Submit a request and we’ll follow up to confirm availability and
-            details.
-          </p>
+            <p className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-white/70 md:text-base">
+              Submit a request and we’ll follow up to confirm availability and
+              details.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -140,7 +142,7 @@ export default function ReservationsPage() {
               be submitted below.
             </p>
 
-            {/* ✅ NEW: success / error messages on YOUR site */}
+            {/* ✅ success / error messages on YOUR site */}
             {status === "success" && (
               <div className="mt-8 border border-white/20 bg-white/10 px-4 py-3 text-sm text-white/90 backdrop-blur">
                 ✅ Sent! We received your request and will follow up soon.

@@ -57,18 +57,25 @@ export default function CalendarPage() {
   return (
     <div className="w-full bg-[#070B10] text-white">
       {/* ================= HERO ================= */}
-      <section className="relative w-full overflow-hidden">
+      <section className="relative w-full overflow-hidden bg-black h-[260px] sm:h-[340px] md:h-[420px]">
+        {/* blurred background fill */}
+        <img
+          src={HERO_BG}
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover blur-xl scale-110 opacity-40"
+        />
+
+        {/* foreground full image (NO CROP) */}
         <img
           src={HERO_BG}
           alt="Ukiyo Events"
-          className="absolute inset-0 h-full w-full object-cover"
+          className="absolute inset-0 h-full w-full object-contain object-center"
         />
+
         <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/60 to-transparent" />
 
-        <div className="relative mx-auto max-w-5xl px-6 py-24 text-center">
-          <h1 className="text-xs uppercase tracking-[0.35em] text-white/70">
-            
-          </h1>
+        <div className="relative mx-auto max-w-5xl px-6 h-full flex flex-col items-center justify-center text-center">
+          <h1 className="text-xs uppercase tracking-[0.35em] text-white/70"></h1>
           <h2 className="mt-4 text-3xl md:text-5xl font-semibold">
             Upcoming Events
           </h2>
@@ -95,19 +102,15 @@ export default function CalendarPage() {
                   className="group block select-none touch-manipulation active:scale-[0.98] transition-transform duration-150"
                   style={{ WebkitTapHighlightColor: "transparent" }}
                 >
-                  {/* ✅ same “card feel” + hover treatment like homepage */}
                   <div className="border border-white/10 bg-black transition-transform duration-200 group-hover:brightness-110">
-                    {/* ================= FLYER ================= */}
                     <div className="relative h-[210px] sm:h-[240px] md:h-[260px] overflow-hidden bg-black">
                       {event.flyer ? (
                         <>
-                          {/* background fill */}
                           <img
                             src={event.flyer}
                             alt=""
                             className="absolute inset-0 h-full w-full object-cover blur-lg scale-110 opacity-50"
                           />
-                          {/* foreground perfect fit */}
                           <img
                             src={event.flyer}
                             alt={event.title}
@@ -121,7 +124,6 @@ export default function CalendarPage() {
                       )}
                     </div>
 
-                    {/* ================= TITLE ================= */}
                     <div className="p-3 text-center bg-black border-t border-white/10">
                       <div className="text-xs uppercase tracking-widest text-white/60">
                         {d.toLocaleDateString("en-US", { weekday: "short" })}
@@ -137,7 +139,6 @@ export default function CalendarPage() {
                       </div>
                     </div>
 
-                    {/* ✅ same purple “underline/glow” hover effect as homepage cards */}
                     <div className="relative h-[2px] w-full overflow-hidden bg-purple-500/70 shadow-[0_0_18px_rgba(168,85,247,0.95)]">
                       <span className="absolute inset-0 origin-left scale-x-0 bg-black transition-transform duration-500 ease-out group-hover:scale-x-100" />
                     </div>
