@@ -1,4 +1,5 @@
 import Link from "next/link";
+import EventActionsAccordion from "@/app/components/EventActionsAccordion";
 
 type PageProps = {
   params: Promise<{ id?: string; slug?: string }>;
@@ -140,14 +141,14 @@ export default async function EventPage({ params }: PageProps) {
   const dressCodeText =
     "Upscale and stylish nightlife fashion. We do NOT allow athletic wear, sports jerseys, plain t-shirts, skullies, flat sandals, sneakers and/or flat boots for women. Oversized jackets and bags are prohibited.";
 
-  // ✅ UPDATED: add icons (emoji) for LIV-style rows
   const actions = [
-    { label: "Tickets", icon: "🎟️", href: eventbriteUrl },
-    { label: "Mezzanine Tables", icon: "🍾", href: "/reservations" },
-    { label: "Main Floor Tables", icon: "🪩", href: "/reservations" },
-    { label: "Dance Floor Tables", icon: "💃", href: "/reservations" },
-    { label: "Stage Tables", icon: "🎤", href: "/reservations" },
-  ];
+  { key: "tickets", label: "Tickets", icon: "🎟️", href: eventbriteUrl },
+  { key: "mezz", label: "Mezzanine Tables", icon: "🍾", href: "/reservations" },
+  { key: "main", label: "Main Floor Tables", icon: "🪩", href: "/reservations" },
+  { key: "dance", label: "Dance Floor Tables", icon: "💃", href: "/reservations" },
+  { key: "stage", label: "Stage Tables", icon: "🎤", href: "/reservations" },
+];
+
 
   return (
     <main className="min-h-screen bg-black text-white">
@@ -246,46 +247,8 @@ export default async function EventPage({ params }: PageProps) {
         <div className="grid gap-8 md:grid-cols-[1.15fr_0.85fr] md:items-start">
           {/* LEFT: Action list */}
           <div>
-            <div className="rounded-sm border border-white/10 bg-white/[0.04] overflow-hidden">
-              {actions.map((item, idx) => {
-                const isExternal = item.href.startsWith("http");
-                const row = (
-                  <div
-                    className={`flex items-center justify-between px-5 py-4 ${
-                      idx !== 0 ? "border-t border-white/10" : ""
-                    }`}
-                  >
-                    {/* ✅ UPDATED: bold + icon like LIV */}
-                    <span className="text-sm font-semibold text-white/90 flex items-center gap-2">
-                      <span className="text-base leading-none">{item.icon}</span>
-                      {item.label}
-                    </span>
-
-                    <span className="text-white/60">›</span>
-                  </div>
-                );
-
-                return isExternal ? (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="block hover:bg-white/[0.06] transition"
-                  >
-                    {row}
-                  </a>
-                ) : (
-                  <Link
-                    key={item.label}
-                    href={item.href}
-                    className="block hover:bg-white/[0.06] transition"
-                  >
-                    {row}
-                  </Link>
-                );
-              })}
-            </div>
+            {/* ✅ Dropdown for Tickets (widget placeholder inside) */}
+            <EventActionsAccordion actions={actions} />
 
             {/* Event info snippet */}
             <div className="mt-6">
