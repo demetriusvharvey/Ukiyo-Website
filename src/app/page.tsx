@@ -181,121 +181,134 @@ export default function Home() {
       <section id="events" className="pt-12 pb-16 bg-[#0b0b0f]">
         {/* LIV-tight: nearly no side padding + wider max width */}
         <div className="mx-auto max-w-[1600px] px-0 sm:px-1">
-          <div className="relative">
-            <button
-              ref={prevRef}
-              className="flex items-center justify-center absolute left-2 sm:left-0 top-1/2 -translate-y-1/2 z-10 h-9 w-9 sm:h-10 sm:w-10 rounded-full bg-black/70 border border-white/15 hover:bg-black/90"
-              aria-label="Previous"
-              type="button"
-            >
-              <span className="text-white/90 text-lg sm:text-xl leading-none">
-                ‹
-              </span>
-            </button>
+          <div className="mx-auto max-w-[1120px]">
+            <div className="relative overflow-hidden">
+              {/* PREV ARROW */}
+              <button
+                ref={prevRef}
+                className="group flex items-center justify-center absolute left-0 top-1/2 -translate-y-1/2 z-10
+        h-9 w-9 sm:h-10 sm:w-10 rounded-full
+        bg-black/70 border border-white/15
+        transition-colors duration-200
+        hover:bg-purple-500 hover:border-purple-500"
+                aria-label="Previous"
+                type="button"
+              >
+                <span className="text-white/90 text-lg sm:text-xl leading-none transition-colors duration-200 group-hover:text-white">
+                  ‹
+                </span>
+              </button>
 
-            <button
-              ref={nextRef}
-              className="flex items-center justify-center absolute right-2 sm:right-0 top-1/2 -translate-y-1/2 z-10 h-9 w-9 sm:h-10 sm:w-10 rounded-full bg-black/70 border border-white/15 hover:bg-black/90"
-              aria-label="Next"
-              type="button"
-            >
-              <span className="text-white/90 text-lg sm:text-xl leading-none">
-                ›
-              </span>
-            </button>
+              {/* NEXT ARROW */}
+              <button
+                ref={nextRef}
+                className="group flex items-center justify-center absolute right-0 top-1/2 -translate-y-1/2 z-10
+        h-9 w-9 sm:h-10 sm:w-10 rounded-full
+        bg-black/70 border border-white/15
+        transition-colors duration-200
+        hover:bg-purple-500 hover:border-purple-500"
+                aria-label="Next"
+                type="button"
+              >
+                <span className="text-white/90 text-lg sm:text-xl leading-none transition-colors duration-200 group-hover:text-white">
+                  ›
+                </span>
+              </button>
 
-            <Swiper
-              modules={[Navigation]}
-              onBeforeInit={(swiper: any) => {
-                swiper.params.navigation = swiper.params.navigation || {};
-                swiper.params.navigation.prevEl = prevRef.current;
-                swiper.params.navigation.nextEl = nextRef.current;
-              }}
-              navigation={{
-                prevEl: prevRef.current,
-                nextEl: nextRef.current,
-              }}
-              centeredSlides={false}
-              rewind={true}
-              watchOverflow={true}
-              loop={false}
+              {/* ✅ THIS is the arrow-to-card spacing (64px each side) */}
+              <div className="px-16">
+                <Swiper
+                  modules={[Navigation]}
+                  onBeforeInit={(swiper: any) => {
+                    swiper.params.navigation = swiper.params.navigation || {};
+                    swiper.params.navigation.prevEl = prevRef.current;
+                    swiper.params.navigation.nextEl = nextRef.current;
+                  }}
+                  navigation={{
+                    prevEl: prevRef.current,
+                    nextEl: nextRef.current,
+                  }}
+                  centeredSlides={false}
+                  rewind={true}
+                  watchOverflow={true}
+                  loop={false}
 
-              /* 🔥 HALF-INCH SPACING */
-              spaceBetween={48}
+                  /* tight like LIV */
+                  spaceBetween={16}
 
-              slidesPerView={1}
-              breakpoints={{
-                640: { slidesPerView: 2, spaceBetween: 48 },
-                1024: { slidesPerView: 3, spaceBetween: 48 },
-              }}
+                  slidesPerView={1}
+                  breakpoints={{
+                    640: { slidesPerView: 2, spaceBetween: 16 },
+                    1024: { slidesPerView: 3, spaceBetween: 20 }, // ✅ ONLY 3
+                  }}
+                  className="overflow-hidden"
+                >
+                  {displayEvents.map((event: any, idx: number) => {
+                    const { top, bottom } = splitDateLabel(event?.date || "");
+                    const href =
+                      event?.id && event?.slug
+                        ? `/events/${event.id}/${event.slug}`
+                        : event.link;
 
-              className="overflow-hidden"
-            >
+                    const isInternal = Boolean(event?.id && event?.slug);
 
-              {displayEvents.map((event: any, idx: number) => {
-                const { top, bottom } = splitDateLabel(event?.date || "");
-                const href =
-                  event?.id && event?.slug
-                    ? `/events/${event.id}/${event.slug}`
-                    : event.link;
+                    return (
+                      <SwiperSlide key={idx}>
+                        <a
+                          href={href}
+                          target={isInternal ? undefined : "_blank"}
+                          rel={isInternal ? undefined : "noreferrer"}
+                          className="group block"
+                        >
+                          <div className="w-full">
+                            <div className="relative bg-black overflow-hidden">
+                              <div className="relative aspect-[1/1] w-full bg-black overflow-hidden">
+                                {event.flyer ? (
+                                  <img
+                                    src={event.flyer}
+                                    alt={event.title}
+                                    className="absolute inset-0 h-full w-full object-cover object-center"
+                                  />
+                                ) : (
+                                  <div className="absolute inset-0 flex items-center justify-center text-xs uppercase tracking-widest text-white/40">
+                                    Event Flyer
+                                  </div>
+                                )}
 
-                const isInternal = Boolean(event?.id && event?.slug);
-
-                return (
-                  <SwiperSlide key={idx}>
-                    <a
-                      href={href}
-                      target={isInternal ? undefined : "_blank"}
-                      rel={isInternal ? undefined : "noreferrer"}
-                      className="group block"
-                    >
-                      <div className="mx-auto w-full">
-                        <div className="relative bg-black overflow-hidden">
-                          <div className="relative aspect-[1/1] w-full bg-black overflow-hidden">
-                            {event.flyer ? (
-                              <img
-                                src={event.flyer}
-                                alt={event.title}
-                                className="absolute inset-0 h-full w-full object-cover object-center"
-                              />
-                            ) : (
-                              <div className="absolute inset-0 flex items-center justify-center text-xs uppercase tracking-widest text-white/40">
-                                Event Flyer
+                                <div className="absolute left-0 bottom-0 bg-black/90 border-t border-white/10 border-r border-white/10 px-3 py-2">
+                                  <div className="text-[10px] uppercase tracking-widest text-white/80">
+                                    {top}
+                                  </div>
+                                  <div className="text-[12px] font-semibold uppercase tracking-widest">
+                                    {bottom}
+                                  </div>
+                                </div>
                               </div>
-                            )}
 
-                            <div className="absolute left-0 bottom-0 bg-black/90 border-t border-white/10 border-r border-white/10 px-3 py-2">
-                              <div className="text-[10px] uppercase tracking-widest text-white/80">
-                                {top}
+                              <div className="bg-black px-4 py-3 border-t border-white/10">
+                                <div className="text-sm font-semibold uppercase tracking-wide line-clamp-1">
+                                  {event.title}
+                                </div>
+                                <div className="mt-1 text-[11px] text-white/70">
+                                  Ukiyo Virginia • {event?.time ? event.time : "10:00 PM"}
+                                </div>
                               </div>
-                              <div className="text-[12px] font-semibold uppercase tracking-widest">
-                                {bottom}
+
+                              <div className="relative h-[2px] w-full overflow-hidden bg-purple-500/70">
+                                <span className="absolute inset-0 origin-left scale-x-0 bg-black transition-transform duration-500 ease-out group-hover:scale-x-100" />
                               </div>
                             </div>
                           </div>
-
-                          <div className="bg-black px-4 py-3 border-t border-white/10">
-                            <div className="text-sm font-semibold uppercase tracking-wide line-clamp-1">
-                              {event.title}
-                            </div>
-                            <div className="mt-1 text-[11px] text-white/70">
-                              Ukiyo Virginia •{" "}
-                              {event?.time ? event.time : "10:00 PM"}
-                            </div>
-                          </div>
-
-                          <div className="relative h-[2px] w-full overflow-hidden bg-purple-500/70 shadow-[0_0_18px_rgba(168,85,247,0.95)]">
-                            <span className="absolute inset-0 origin-left scale-x-0 bg-black transition-transform duration-500 ease-out group-hover:scale-x-100" />
-                          </div>
-                        </div>
-                      </div>
-                    </a>
-                  </SwiperSlide>
-                );
-              })}
-            </Swiper>
+                        </a>
+                      </SwiperSlide>
+                    );
+                  })}
+                </Swiper>
+              </div>
+            </div>
           </div>
         </div>
+
 
         <div className="mt-10 flex justify-center">
           <Link

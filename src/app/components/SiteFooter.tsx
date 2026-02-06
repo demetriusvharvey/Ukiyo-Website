@@ -136,26 +136,34 @@ export default function SiteFooter({
           </div>
 
           {/* BOTTOM BAR */}
-          <div className="mt-16 border-t border-white/10 pt-8">
-            <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-[11px] uppercase tracking-[0.22em] text-white/55 md:justify-end">
-              <Link href="/privacy" className="hover:text-white">
-                Privacy
-              </Link>
-              <Link href="/terms" className="hover:text-white">
-                Terms
-              </Link>
-              <Link href="/accessibility" className="hover:text-white">
-                Accessibility
-              </Link>
-              <Link href="/cookie-settings" className="hover:text-white">
-                Cookie Settings
-              </Link>
-            </div>
+          {/* BOTTOM BAR */}
+          <div className="mt-16 border-t border-white/10 pt-6">
+            <div className="flex flex-col gap-4 text-[11px] uppercase tracking-[0.22em] text-white/55 md:flex-row md:items-center md:justify-between">
 
-            <div className="mt-6 text-center text-xs text-white/50 md:mt-3 md:text-left">
-              © {new Date().getFullYear()} Ukiyo. All rights reserved.
+              {/* LEFT: COPYRIGHT */}
+              <div className="text-center md:text-left">
+                © {new Date().getFullYear()} Ukiyo. All rights reserved.
+              </div>
+
+              {/* RIGHT: LEGAL LINKS */}
+              <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 md:justify-end">
+                <Link href="/privacy" className="hover:text-white">
+                  Privacy
+                </Link>
+                <Link href="/terms" className="hover:text-white">
+                  Terms
+                </Link>
+                <Link href="/accessibility" className="hover:text-white">
+                  Accessibility
+                </Link>
+                <Link href="/cookie-settings" className="hover:text-white">
+                  Cookie Settings
+                </Link>
+              </div>
+
             </div>
           </div>
+
         </div>
       </footer>
 
