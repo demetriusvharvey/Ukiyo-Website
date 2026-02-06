@@ -156,7 +156,7 @@ export default function SiteFooter({
                 <Link href="/accessibility" className="hover:text-white">
                   Accessibility
                 </Link>
-                <Link href="/cookie-settings" className="hover:text-white">
+                <Link href="/cookies" className="hover:text-white">
                   Cookie Settings
                 </Link>
               </div>

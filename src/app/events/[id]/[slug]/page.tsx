@@ -1,5 +1,6 @@
 import Link from "next/link";
 import EventActionsAccordion from "@/app/components/EventActionsAccordion";
+import RelatedEventsCarousel from "@/app/components/RelatedEventsCarousel";
 
 type PageProps = {
   params: Promise<{ id?: string; slug?: string }>;
@@ -61,6 +62,9 @@ export default async function EventPage({ params }: PageProps) {
     );
   }
 
+  // ----------------------------
+  // Fetch the single event
+  // ----------------------------
   const eventUrl = `https://www.eventbriteapi.com/v3/events/${id}/`;
 
   const res = await fetch(eventUrl, {
@@ -142,24 +146,47 @@ export default async function EventPage({ params }: PageProps) {
     "Upscale and stylish nightlife fashion. We do NOT allow athletic wear, sports jerseys, plain t-shirts, skullies, flat sandals, sneakers and/or flat boots for women. Oversized jackets and bags are prohibited.";
 
   const actions = [
-  { key: "tickets", label: "Tickets", icon: "🎟️", href: eventbriteUrl },
-  { key: "mezz", label: "Mezzanine Tables", icon: "🍾", href: "/reservations" },
-  { key: "main", label: "Main Floor Tables", icon: "🪩", href: "/reservations" },
-  { key: "dance", label: "Dance Floor Tables", icon: "💃", href: "/reservations" },
-  { key: "stage", label: "Stage Tables", icon: "🎤", href: "/reservations" },
-];
+    { key: "tickets", label: "Tickets", icon: "🎟️", href: eventbriteUrl },
+    { key: "mezz", label: "Mezzanine Tables", icon: "🍾", href: "/reservations" },
+    { key: "main", label: "Main Floor Tables", icon: "🪩", href: "/reservations" },
+    { key: "dance", label: "Dance Floor Tables", icon: "💃", href: "/reservations" },
+    { key: "stage", label: "Stage Tables", icon: "🎤", href: "/reservations" },
+  ];
 
+  // ----------------------------
+  // ✅ Fetch "Related Events" directly from Eventbrite
+  // (matches your API route logic; avoids /api absolute URL issues)
+  // ----------------------------
+  const ORG_ID = "252110687260";
+  const UKIYO_KEYWORD = "ukiyo";
+
+  let allEvents: any[] = [];
+  try {
+    const listUrl =
+      `https://www.eventbriteapi.com/v3/organizations/${ORG_ID}/events/` +
+      `?status=live,started&order_by=start_asc&page_size=100`;
+
+    const listRes = await fetch(listUrl, {
+      headers: { Authorization: `Bearer ${token}` },
+      cache: "no-store",
+    });
+
+    const listData = await listRes.json();
+
+    const events = Array.isArray(listData?.events) ? listData.events : [];
+    allEvents = events.filter((e: any) => {
+      const t = (e?.name?.text ?? "").toLowerCase();
+      const s = (e?.summary ?? "").toLowerCase();
+      return t.includes(UKIYO_KEYWORD) || s.includes(UKIYO_KEYWORD);
+    });
+  } catch (err) {
+    console.error("Related events fetch failed:", err);
+  }
 
   return (
     <main className="min-h-screen bg-black text-white">
-      {/* =========================
-          HERO (LIV-style)
-          - Sharp/dark background
-          - Blur only on the far-right
-          - Flyer clearly visible
-         ========================= */}
+      {/* ========================= HERO ========================= */}
       <section className="relative w-full overflow-hidden">
-        {/* Base background (NOT blurred) */}
         <div
           className="absolute inset-0"
           style={{
@@ -170,7 +197,6 @@ export default async function EventPage({ params }: PageProps) {
           }}
         />
 
-        {/* LIV-style right-side blur strip */}
         <div
           className="absolute inset-y-0 right-0 w-[42%] hidden md:block"
           style={{
@@ -183,14 +209,11 @@ export default async function EventPage({ params }: PageProps) {
           }}
         />
 
-        {/* Dark overlays (keep it readable like LIV) */}
         <div className="absolute inset-0 bg-gradient-to-r from-black via-black/75 to-black/40" />
         <div className="absolute inset-0 bg-black/35" />
 
-        {/* Content */}
         <div className="relative mx-auto max-w-6xl px-6 py-14 md:py-16">
           <div className="grid gap-10 md:grid-cols-[1.25fr_0.75fr] md:items-center">
-            {/* Left text */}
             <div className="max-w-3xl">
               <div className="text-xs font-semibold uppercase tracking-[0.35em] text-white/70">
                 Event
@@ -211,7 +234,6 @@ export default async function EventPage({ params }: PageProps) {
               ) : null}
             </div>
 
-            {/* Right flyer in hero (like LIV) */}
             <div className="hidden md:flex justify-end">
               <div className="w-[320px]">
                 <div className="rounded-sm border border-white/10 bg-black/30 p-3 shadow-[0_20px_80px_rgba(0,0,0,0.6)]">
@@ -226,7 +248,6 @@ export default async function EventPage({ params }: PageProps) {
             </div>
           </div>
 
-          {/* Mobile flyer under the hero text */}
           <div className="mt-10 md:hidden">
             <div className="rounded-sm border border-white/10 bg-black/30 p-3">
               <img
@@ -240,17 +261,12 @@ export default async function EventPage({ params }: PageProps) {
         </div>
       </section>
 
-      {/* =========================
-          BODY (LIV-style split)
-         ========================= */}
+      {/* ========================= BODY ========================= */}
       <section className="mx-auto max-w-6xl px-6 py-10 md:py-12">
         <div className="grid gap-8 md:grid-cols-[1.15fr_0.85fr] md:items-start">
-          {/* LEFT: Action list */}
           <div>
-            {/* ✅ Dropdown for Tickets (widget placeholder inside) */}
             <EventActionsAccordion actions={actions} />
 
-            {/* Event info snippet */}
             <div className="mt-6">
               <div className="text-xs font-semibold uppercase tracking-[0.35em] text-white/60">
                 Event Info
@@ -259,9 +275,7 @@ export default async function EventPage({ params }: PageProps) {
             </div>
           </div>
 
-          {/* RIGHT: Flyer + info panel */}
           <div className="space-y-5">
-            {/* ✅ Keep only ONE flyer on mobile (hide this duplicate on mobile) */}
             <div className="hidden md:block rounded-sm border border-white/10 bg-white/[0.04] p-3">
               <img
                 src={flyer}
@@ -272,7 +286,6 @@ export default async function EventPage({ params }: PageProps) {
             </div>
 
             <div className="rounded-sm border border-white/10 bg-white/[0.04] p-5">
-              {/* ✅ Only Facebook icon, link to your FB page */}
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3 text-white/70">
                   <a
@@ -344,9 +357,7 @@ export default async function EventPage({ params }: PageProps) {
         </div>
       </section>
 
-      {/* =========================
-          DESCRIPTION
-         ========================= */}
+      {/* ========================= DESCRIPTION ========================= */}
       <section className="mx-auto max-w-6xl px-6 pb-14">
         {shouldShowSummary ? <p className="text-white/70 leading-relaxed">{summaryClean}</p> : null}
 
@@ -357,7 +368,10 @@ export default async function EventPage({ params }: PageProps) {
           />
         ) : null}
 
-        <div className="mt-12">
+        {/* ✅ RELATED EVENTS */}
+        <RelatedEventsCarousel events={allEvents} currentEventId={id} />
+
+        <div className="mt-12 flex justify-center">
           <Link
             href="/"
             className="inline-block border border-white/30 bg-white/10 px-6 py-4 text-xs font-semibold uppercase tracking-[0.35em] transition hover:bg-white/20"
