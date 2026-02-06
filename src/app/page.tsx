@@ -216,7 +216,7 @@ export default function Home() {
               </button>
 
               {/* ✅ THIS is the arrow-to-card spacing (64px each side) */}
-              <div className="px-16">
+              <div className="px-12">
                 <Swiper
                   modules={[Navigation]}
                   onBeforeInit={(swiper: any) => {

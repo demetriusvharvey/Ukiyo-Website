@@ -3,7 +3,7 @@
 import Link from "next/link";
 
 export default function VenuePage() {
-  const HERO_BG = "/moneyshot2.png"; // venue hero image
+  const HERO_BG = "/moneyshot2.png";
 
   const highlightsLeft = [
     "Upscale nightlife atmosphere",
@@ -23,30 +23,20 @@ export default function VenuePage() {
     <main className="min-h-screen bg-black text-white">
       {/* ================= HERO ================= */}
       <section className="relative w-full overflow-hidden bg-black h-[520px] sm:h-[560px] md:h-[420px] -mt-[72px] sm:-mt-[80px]">
-        {/* blurred background fill */}
-        <img
-          src={HERO_BG}
-          alt=""
-          className="absolute inset-0 h-full w-full object-cover blur-xl scale-110 opacity-40"
-        />
-
-        {/* foreground image */}
-        {/* MOBILE = COVER (prevents blurred gap) | DESKTOP = CONTAIN */}
+        {/* foreground image — FULL BLEED, LEFT + SLIGHT DOWN */}
         <img
           src={HERO_BG}
           alt="Ukiyo Venue"
-          className="absolute inset-0 h-full w-full object-cover md:object-contain object-center"
+          className="absolute inset-0 h-full w-full object-cover"
+          style={{ objectPosition: "30% 25%" }}
         />
 
+        {/* dark overlay (kept for text readability) */}
         <div className="absolute inset-0 bg-black/65" />
 
         {/* text container */}
         <div className="relative mx-auto px-6 h-full flex items-center justify-center">
           <div className="w-full max-w-[520px] sm:max-w-[560px] md:max-w-[620px] text-center">
-            <h1 className="text-xs font-semibold uppercase tracking-[0.35em] text-white/70">
-              
-            </h1>
-
             <h2 className="mt-4 text-2xl font-semibold tracking-tight md:text-4xl">
               The definitive Virginia nightlife experience
             </h2>
