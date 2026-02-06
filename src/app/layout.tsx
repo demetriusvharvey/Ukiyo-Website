@@ -52,7 +52,6 @@ export default function RootLayout({
 
         {/* ================= HEADER ================= */}
         <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-black">
-          {/* FULL WIDTH ROW (logo left / nav right) */}
           <div className="mx-auto flex h-[72px] w-full items-center px-6">
             {/* LOGO — LEFT */}
             <Link href="/" className="flex flex-col items-center">
@@ -62,7 +61,12 @@ export default function RootLayout({
                 className="h-9 w-auto md:h-11"
               />
 
-              {/* Subtitle — desktop only */}
+              {/* Mobile subtitle */}
+              <div className="mt-[2px] block md:hidden text-center text-[8px] uppercase tracking-[0.28em] text-white/60 whitespace-nowrap">
+                UKIYO VIRGINIA
+              </div>
+
+              {/* Desktop subtitle */}
               <div className="mt-[2px] hidden md:block text-center text-[9px] uppercase tracking-[0.32em] text-white/60 whitespace-nowrap">
                 UKIYO VIRGINIA
               </div>
