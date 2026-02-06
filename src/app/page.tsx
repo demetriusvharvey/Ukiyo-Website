@@ -138,7 +138,7 @@ export default function Home() {
     backdrop-blur-md
 
     transition-all duration-300 ease-out
-    hover:rotate-[2deg] hover:scale-105
+    hover:rotate-[22deg] hover:scale-105
 
     hover:bg-purple-600/60
     hover:shadow-[0_0_40px_rgba(168,85,247,0.95)]
@@ -205,32 +205,32 @@ export default function Home() {
             </button>
 
             <Swiper
-  modules={[Navigation]}
-  onBeforeInit={(swiper: any) => {
-    swiper.params.navigation = swiper.params.navigation || {};
-    swiper.params.navigation.prevEl = prevRef.current;
-    swiper.params.navigation.nextEl = nextRef.current;
-  }}
-  navigation={{
-    prevEl: prevRef.current,
-    nextEl: nextRef.current,
-  }}
-  centeredSlides={false}
-  rewind={true}
-  watchOverflow={true}
-  loop={false}
+              modules={[Navigation]}
+              onBeforeInit={(swiper: any) => {
+                swiper.params.navigation = swiper.params.navigation || {};
+                swiper.params.navigation.prevEl = prevRef.current;
+                swiper.params.navigation.nextEl = nextRef.current;
+              }}
+              navigation={{
+                prevEl: prevRef.current,
+                nextEl: nextRef.current,
+              }}
+              centeredSlides={false}
+              rewind={true}
+              watchOverflow={true}
+              loop={false}
 
-  /* 🔥 HALF-INCH SPACING */
-  spaceBetween={48}
+              /* 🔥 HALF-INCH SPACING */
+              spaceBetween={48}
 
-  slidesPerView={1}
-  breakpoints={{
-    640: { slidesPerView: 2, spaceBetween: 48 },
-    1024: { slidesPerView: 3, spaceBetween: 48 },
-  }}
+              slidesPerView={1}
+              breakpoints={{
+                640: { slidesPerView: 2, spaceBetween: 48 },
+                1024: { slidesPerView: 3, spaceBetween: 48 },
+              }}
 
-  className="overflow-hidden"
->
+              className="overflow-hidden"
+            >
 
               {displayEvents.map((event: any, idx: number) => {
                 const { top, bottom } = splitDateLabel(event?.date || "");
@@ -375,14 +375,23 @@ export default function Home() {
                 visit the FAQs page.
               </p>
 
-              <div className="mt-8">
-                <Link
-                  href="/faqs"
-                  className="inline-flex items-center justify-center px-10 py-3 text-xs font-semibold uppercase tracking-widest border border-white/30 hover:border-white/60 hover:bg-white/5 transition"
-                >
-                  All FAQs
-                </Link>
-              </div>
+              <Link
+                href="/faqs"
+                className="
+    mt-8
+    inline-flex items-center justify-center
+    px-10 py-3
+    text-xs font-semibold uppercase tracking-widest
+    text-white
+    border border-purple-500
+    bg-transparent
+    transition-colors duration-300
+    hover:bg-purple-600/10
+  "
+              >
+                All FAQs
+              </Link>
+
             </div>
 
             <div className="divide-y divide-white/15 border-t border-white/15 mx-auto w-full max-w-xl lg:max-w-none text-left">

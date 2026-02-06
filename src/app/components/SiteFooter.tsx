@@ -21,16 +21,17 @@ export default function SiteFooter({
     <>
       <footer className="border-t border-white/10 bg-black">
         <div className="mx-auto max-w-7xl px-6 py-16">
-          <div className="grid gap-12 text-center md:grid-cols-4 md:text-left">
-            {/* BRAND / LOGO */}
-            <div className="flex flex-col items-center">
-              <Link href="/" className="flex flex-col items-center">
+          {/* LIV-style column sizing */}
+          <div className="grid items-start gap-10 text-center md:grid-cols-[180px_1.1fr_0.75fr_0.75fr_1.4fr] md:text-left">
+            {/* BRAND */}
+            <div className="flex flex-col items-center md:items-start">
+              <Link href="/" className="flex flex-col items-center md:items-start">
                 <img
                   src="/ukiyologo.PNG"
                   alt="Ukiyo Virginia logo"
-                  className="h-14 sm:h-16 w-auto mx-auto"
+                  className="h-14 sm:h-16 w-auto"
                 />
-                <div className="mt-1 text-center text-[10px] uppercase tracking-[0.32em] text-white/60 whitespace-nowrap">
+                <div className="mt-1 text-[10px] uppercase tracking-[0.32em] text-white/60 whitespace-nowrap">
                   UKIYO VIRGINIA
                 </div>
               </Link>
@@ -41,10 +42,9 @@ export default function SiteFooter({
               <div className="text-sm font-semibold uppercase tracking-[0.22em]">
                 Visit
               </div>
-              <div className="mt-3 space-y-2 text-sm text-white/80">
+              <div className="mt-4 space-y-2 text-sm text-white/80">
                 <div>4592 George Washington Hwy, Portsmouth, VA</div>
                 <div>Saturday & Sunday • 10PM–2AM</div>
-
                 <div>
                   Directions →{" "}
                   <a
@@ -73,7 +73,7 @@ export default function SiteFooter({
               <div className="text-sm font-semibold uppercase tracking-[0.22em]">
                 Connect
               </div>
-              <div className="mt-3 space-y-2 text-sm">
+              <div className="mt-4 space-y-2 text-sm">
                 <a
                   href={instagramUrl}
                   target="_blank"
@@ -93,13 +93,25 @@ export default function SiteFooter({
               </div>
             </div>
 
-            {/* SUBSCRIBE (FIXED CENTERING) */}
-            <div className="flex flex-col items-center text-center">
+            {/* LEARN MORE (now closer to Connect) */}
+            <div>
+              <div className="text-sm font-semibold uppercase tracking-[0.22em]">
+                Learn More
+              </div>
+              <div className="mt-4 space-y-2 text-sm">
+                <Link href="/venue" className="block hover:underline">
+                  Venue
+                </Link>
+              </div>
+            </div>
+
+            {/* SUBSCRIBE */}
+            <div className="flex flex-col items-center md:items-start md:text-left">
               <div className="text-sm font-semibold uppercase tracking-[0.22em]">
                 Subscribe
               </div>
 
-              <p className="mt-3 max-w-[34ch] text-sm text-white/60">
+              <p className="mt-4 max-w-[42ch] text-sm text-white/60">
                 Stay ahead of the nightlife curve — subscribe for exclusive
                 updates.
               </p>
@@ -108,14 +120,14 @@ export default function SiteFooter({
                 type="button"
                 onClick={() => setOpen(true)}
                 className={[
-                  "mt-5 inline-flex h-10 items-center justify-center px-6",
+                  "mt-6 inline-flex h-12 items-center justify-center px-12",
                   "bg-transparent text-white",
                   "border-2 border-purple-500",
-                  "text-xs font-semibold uppercase tracking-[0.22em]",
+                  "text-xs font-semibold uppercase tracking-[0.3em]",
                   "transition-all duration-300",
-                  "shadow-[0_0_10px_rgba(168,85,247,0.35)]",
+                  "shadow-[0_0_12px_rgba(168,85,247,0.4)]",
                   "hover:bg-purple-600",
-                  "hover:shadow-[0_0_30px_rgba(168,85,247,1),inset_0_0_14px_rgba(255,255,255,0.18)]",
+                  "hover:shadow-[0_0_36px_rgba(168,85,247,1),inset_0_0_14px_rgba(255,255,255,0.18)]",
                 ].join(" ")}
               >
                 Subscribe
@@ -124,8 +136,7 @@ export default function SiteFooter({
           </div>
 
           {/* BOTTOM BAR */}
-          <div className="mt-14 border-t border-white/10 pt-8">
-            {/* Legal row */}
+          <div className="mt-16 border-t border-white/10 pt-8">
             <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-[11px] uppercase tracking-[0.22em] text-white/55 md:justify-end">
               <Link href="/privacy" className="hover:text-white">
                 Privacy
@@ -141,7 +152,6 @@ export default function SiteFooter({
               </Link>
             </div>
 
-            {/* Copyright */}
             <div className="mt-6 text-center text-xs text-white/50 md:mt-3 md:text-left">
               © {new Date().getFullYear()} Ukiyo. All rights reserved.
             </div>
