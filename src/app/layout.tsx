@@ -69,7 +69,7 @@ export default function RootLayout({
             </Link>
 
             {/* NAV — RIGHT */}
-            <nav className="ml-auto mr-[96px] hidden md:flex items-center gap-12 pt-[10px] text-sm uppercase tracking-[0.25em]">
+            <nav className="ml-auto mr-[96px] hidden md:flex items-center gap-12 pt-[10px] text-sm font-semibold uppercase tracking-[0.25em]">
               <Link href="/calendar" className="nav-link">
                 Events
               </Link>

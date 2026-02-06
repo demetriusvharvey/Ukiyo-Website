@@ -140,12 +140,13 @@ export default async function EventPage({ params }: PageProps) {
   const dressCodeText =
     "Upscale and stylish nightlife fashion. We do NOT allow athletic wear, sports jerseys, plain t-shirts, skullies, flat sandals, sneakers and/or flat boots for women. Oversized jackets and bags are prohibited.";
 
+  // ✅ UPDATED: add icons (emoji) for LIV-style rows
   const actions = [
-    { label: "Tickets", href: eventbriteUrl },
-    { label: "Mezzanine Tables", href: "/reservations" },
-    { label: "Main Floor Tables", href: "/reservations" },
-    { label: "Dance Floor Tables", href: "/reservations" },
-    { label: "Stage Tables", href: "/reservations" },
+    { label: "Tickets", icon: "🎟️", href: eventbriteUrl },
+    { label: "Mezzanine Tables", icon: "🍾", href: "/reservations" },
+    { label: "Main Floor Tables", icon: "🪩", href: "/reservations" },
+    { label: "Dance Floor Tables", icon: "💃", href: "/reservations" },
+    { label: "Stage Tables", icon: "🎤", href: "/reservations" },
   ];
 
   return (
@@ -198,7 +199,7 @@ export default async function EventPage({ params }: PageProps) {
                 {title}
               </h1>
 
-              {(dateLine || startTimeLine) ? (
+              {dateLine || startTimeLine ? (
                 <p className="mt-5 text-sm text-white/80 md:text-base">
                   {dateLine ? dateLine : ""}
                   {startTimeLine ? ` • ${startTimeLine}` : ""}
@@ -254,7 +255,12 @@ export default async function EventPage({ params }: PageProps) {
                       idx !== 0 ? "border-t border-white/10" : ""
                     }`}
                   >
-                    <span className="text-sm text-white/90">{item.label}</span>
+                    {/* ✅ UPDATED: bold + icon like LIV */}
+                    <span className="text-sm font-semibold text-white/90 flex items-center gap-2">
+                      <span className="text-base leading-none">{item.icon}</span>
+                      {item.label}
+                    </span>
+
                     <span className="text-white/60">›</span>
                   </div>
                 );
@@ -292,7 +298,8 @@ export default async function EventPage({ params }: PageProps) {
 
           {/* RIGHT: Flyer + info panel */}
           <div className="space-y-5">
-            <div className="rounded-sm border border-white/10 bg-white/[0.04] p-3">
+            {/* ✅ Keep only ONE flyer on mobile (hide this duplicate on mobile) */}
+            <div className="hidden md:block rounded-sm border border-white/10 bg-white/[0.04] p-3">
               <img
                 src={flyer}
                 alt={title}
