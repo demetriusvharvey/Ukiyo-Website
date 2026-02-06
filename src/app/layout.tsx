@@ -46,13 +46,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${italiana.variable} ${inter.variable} ${montserrat.variable} antialiased text-white bg-black`}
+        className={`${italiana.variable} ${inter.variable} ${montserrat.variable} antialiased text-[color:var(--ds2-text)] bg-[color:var(--ds2-bg)]`}
       >
         <div id="top" />
 
         {/* ================= HEADER ================= */}
-        <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-black">
-          <div className="mx-auto flex h-[72px] w-full items-center px-6">
+        <header
+          className="fixed inset-x-0 top-0 z-50 border-b border-white/10 overflow-hidden"
+          style={{ background: "var(--ds2-radial-header)" }}
+        >
+          {/* subtle glass wash */}
+          <div className="absolute inset-0 bg-black/55 backdrop-blur-md" />
+
+          <div className="relative mx-auto flex h-[72px] w-full items-center px-6">
             {/* LOGO — LEFT */}
             <Link href="/" className="flex flex-col items-center">
               <img
@@ -97,7 +103,10 @@ export default function RootLayout({
         <MobileHeader />
 
         {/* ================= PAGE CONTENT ================= */}
-        <main className="relative z-10 min-h-screen pt-20 bg-black overflow-x-hidden">
+        <main
+          className="relative z-10 min-h-screen pt-20 overflow-x-hidden ds2-page-bg"
+          style={{ background: "var(--ds2-radial-page)" }}
+        >
           {children}
         </main>
 

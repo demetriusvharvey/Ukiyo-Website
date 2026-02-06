@@ -3,6 +3,48 @@
 :root {
   --font-italiana: "Italiana", serif;
   --font-montserrat: "Montserrat", sans-serif;
+
+  /* =========================
+     DS2 THEME TOKENS
+     ========================= */
+  --ds2-bg: #0b0b0f;            /* near-black base */
+  --ds2-surface: #0f0f16;       /* card/panel surface */
+  --ds2-border: rgba(255, 255, 255, 0.12);
+
+  --ds2-text: rgba(255, 255, 255, 0.92);
+  --ds2-muted: rgba(255, 255, 255, 0.65);
+
+  --ds2-cyan: #22d3ee;
+  --ds2-teal: #14b8c4;
+  --ds2-indigo: #3730a3;
+  --ds2-purple: #7c3aed;
+  --ds2-magenta: #d946ef;
+
+  /* =========================
+     DS2 BACKGROUNDS (NOTICEABLE)
+     ========================= */
+  --ds2-radial-page: radial-gradient(
+    70% 70% at 50% 0%,
+    rgba(34, 211, 238, 0.22) 0%,
+    rgba(55, 48, 163, 0.18) 28%,
+    rgba(124, 58, 237, 0.16) 48%,
+    rgba(217, 70, 239, 0.12) 62%,
+    rgba(11, 11, 15, 1) 86%
+  );
+
+  --ds2-radial-header: radial-gradient(
+    140% 160% at 20% 0%,
+    rgba(34, 211, 238, 0.35) 0%,
+    rgba(124, 58, 237, 0.22) 35%,
+    rgba(217, 70, 239, 0.16) 55%,
+    rgba(11, 11, 15, 0.92) 85%
+  );
+}
+
+html,
+body {
+  background: var(--ds2-bg);
+  color: var(--ds2-text);
 }
 
 body {
@@ -11,7 +53,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* LIV-style hover underline (purple) */
+/* Optional: makes text selection feel “neon ink” */
+::selection {
+  background: rgba(34, 211, 238, 0.22);
+}
+
+/* =========================
+   DS2 NAV LINK (UNDERLINE + GLOW)
+   ========================= */
 .nav-link {
   position: relative;
   padding-bottom: 10px;
@@ -25,10 +74,44 @@ body {
   bottom: 2px;
   height: 2px;
   width: 0%;
-  background: #7c3aed;
+  background: linear-gradient(
+    90deg,
+    var(--ds2-cyan),
+    var(--ds2-purple),
+    var(--ds2-magenta)
+  );
   transition: width 0.25s ease;
 }
 
 .nav-link:hover::after {
   width: 100%;
+}
+
+.nav-link:hover {
+  text-shadow:
+    0 0 18px rgba(34, 211, 238, 0.35),
+    0 0 30px rgba(217, 70, 239, 0.25);
+}
+
+/* =========================
+   DS2 HELPER UTILITY CLASSES
+   (use these anywhere without rewriting gradients)
+   ========================= */
+.ds2-page-bg {
+  background: var(--ds2-radial-page);
+}
+
+.ds2-header-bg {
+  background: var(--ds2-radial-header);
+}
+
+.ds2-surface {
+  background: var(--ds2-surface);
+  border: 1px solid var(--ds2-border);
+}
+
+.ds2-glow {
+  box-shadow:
+    0 0 40px rgba(34, 211, 238, 0.18),
+    0 0 90px rgba(217, 70, 239, 0.12);
 }

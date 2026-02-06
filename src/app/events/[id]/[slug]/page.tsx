@@ -184,7 +184,7 @@ export default async function EventPage({ params }: PageProps) {
   }
 
   return (
-    <main className="min-h-screen bg-black text-white">
+    <main className="min-h-screen bg-transparent text-white">
       {/* ========================= HERO ========================= */}
       <section className="relative w-full overflow-hidden">
         <div
