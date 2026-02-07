@@ -1,6 +1,7 @@
 import Link from "next/link";
 import EventActionsAccordion from "@/app/components/EventActionsAccordion";
 import RelatedEventsCarousel from "@/app/components/RelatedEventsCarousel";
+import EventbriteTicketsEmbedded from "@/app/components/EventbriteTicketsEmbedded";
 
 type PageProps = {
   params: Promise<{ id?: string; slug?: string }>;
@@ -265,7 +266,11 @@ export default async function EventPage({ params }: PageProps) {
       <section className="mx-auto max-w-6xl px-6 py-10 md:py-12">
         <div className="grid gap-8 md:grid-cols-[1.15fr_0.85fr] md:items-start">
           <div>
-            <EventActionsAccordion actions={actions} />
+            <EventActionsAccordion
+              actions={actions}
+              ticketsSlot={<EventbriteTicketsEmbedded eventId={id} />}
+            />
+
 
             <div className="mt-6">
               <div className="text-xs font-semibold uppercase tracking-[0.35em] text-white/60">
