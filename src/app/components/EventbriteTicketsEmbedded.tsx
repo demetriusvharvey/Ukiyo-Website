@@ -224,8 +224,11 @@ export default function EventbriteTicketsEmbedded({ eventId }: { eventId: string
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3">
-                  <div className="text-sm font-semibold text-white">{t.price}</div>
+                {/* ✅ MOBILE FIX: stack price + Book so it never clips */}
+                <div className="flex flex-col items-end gap-2 sm:flex-row sm:items-center sm:gap-3">
+                  <div className="text-sm font-semibold text-white sm:order-1 order-0">
+                    {t.price}
+                  </div>
 
                   {canEmbed ? (
                     <button
@@ -235,7 +238,7 @@ export default function EventbriteTicketsEmbedded({ eventId }: { eventId: string
                         openModal(); // ✅ POP OUT like LIV
                       }}
                       className={[
-                        "inline-flex items-center justify-center rounded-sm px-3 py-1.5 text-xs font-semibold",
+                        "inline-flex w-full sm:w-auto items-center justify-center rounded-sm px-3 py-1.5 text-xs font-semibold",
                         "transition-colors",
                         disabled
                           ? "cursor-not-allowed bg-white/10 text-white/40"
@@ -251,7 +254,7 @@ export default function EventbriteTicketsEmbedded({ eventId }: { eventId: string
                       target="_blank"
                       rel="noreferrer"
                       className={[
-                        "inline-flex items-center justify-center rounded-sm px-3 py-1.5 text-xs font-semibold",
+                        "inline-flex w-full sm:w-auto items-center justify-center rounded-sm px-3 py-1.5 text-xs font-semibold",
                         "transition-colors",
                         disabled
                           ? "pointer-events-none bg-white/10 text-white/40"
