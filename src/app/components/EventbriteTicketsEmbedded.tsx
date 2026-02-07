@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 type TicketRow = {
   id: string;
@@ -9,7 +9,6 @@ type TicketRow = {
   sales_status?: string;
   remaining: number | null;
 
-  // ✅ from API route for REAL sold %
   quantity_total: number | null;
   quantity_sold: number | null;
 };
@@ -56,7 +55,6 @@ function soldOutBadgeText(tickets: TicketRow[]) {
 
   for (const t of tickets) {
     if (typeof t.quantity_total === "number" && typeof t.quantity_sold === "number") {
-      // ignore weird zeros
       if (t.quantity_total > 0) {
         total += t.quantity_total;
         sold += t.quantity_sold;
@@ -67,13 +65,9 @@ function soldOutBadgeText(tickets: TicketRow[]) {
   if (total <= 0) return "";
 
   const pctRaw = Math.round((sold / total) * 100);
-
-  // ✅ start showing at 60%
   if (pctRaw < 60) return "";
 
-  // ✅ snap to 5% increments
   const snapped = Math.min(100, Math.floor(pctRaw / 5) * 5);
-
   return `${snapped}% SOLD OUT`;
 }
 
@@ -84,13 +78,16 @@ export default function EventbriteTicketsEmbedded({ eventId }: { eventId: string
   const [widgetReady, setWidgetReady] = useState(false);
   const [widgetLoaded, setWidgetLoaded] = useState(false);
 
-  const checkoutWrapRef = useRef<HTMLDivElement | null>(null);
-
-  const iframeContainerId = useMemo(() => `eb-checkout-${eventId}`, [eventId]);
-
+  // ✅ Eventbrite requires HTTPS for embedded checkout (modal or inline)
   const canEmbed =
     typeof window !== "undefined" && window.location && window.location.protocol === "https:";
 
+  const modalTriggerId = useMemo(
+    () => `eventbrite-widget-modal-trigger-${eventId}`,
+    [eventId]
+  );
+
+  // Fetch ticket classes (prices)
   useEffect(() => {
     let alive = true;
 
@@ -117,6 +114,7 @@ export default function EventbriteTicketsEmbedded({ eventId }: { eventId: string
     };
   }, [eventId]);
 
+  // Load Eventbrite widget script once (only if we can embed)
   useEffect(() => {
     if (!canEmbed) return;
 
@@ -139,52 +137,54 @@ export default function EventbriteTicketsEmbedded({ eventId }: { eventId: string
     document.body.appendChild(s);
   }, [canEmbed]);
 
+  // ✅ Create MODAL checkout widget (LIV-style popout)
   useEffect(() => {
     if (!canEmbed) return;
     if (!widgetReady) return;
     if (!eventId) return;
     if (widgetLoaded) return;
 
-    const container = document.getElementById(iframeContainerId);
-    if (!container) return;
-    container.innerHTML = "";
+    const trigger = document.getElementById(modalTriggerId);
+    if (!trigger) return;
 
     try {
       window.EBWidgets?.createWidget({
         widgetType: "checkout",
         eventId,
-        iframeContainerId,
-        iframeContainerHeight: 720,
+        modal: true,
+        modalTriggerElementId: modalTriggerId,
         onOrderComplete: () => {},
       });
 
       setWidgetLoaded(true);
     } catch {
-      // If embed fails (settings), keep fallback link visible
+      // If modal fails (settings), fallback link will still work
     }
-  }, [canEmbed, widgetReady, widgetLoaded, eventId, iframeContainerId]);
+  }, [canEmbed, widgetReady, widgetLoaded, eventId, modalTriggerId]);
 
   const hasTickets = tickets.length > 0;
-
-  function scrollToCheckout() {
-    const el = checkoutWrapRef.current;
-    if (!el) return;
-    el.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
-
   const eventbriteFallbackUrl = `https://www.eventbrite.com/e/${eventId}`;
 
-  // ✅ real badge text
+  // ✅ Badge for Tickets tab
   const badgeText = useMemo(() => soldOutBadgeText(tickets), [tickets]);
+
+  function openModal() {
+    const trigger = document.getElementById(modalTriggerId) as HTMLButtonElement | null;
+    if (!trigger) return;
+    trigger.click();
+  }
 
   return (
     <div>
       {/* ✅ Expose badge for the Tickets tab */}
-      <div
-        data-ukiyo-tickets-badge={badgeText}
-        className="hidden"
-        aria-hidden="true"
-      />
+      <div data-ukiyo-tickets-badge={badgeText} className="hidden" aria-hidden="true" />
+
+      {/* ✅ hidden trigger button (Eventbrite binds modal to this) */}
+      {canEmbed ? (
+        <button id={modalTriggerId} type="button" className="hidden" aria-hidden="true">
+          Open Checkout
+        </button>
+      ) : null}
 
       {loadingTickets ? (
         <div className="text-sm text-white/60">Loading tickets…</div>
@@ -232,7 +232,7 @@ export default function EventbriteTicketsEmbedded({ eventId }: { eventId: string
                       type="button"
                       onClick={() => {
                         if (disabled) return;
-                        scrollToCheckout();
+                        openModal(); // ✅ POP OUT like LIV
                       }}
                       className={[
                         "inline-flex items-center justify-center rounded-sm px-3 py-1.5 text-xs font-semibold",
@@ -269,20 +269,11 @@ export default function EventbriteTicketsEmbedded({ eventId }: { eventId: string
         </div>
       )}
 
-      {canEmbed ? (
-        <div ref={checkoutWrapRef} className="mt-4">
-          <div className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/60">
-            Checkout
-          </div>
-          <div className="mt-2 rounded-sm border border-white/10 bg-black/20 p-2">
-            <div id={iframeContainerId} />
-          </div>
-        </div>
-      ) : (
+      {!canEmbed ? (
         <div className="mt-3 text-[11px] text-white/50">
-          Embedded checkout requires HTTPS. In production (Vercel), the inline checkout will load.
+          Embedded checkout requires HTTPS. In production (Vercel), the popout checkout will load.
         </div>
-      )}
+      ) : null}
     </div>
   );
 }
