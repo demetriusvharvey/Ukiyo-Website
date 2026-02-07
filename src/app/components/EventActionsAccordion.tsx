@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
 type ActionItem = {
@@ -10,8 +10,28 @@ type ActionItem = {
   icon?: string;
 };
 
-export default function EventActionsAccordion({ actions }: { actions: ActionItem[] }) {
+export default function EventActionsAccordion({
+  actions,
+  ticketsSlot,
+}: {
+  actions: ActionItem[];
+  ticketsSlot?: React.ReactNode;
+}) {
   const [openKey, setOpenKey] = useState<string | null>(null);
+  const [ticketsBadge, setTicketsBadge] = useState<string>("");
+
+  // ✅ Read badge text exposed by EventbriteTicketsEmbedded (updates after fetch)
+  useEffect(() => {
+    const read = () => {
+      const el = document.querySelector("[data-ukiyo-tickets-badge]") as HTMLElement | null;
+      const txt = (el?.getAttribute("data-ukiyo-tickets-badge") || "").trim();
+      setTicketsBadge(txt);
+    };
+
+    read();
+    const t = window.setTimeout(read, 250);
+    return () => window.clearTimeout(t);
+  }, [openKey]);
 
   return (
     <div className="rounded-sm border border-white/10 bg-white/[0.04] overflow-hidden">
@@ -27,6 +47,13 @@ export default function EventActionsAccordion({ actions }: { actions: ActionItem
           <span className="text-sm font-semibold text-white/90 flex items-center gap-2">
             <span className="text-base leading-none">{item.icon ?? ""}</span>
             {item.label}
+
+            {/* ✅ LIV-style badge on the Tickets tab */}
+            {item.key === "tickets" && ticketsBadge ? (
+              <span className="ml-2 rounded-sm bg-red-600/90 px-2 py-0.5 text-[11px] font-bold text-white">
+                {ticketsBadge}
+              </span>
+            ) : null}
           </span>
         );
 
@@ -56,21 +83,27 @@ export default function EventActionsAccordion({ actions }: { actions: ActionItem
                   {item.label}
                 </div>
 
-                {/* Tickets: keep the widget placeholder + link */}
+                {/* ✅ Tickets dropdown renders injected slot (LIV-style) */}
                 {item.key === "tickets" ? (
                   <>
-                    <div className="mt-3 text-sm text-white/70">
-                      Checkout widget will go here.
-                    </div>
+                    {ticketsSlot ? (
+                      <div className="mt-4">{ticketsSlot}</div>
+                    ) : (
+                      <>
+                        <div className="mt-3 text-sm text-white/70">
+                          Checkout widget will go here.
+                        </div>
 
-                    <a
-                      href={item.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="mt-4 inline-block text-sm text-white/80 underline underline-offset-4 hover:text-white transition"
-                    >
-                      Open Eventbrite Checkout
-                    </a>
+                        <a
+                          href={item.href}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="mt-4 inline-block text-sm text-white/80 underline underline-offset-4 hover:text-white transition"
+                        >
+                          Open Eventbrite Checkout
+                        </a>
+                      </>
+                    )}
                   </>
                 ) : (
                   <>
