@@ -24,10 +24,15 @@ const montserrat = Montserrat({
   variable: "--font-montserrat",
 });
 
-export const metadata: Metadata = {
+export const metadata = {
   title: "Ukiyo Virginia",
-  description: "Ukiyo Nightlife Virginia",
+  description: "Upscale nightlife experience in Virginia",
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-icon.png",
+  },
 };
+
 
 export default function RootLayout({
   children,
