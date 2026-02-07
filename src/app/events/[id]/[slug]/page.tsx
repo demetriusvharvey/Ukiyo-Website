@@ -147,8 +147,8 @@ export default async function EventPage({ params }: PageProps) {
 
   const actions = [
     { key: "tickets", label: "Tickets", icon: "🎟️", href: eventbriteUrl },
-    { key: "mezz", label: "Mezzanine Tables", icon: "🍾", href: "/reservations" },
-    { key: "main", label: "Main Floor Tables", icon: "🪩", href: "/reservations" },
+    { key: "mezz", label: "Birthday Tables", icon: "🍾", href: "/reservations" },
+    { key: "main", label: "Back Wall Tables", icon: "🪩", href: "/reservations" },
     { key: "dance", label: "Dance Floor Tables", icon: "💃", href: "/reservations" },
     { key: "stage", label: "Stage Tables", icon: "🎤", href: "/reservations" },
   ];
