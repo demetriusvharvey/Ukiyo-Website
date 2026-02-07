@@ -366,7 +366,7 @@ export default function Home() {
           <iframe
             src="//lightwidget.com/widgets/7703c72f62a85e5987e6218ad79d594f.html"
             scrolling="no"
-            allowTransparency={true}
+            allowtransparency="true"
             className="lightwidget-widget w-full border-0 overflow-hidden"
           />
         </div>
