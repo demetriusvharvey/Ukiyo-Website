@@ -158,9 +158,9 @@ export default function Home() {
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/35 to-black/85" />
 
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          {/* ✅ FIX: nudge whole hero stack up so it matches your “awesome” screenshot at 100% zoom */}
-          <div className="flex flex-col items-center -translate-y-8 sm:-translate-y-10 md:-translate-y-12">
+        <div className="absolute inset-0 flex justify-center pt-[22vh] pointer-events-none">
+          {/* ✅ moved logo+text DOWN ~2in by adding translate-y */}
+          <div className="flex flex-col items-center -translate-y-12 sm:-translate-y-16 md:-translate-y-18 translate-y-18 sm:translate-y-20 md:translate-y-22">
             <img
               src="/ukiyologo.PNG"
               alt="Ukiyo logo"
@@ -290,7 +290,8 @@ export default function Home() {
                                   {event.title}
                                 </div>
                                 <div className="mt-1 text-[11px] text-white/70">
-                                  Ukiyo Virginia • {event?.time ? event.time : "10:00 PM"}
+                                  Ukiyo Virginia •{" "}
+                                  {event?.time ? event.time : "10:00 PM"}
                                 </div>
                               </div>
 
@@ -308,7 +309,6 @@ export default function Home() {
             </div>
           </div>
         </div>
-
 
         <div className="mt-10 flex justify-center">
           <Link
@@ -362,14 +362,15 @@ export default function Home() {
         </p>
 
         <div className="mt-8 mx-auto max-w-[900px]">
-          <Script src="https://cdn.lightwidget.com/widgets/lightwidget.js" />
-          <iframe
-            src="//lightwidget.com/widgets/7703c72f62a85e5987e6218ad79d594f.html"
-            scrolling="no"
-            allowtransparency="true"
-            className="lightwidget-widget w-full border-0 overflow-hidden"
-          />
-        </div>
+  <Script src="https://cdn.lightwidget.com/widgets/lightwidget.js" />
+  <iframe
+    src="https://cdn.lightwidget.com/widgets/1b9413908e225109b546c310877fa21b.html"
+    scrolling="no"
+    allowtransparency="true"
+    className="lightwidget-widget"
+    style={{ width: "100%", border: 0, overflow: "hidden" }}
+  />
+</div>
       </section>
 
       {/* ================= FAQ (LIV-STYLE) ================= */}
@@ -404,7 +405,6 @@ export default function Home() {
               >
                 All FAQs
               </Link>
-
             </div>
 
             <div className="divide-y divide-white/15 border-t border-white/15 mx-auto w-full max-w-xl lg:max-w-none text-left">
