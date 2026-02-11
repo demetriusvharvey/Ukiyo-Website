@@ -166,10 +166,9 @@ export default function Home() {
               alt="Ukiyo logo"
               className="w-[clamp(180px,22vw,440px)] drop-shadow-[0_0_26px_rgba(0,0,0,0.8)]"
             />
-
-            <div className="mt-6 ml-0 sm:ml-24 text-[clamp(14px,2.2vw,48px)] uppercase whitespace-nowrap text-center tracking-[0.25em] sm:tracking-[0.6em]">
+            <div className="mt-6 ml-0 sm:ml-24 text-[clamp(26px,3.6vw,72px)] uppercase whitespace-nowrap text-center tracking-[0.28em] sm:tracking-[0.55em]">
               <span>UKIYO</span>
-              <span className="inline-block mx-4 sm:mx-16 md:mx-20">
+              <span className="inline-block mx-6 sm:mx-14 md:mx-16">
                 VIRGINIA
               </span>
             </div>

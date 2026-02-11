@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 
 type Props = {
@@ -8,8 +8,14 @@ type Props = {
   onClose: () => void;
 };
 
+const FORMSPREE_URL = "https://formspree.io/f/mjgegrre";
+
 export default function SubscribeModal({ open, onClose }: Props) {
   const panelRef = useRef<HTMLDivElement | null>(null);
+
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">(
+    "idle"
+  );
 
   useEffect(() => {
     if (!open) return;
@@ -21,6 +27,9 @@ export default function SubscribeModal({ open, onClose }: Props) {
     document.addEventListener("keydown", onKeyDown);
     document.body.style.overflow = "hidden";
 
+    // reset status every time modal opens
+    setStatus("idle");
+
     return () => {
       document.removeEventListener("keydown", onKeyDown);
       document.body.style.overflow = "";
@@ -28,6 +37,33 @@ export default function SubscribeModal({ open, onClose }: Props) {
   }, [open, onClose]);
 
   if (!open) return null;
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setStatus("sending");
+
+    const form = e.currentTarget;
+    const data = new FormData(form);
+
+    try {
+      const res = await fetch(FORMSPREE_URL, {
+        method: "POST",
+        body: data,
+        headers: { Accept: "application/json" },
+      });
+
+      if (res.ok) {
+        setStatus("success");
+        form.reset();
+        // optional: close after a short moment
+        setTimeout(() => onClose(), 900);
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
+  }
 
   return (
     <div
@@ -82,29 +118,28 @@ export default function SubscribeModal({ open, onClose }: Props) {
               .
             </p>
 
-            <form
-              className="mt-6"
-              onSubmit={(e) => {
-                e.preventDefault();
-                onClose();
-              }}
-            >
+            <form className="mt-6" onSubmit={handleSubmit}>
+              {/* hidden metadata (optional but nice) */}
+              <input type="hidden" name="source" value="ukiyo-subscribe-modal" />
+
               <label className="block">
                 <div className="mb-2 text-[11px] uppercase tracking-[0.22em] text-white/60">
                   Email
                 </div>
                 <input
                   type="email"
+                  name="email"
                   required
                   placeholder="you@example.com"
                   className="h-11 w-full bg-white px-3 text-black outline-none"
+                  disabled={status === "sending"}
                 />
               </label>
 
-              {/* Button: centered + more spacing below input */}
               <div className="mt-6 flex justify-center">
                 <button
                   type="submit"
+                  disabled={status === "sending"}
                   className={[
                     "inline-flex h-10 items-center justify-center px-10",
                     "bg-transparent text-white",
@@ -114,11 +149,23 @@ export default function SubscribeModal({ open, onClose }: Props) {
                     "shadow-[0_0_10px_rgba(168,85,247,0.35)]",
                     "hover:bg-purple-600",
                     "hover:shadow-[0_0_30px_rgba(168,85,247,1),inset_0_0_14px_rgba(255,255,255,0.18)]",
+                    "disabled:opacity-60 disabled:cursor-not-allowed",
                   ].join(" ")}
                 >
-                  Subscribe
+                  {status === "sending" ? "Submitting..." : "Subscribe"}
                 </button>
               </div>
+
+              {status === "success" && (
+                <p className="mt-4 text-center text-sm text-green-400">
+                  You’re subscribed 🥂
+                </p>
+              )}
+              {status === "error" && (
+                <p className="mt-4 text-center text-sm text-red-400">
+                  Something went wrong. Try again.
+                </p>
+              )}
             </form>
 
             <div className="mt-6 md:hidden">
