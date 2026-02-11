@@ -158,16 +158,16 @@ export default function Home() {
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/35 to-black/85" />
 
-        <div className="absolute inset-0 flex justify-center pt-[22vh] pointer-events-none">
-          {/* ✅ moved logo+text DOWN ~2in by adding translate-y */}
-          <div className="flex flex-col items-center translate-y-[80px] sm:translate-y-[96px] md:translate-y-[112px]">
+        {/* ✅ overlay pinned so it’s ALWAYS visible at 100% */}
+        <div className="absolute inset-0 pointer-events-none flex items-end justify-center pb-[clamp(24px,6vh,72px)]">
+          <div className="flex flex-col items-center">
             <img
               src="/ukiyologo.PNG"
               alt="Ukiyo logo"
-              className="w-[300px] sm:w-[380px] md:w-[440px] drop-shadow-[0_0_26px_rgba(0,0,0,0.8)]"
+              className="w-[clamp(180px,22vw,440px)] drop-shadow-[0_0_26px_rgba(0,0,0,0.8)]"
             />
 
-            <div className="mt-6 ml-0 sm:ml-24 text-[16px] sm:text-4xl md:text-5xl uppercase whitespace-nowrap text-center tracking-[0.25em] sm:tracking-[0.6em]">
+            <div className="mt-6 ml-0 sm:ml-24 text-[clamp(14px,2.2vw,48px)] uppercase whitespace-nowrap text-center tracking-[0.25em] sm:tracking-[0.6em]">
               <span>UKIYO</span>
               <span className="inline-block mx-4 sm:mx-16 md:mx-20">
                 VIRGINIA
@@ -362,15 +362,15 @@ export default function Home() {
         </p>
 
         <div className="mt-8 mx-auto max-w-[900px]">
-  <Script src="https://cdn.lightwidget.com/widgets/lightwidget.js" />
-  <iframe
-    src="https://cdn.lightwidget.com/widgets/1b9413908e225109b546c310877fa21b.html"
-    scrolling="no"
-    allowtransparency="true"
-    className="lightwidget-widget"
-    style={{ width: "100%", border: 0, overflow: "hidden" }}
-  />
-</div>
+          <Script src="https://cdn.lightwidget.com/widgets/lightwidget.js" />
+          <iframe
+            src="https://cdn.lightwidget.com/widgets/1b9413908e225109b546c310877fa21b.html"
+            scrolling="no"
+            allowtransparency="true"
+            className="lightwidget-widget"
+            style={{ width: "100%", border: 0, overflow: "hidden" }}
+          />
+        </div>
       </section>
 
       {/* ================= FAQ (LIV-STYLE) ================= */}
