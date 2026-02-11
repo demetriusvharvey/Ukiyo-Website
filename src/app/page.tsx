@@ -160,7 +160,7 @@ export default function Home() {
 
         <div className="absolute inset-0 flex justify-center pt-[22vh] pointer-events-none">
           {/* ✅ moved logo+text DOWN ~2in by adding translate-y */}
-          <div className="flex flex-col items-center -translate-y-12 sm:-translate-y-16 md:-translate-y-18 translate-y-18 sm:translate-y-20 md:translate-y-22">
+          <div className="flex flex-col items-center translate-y-[80px] sm:translate-y-[96px] md:translate-y-[112px]">
             <img
               src="/ukiyologo.PNG"
               alt="Ukiyo logo"
