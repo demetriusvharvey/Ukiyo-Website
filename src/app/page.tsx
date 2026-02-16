@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import Script from "next/script";
+import { useRouter } from "next/navigation";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 
@@ -24,6 +25,15 @@ function splitDateLabel(dateLabel: string) {
 }
 
 export default function Home() {
+  const router = useRouter();
+
+  // ✅ Mobile landing page should be the calendar page
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const isMobile = window.matchMedia("(max-width: 639px)").matches; // Tailwind sm breakpoint
+    if (isMobile) router.replace("/calendar");
+  }, [router]);
+
   const EVENTBRITE_LISTING =
     "https://www.eventbrite.com/d/va--portsmouth/ukiyo/";
   const INSTAGRAM_URL = "https://www.instagram.com/ukiyo_virginia/";
@@ -158,17 +168,18 @@ export default function Home() {
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/35 to-black/85" />
 
-        {/* ✅ overlay pinned so it’s ALWAYS visible at 100% */}
-        <div className="absolute inset-0 pointer-events-none flex items-end justify-center pb-[clamp(24px,6vh,72px)]">
-          <div className="flex flex-col items-center">
+        <div className="absolute inset-0 flex justify-center pt-[22vh] pointer-events-none">
+          {/* ✅ moved logo+text DOWN ~2in by adding translate-y */}
+          <div className="flex flex-col items-center translate-y-[80px] sm:translate-y-[96px] md:translate-y-[112px]">
             <img
               src="/ukiyologo.PNG"
               alt="Ukiyo logo"
-              className="w-[clamp(180px,22vw,440px)] drop-shadow-[0_0_26px_rgba(0,0,0,0.8)]"
+              className="w-[444px] sm:w-[380px] md:w-[440px] drop-shadow-[0_0_26px_rgba(0,0,0,0.8)]"
             />
-            <div className="mt-6 ml-0 sm:ml-24 text-[clamp(26px,3.6vw,72px)] uppercase whitespace-nowrap text-center tracking-[0.28em] sm:tracking-[0.55em]">
+
+            <div className="mt-2 sm:mt-6 ml-0 sm:ml-24 text-[12px] sm:text-4xl md:text-5xl uppercase whitespace-nowrap text-center tracking-[0.35em] sm:tracking-[0.6em]">
               <span>UKIYO</span>
-              <span className="inline-block mx-6 sm:mx-14 md:mx-16">
+              <span className="inline-block mx-4 sm:mx-16 md:mx-20">
                 VIRGINIA
               </span>
             </div>
@@ -231,10 +242,8 @@ export default function Home() {
                   rewind={true}
                   watchOverflow={true}
                   loop={false}
-
                   /* tight like LIV */
                   spaceBetween={16}
-
                   slidesPerView={1}
                   breakpoints={{
                     640: { slidesPerView: 2, spaceBetween: 16 },
@@ -365,7 +374,7 @@ export default function Home() {
           <iframe
             src="https://cdn.lightwidget.com/widgets/1b9413908e225109b546c310877fa21b.html"
             scrolling="no"
-            allowTransparency
+            allowtransparency="true"
             className="lightwidget-widget"
             style={{ width: "100%", border: 0, overflow: "hidden" }}
           />
