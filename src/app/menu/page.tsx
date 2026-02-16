@@ -29,28 +29,12 @@ export default function MenuPage() {
             </div>
 
             <h1 className="mt-4 text-3xl font-semibold tracking-tight md:text-5xl">
-              Drinks, bottles, and specialty offerings
+              Explore our food, drinks, bottles, and specialty offerings.
             </h1>
 
             <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-white/80 md:text-base">
-              Explore our drinks, bottles, and specialty offerings.
+            
             </p>
-
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-              <Link
-                href="/reserve"
-                className="inline-flex h-11 items-center justify-center border border-white/60 px-8 text-[11px] font-semibold uppercase tracking-[0.35em] text-white backdrop-blur transition hover:bg-white/15"
-              >
-                Reserve
-              </Link>
-
-              <Link
-                href="#menu"
-                className="inline-flex h-11 items-center justify-center border border-white/60 px-8 text-[11px] font-semibold uppercase tracking-[0.35em] text-white backdrop-blur transition hover:bg-white/15"
-              >
-                View Menu
-              </Link>
-            </div>
           </div>
         </div>
       </section>
@@ -62,7 +46,7 @@ export default function MenuPage() {
             <h2 className="text-3xl font-semibold tracking-tight">Menu</h2>
 
             <p className="mt-4 text-white/60">
-              Explore our drinks, bottles, and specialty offerings.
+              Menu coming soon!
             </p>
 
             {/* menu items go here */}
