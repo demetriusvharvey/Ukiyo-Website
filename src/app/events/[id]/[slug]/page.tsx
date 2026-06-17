@@ -20,6 +20,28 @@ function fmtTime(d: Date) {
   return d.toLocaleString("en-US", { hour: "numeric", minute: "2-digit" });
 }
 
+function getAgePolicy(ev: any, extra: string = ""): string {
+  const text = [
+    ev?.name?.text,
+    ev?.summary,
+    ev?.description?.text ?? ev?.description?.html,
+    extra,
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  // Eventbrite "all ages welcome" -> 18+
+  if (/all\s*ages/i.test(text)) return "Ages 18 & over";
+
+  // Pull the age from the Eventbrite listing text (e.g. "18+", "21 +",
+  // "ages 18", "18 and over", "18 & over"). Falls back if none is stated.
+  const m =
+    text.match(/(\d{2})\s*(?:\+|and over|and up|&\s*over)/i) ||
+    text.match(/ages?\s*(\d{2})/i);
+
+  return m ? `Ages ${m[1]} & over` : "Ages 21 & over";
+}
+
 export default async function EventPage({ params }: PageProps) {
   const { id } = await params;
 
@@ -95,6 +117,28 @@ export default async function EventPage({ params }: PageProps) {
   }
 
   const ev = await res.json();
+
+  // Eventbrite keeps the full body (incl. age info like "all ages welcome")
+  // in the event's full description / structured content, NOT in description.html.
+  let extraText = "";
+  try {
+    const [descRes, scRes] = await Promise.all([
+      fetch(`https://www.eventbriteapi.com/v3/events/${id}/description/`, {
+        headers: { Authorization: `Bearer ${token}` },
+        cache: "no-store",
+      }),
+      fetch(`https://www.eventbriteapi.com/v3/events/${id}/structured_content/`, {
+        headers: { Authorization: `Bearer ${token}` },
+        cache: "no-store",
+      }),
+    ]);
+    if (descRes.ok) extraText += " " + JSON.stringify(await descRes.json());
+    if (scRes.ok) extraText += " " + JSON.stringify(await scRes.json());
+  } catch (err) {
+    console.error("Age lookup (description/structured_content) failed:", err);
+  }
+
+  const agePolicy = getAgePolicy(ev, extraText);
 
   const title: string = ev?.name?.text ?? "Event";
   const summary: string = ev?.summary ?? "";
@@ -230,7 +274,7 @@ export default async function EventPage({ params }: PageProps) {
                   {startTimeLine ? ` • ${startTimeLine}` : ""}
                   {endLine ? ` — ${endLine}` : ""}
                   <span className="mx-2 text-white/40">•</span>
-                  <span className="text-white/70">Ages 21 &amp; over</span>
+                  <span className="text-white/70">{agePolicy}</span>
                 </p>
               ) : null}
             </div>
