@@ -20,11 +20,12 @@ function fmtTime(d: Date) {
   return d.toLocaleString("en-US", { hour: "numeric", minute: "2-digit" });
 }
 
-function getAgePolicy(ev: any): string {
+function getAgePolicy(ev: any, extra: string = ""): string {
   const text = [
     ev?.name?.text,
     ev?.summary,
     ev?.description?.text ?? ev?.description?.html,
+    extra,
   ]
     .filter(Boolean)
     .join(" ");
@@ -117,7 +118,27 @@ export default async function EventPage({ params }: PageProps) {
 
   const ev = await res.json();
 
-  const agePolicy = getAgePolicy(ev);
+  // Eventbrite keeps the full body (incl. age info like "all ages welcome")
+  // in the event's full description / structured content, NOT in description.html.
+  let extraText = "";
+  try {
+    const [descRes, scRes] = await Promise.all([
+      fetch(`https://www.eventbriteapi.com/v3/events/${id}/description/`, {
+        headers: { Authorization: `Bearer ${token}` },
+        cache: "no-store",
+      }),
+      fetch(`https://www.eventbriteapi.com/v3/events/${id}/structured_content/`, {
+        headers: { Authorization: `Bearer ${token}` },
+        cache: "no-store",
+      }),
+    ]);
+    if (descRes.ok) extraText += " " + JSON.stringify(await descRes.json());
+    if (scRes.ok) extraText += " " + JSON.stringify(await scRes.json());
+  } catch (err) {
+    console.error("Age lookup (description/structured_content) failed:", err);
+  }
+
+  const agePolicy = getAgePolicy(ev, extraText);
 
   const title: string = ev?.name?.text ?? "Event";
   const summary: string = ev?.summary ?? "";
