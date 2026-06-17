@@ -29,6 +29,9 @@ function getAgePolicy(ev: any): string {
     .filter(Boolean)
     .join(" ");
 
+  // Eventbrite "all ages welcome" -> 18+
+  if (/all\s*ages/i.test(text)) return "Ages 18 & over";
+
   // Pull the age from the Eventbrite listing text (e.g. "18+", "21 +",
   // "ages 18", "18 and over", "18 & over"). Falls back if none is stated.
   const m =
